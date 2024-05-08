@@ -74,7 +74,7 @@
                 هدف بهبود
               </p>
               <div class="d-flex justify-content-between align-items-center">
-                <a href="single.html" class="btn btn-sm btn-dark">مشاهده</a>
+                <a href="single.php" class="btn btn-sm btn-dark">مشاهده</a>
 
                 <p class="fs-7 mb-0">نویسنده : علی شیخ</p>
               </div>
@@ -99,7 +99,7 @@
                 هدف بهبود
               </p>
               <div class="d-flex justify-content-between align-items-center">
-                <a href="single.html" class="btn btn-sm btn-dark">مشاهده</a>
+                <a href="single.php" class="btn btn-sm btn-dark">مشاهده</a>
 
                 <p class="fs-7 mb-0">نویسنده : علی شیخ</p>
               </div>
@@ -124,7 +124,7 @@
                 هدف بهبود
               </p>
               <div class="d-flex justify-content-between align-items-center">
-                <a href="single.html" class="btn btn-sm btn-dark">مشاهده</a>
+                <a href="single.php" class="btn btn-sm btn-dark">مشاهده</a>
 
                 <p class="fs-7 mb-0">نویسنده : علی شیخ</p>
               </div>
