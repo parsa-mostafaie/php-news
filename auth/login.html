@@ -18,7 +18,7 @@
   <body class="auth m-0">
     <main class="form-signin w-100 m-auto">
       <div class="fs-2 fw-bold text-center mb-4">اخبار</div>
-      <form submit-control form-wait="#wait">
+      <form submit-control form-wait="#wait" form-ajax action="app.php">
         <div class="mb-3">
           <label class="form-label">ایمیل</label>
           <input type="email" class="form-control" />
@@ -30,6 +30,10 @@
         </div>
         <div id="wait">لطفا صبر کنید!</div>
         <button class="w-100 btn btn-dark mt-4" type="submit">ورود</button>
+        <div class="mt-4 text-center w-100">
+          <label class="form-label">قبلا ثبت نام نکرده اید؟</label>
+          <a class="" href="signup.html">ثبت نام</a>
+        </div>
       </form>
     </main>
 
@@ -38,6 +42,6 @@
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
     ></script>
-    <script src="../libs/js/formlib.js"></script>
+    <script src="/libs/pluslib/frontend/formlib.js" type="module"></script>
   </body>
 </html>
