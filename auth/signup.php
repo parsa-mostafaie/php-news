@@ -31,9 +31,9 @@ $_COND = count($errors) == 0;
 
 // PROCESSOR
 $__PROCESS__CALLBACK__ = function () {
-  global $fname, $lname, $uname, $pword, $email;
+  global $fname, $lname, $uname, $pword, $mail;
   add_user($fname, $lname, $uname, $pword);
-  update_users('username=?', 'mail=?', [$uname, $email]);
+  update_users('username=?', 'mail=?', [$uname, $mail]);
 };
 
 $__PROCESS__SUCCESS__ = function () {
