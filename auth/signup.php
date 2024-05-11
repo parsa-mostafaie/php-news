@@ -33,7 +33,7 @@ $_COND = count($errors) == 0;
 $__PROCESS__CALLBACK__ = function () {
   global $fname, $lname, $uname, $pword, $mail;
   add_user($fname, $lname, $uname, $pword);
-  update_users('username=?', 'mail=?', [$uname, $mail]);
+  update_users('username="' . $uname . '"', 'mail=?', [$mail]);
 };
 
 $__PROCESS__SUCCESS__ = function () {
