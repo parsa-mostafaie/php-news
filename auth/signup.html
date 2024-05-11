@@ -24,18 +24,27 @@
         data-form-n="بعدی"
         data-form-p="قبلی"
         data-form-s="ثبت نام"
+        submit-control
+        action="signup.php"
       >
         <div id="tabs">
+          <div class="tab">
+            <b class="fw-bold fs-6">اطلاعات یکتا:</b>
+            <div class="mb-3">
+              <label class="form-label">نام کاربری</label>
+              <input type="text" class="form-control" name="uname" />
+            </div>
+          </div>
           <div class="tab">
             <b class="fw-bold fs-6">اطلاعات نام:</b>
             <div class="mb-3">
               <label class="form-label">نام</label>
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" name="fname" />
             </div>
 
             <div class="mb-3">
               <label class="form-label">نام خانوادگی</label>
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" name="lname" />
             </div>
           </div>
 
@@ -43,12 +52,12 @@
             <b class="fw-bold fs-6">اطلاعات ورود:</b>
             <div class="mb-3">
               <label class="form-label">ایمیل</label>
-              <input type="email" class="form-control" />
+              <input type="email" class="form-control" name="email" />
             </div>
 
             <div class="mb-3">
               <label class="form-label">رمز عبور</label>
-              <input type="password" class="form-control" />
+              <input type="password" name="pass" class="form-control" />
             </div>
           </div>
 
@@ -62,7 +71,13 @@
               <button type="button" id="nextBtn" class="btn btn-dark">
                 بعدی
               </button>
-              <button type="submit" id="submitBtn" class="btn btn-dark">
+              <button
+                type="submit"
+                id="submitBtn"
+                name="signup"
+                ajax-submit
+                class="btn btn-dark"
+              >
                 ثبت نام
               </button>
             </div>
@@ -82,5 +97,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="/libs/pluslib/frontend/multistepform.js"></script>
+    <script src="/libs/pluslib/frontend/formlib.js" type="module"></script>
   </body>
 </html>
