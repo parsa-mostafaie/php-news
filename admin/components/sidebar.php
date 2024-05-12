@@ -27,7 +27,7 @@ function classIt($name)
 
         <li class="nav-item">
           <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?=classIt('/posts')?>"
-            href="<?= $adminPages ?>posts/index.html">
+            href="<?= $adminPages ?>posts/index.php">
             <i class="bi bi-file-earmark-image-fill fs-4 text-secondary"></i>
             <span class="fw-bold">مقالات</span>
           </a>
