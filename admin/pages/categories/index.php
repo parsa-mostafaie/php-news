@@ -6,7 +6,7 @@
     <h1 class="fs-3 fw-bold">دسته بندی ها</h1>
 
     <div class="btn-toolbar mb-2 mb-md-0">
-      <a href="/create.php" class="btn btn-sm btn-dark">
+      <a href="./create.php" class="btn btn-sm btn-dark">
         ایجاد دسته بندی
       </a>
     </div>
