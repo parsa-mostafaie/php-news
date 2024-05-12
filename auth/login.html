@@ -18,18 +18,35 @@
   <body class="auth m-0">
     <main class="form-signin w-100 m-auto">
       <div class="fs-2 fw-bold text-center mb-4">اخبار</div>
-      <form submit-control form-wait="#wait" form-ajax action="app.php">
+      <form submit-control form-wait="#wait" action="login.php">
         <div class="mb-3">
-          <label class="form-label">ایمیل</label>
-          <input type="email" class="form-control" />
+          <label class="form-label">نام کاربری</label>
+          <input
+            type="text"
+            class="form-control"
+            name="uname"
+            autocomplete="username"
+          />
         </div>
 
         <div class="mb-3">
           <label class="form-label">رمز عبور</label>
-          <input type="password" class="form-control" />
+          <input
+            type="password"
+            class="form-control"
+            name="pass"
+            autocomplete="current-password"
+          />
         </div>
         <div id="wait">لطفا صبر کنید!</div>
-        <button class="w-100 btn btn-dark mt-4" type="submit">ورود</button>
+        <button
+          class="w-100 btn btn-dark mt-4"
+          type="submit"
+          ajax-submit
+          name="login"
+        >
+          ورود
+        </button>
         <div class="mt-4 text-center w-100">
           <label class="form-label">قبلا ثبت نام نکرده اید؟</label>
           <a class="" href="signup.html">ثبت نام</a>
