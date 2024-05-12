@@ -44,7 +44,7 @@ function classIt($name)
 
         <li class="nav-item">
           <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2  <?= classIt('/com') ?>"
-            href="<?= $adminPages ?>comments/index.html"
+            href="<?= $adminPages ?>comments/index.php"
             >
             <i class="bi bi-chat-left-text-fill fs-4 text-secondary"></i>
 
