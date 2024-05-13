@@ -39,6 +39,7 @@
           />
         </div>
         <div id="wait">لطفا صبر کنید!</div>
+        <div id="error"></div>
         <button
           class="w-100 btn btn-dark mt-4"
           type="submit"
@@ -60,5 +61,15 @@
       crossorigin="anonymous"
     ></script>
     <script src="/libs/pluslib/frontend/formlib.js" type="module"></script>
+    <script>
+      window.addEventListener("load", () => {
+        let e = document.querySelector("#error");
+        window.FormLibInitializer.setting(
+          "[ajax-submit]",
+          () => (e.textContent = ""),
+          ({ err }) => (e.textContent = JSON.stringify(err))
+        ).init();
+      });
+    </script>
   </body>
 </html>
