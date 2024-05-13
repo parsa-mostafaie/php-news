@@ -119,41 +119,7 @@
   <div class="mt-4">
     <h4 class="text-secondary fw-bold">دسته بندی</h4>
     <div class="table-responsive small">
-      <table class="table table-hover align-middle">
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>عنوان</th>
-            <th>عملیات</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>1</th>
-            <td>طبیعت</td>
-            <td>
-              <a href="#" class="btn btn-sm btn-outline-dark">ویرایش</a>
-              <a href="#" class="btn btn-sm btn-outline-danger">حذف</a>
-            </td>
-          </tr>
-          <tr>
-            <th>2</th>
-            <td>گردشگری</td>
-            <td>
-              <a href="#" class="btn btn-sm btn-outline-dark">ویرایش</a>
-              <a href="#" class="btn btn-sm btn-outline-danger">حذف</a>
-            </td>
-          </tr>
-          <tr>
-            <th>3</th>
-            <td>متفرقه</td>
-            <td>
-              <a href="#" class="btn btn-sm btn-outline-dark">ویرایش</a>
-              <a href="#" class="btn btn-sm btn-outline-danger">حذف</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <?php categories_table(); ?>
     </div>
   </div>
 </main>
