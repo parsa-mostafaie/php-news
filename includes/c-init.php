@@ -6,3 +6,5 @@ if (!defined('news')) {
   HOME_URL('/news');
   db('plus_news');
 }
+
+require_once '@table.php';
