@@ -9,12 +9,15 @@ function colnames(PDOStatement $st)
   return $columns;
 }
 
-function tablify(PDOStatement $st, $h_actions = '', $actions = '', $echo = true)
+function tablify(PDOStatement $st, $h_actions = '', $actions = '', $echo = true, $hidden = [], $th_s = ['ID'])
 {
   $html = '<table class="table table-hover align-middle"><thead>';
   $fetch = $st->fetchAll(PDO::FETCH_ASSOC);
   $headers = colnames($st);
   foreach ($headers as $header) {
+    if (in_array($header, $hidden)) {
+      continue;
+    }
     $html .= "<th>$header</th>";
   }
   if ($h_actions and $actions) {
@@ -23,15 +26,21 @@ function tablify(PDOStatement $st, $h_actions = '', $actions = '', $echo = true)
   $html .= "<tbody>";
   foreach ($fetch as $data) {
     $html .= "<tr>";
-    foreach ($data as $cold) {
-      $html .= "<td>$cold</td>";
+    foreach ($data as $k => $cold) {
+      if (in_array($k, $hidden)) {
+        continue;
+      }
+      if (!in_array($k, $th_s))
+        $html .= "<td>$cold</td>";
+      else
+        $html .= "<th>$cold</th>";
     }
     if ($h_actions and $actions) {
       $actions_ = $actions;
       if (is_callable($actions)) {
         $actions_ = $actions($data);
       }
-      $html .= "<td>$actions_</td>";
+      $html .= "<!-- 1 --><td>$actions_</td>";
     }
     $html .= '</tr>';
   }
@@ -50,4 +59,16 @@ function categories_table()
   };
   $st = db()->TABLE('categories')->SELECT('ID, Name as `عنوان`')->Run();
   tablify($st, 'عملیات', $actions);
+}
+
+function comments_table()
+{
+  $actions = function ($data) {
+    $nv = '<a href="#" class="btn btn-sm btn-outline-info">در انتظار تایید</a>';
+    $v = '<a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>';
+    $vb = $data['verify'] ? $v : $nv;
+    return $vb . ' <a href="#" class="btn btn-sm btn-outline-danger">حذف</a>';
+  };
+  $st = db()->TABLE('comments as c', true)->SELECT('c.verify, c.ID, (CONCAT(u.firstname, " ",u.lastname)) as `نام`, Text as `متن کامنت`')->ON('u.ID = c.user_id', 'users as u')->Run();
+  tablify($st, 'عملیات', $actions, hidden: ['verify']);
 }
