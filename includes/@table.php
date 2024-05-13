@@ -69,6 +69,6 @@ function comments_table()
     $vb = $data['verify'] ? $v : $nv;
     return $vb . ' <a href="#" class="btn btn-sm btn-outline-danger">حذف</a>';
   };
-  $st = db()->TABLE('comments as c', true)->SELECT('c.verify, c.ID, (CONCAT(u.firstname, " ",u.lastname)) as `نام`, Text as `متن کامنت`')->ON('u.ID = c.user_id', 'users as u')->Run();
+  $st = db()->TABLE('comments as c', true)->SELECT('c.verify, c.ID, (CONCAT(u.firstname, " ",u.lastname)) as `نام`, Text as `متن کامنت`')->ON('u.ID = c.user_id', 'users as u')->LIMIT(5)->Run();
   tablify($st, 'عملیات', $actions, hidden: ['verify']);
 }
