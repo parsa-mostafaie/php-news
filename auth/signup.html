@@ -32,7 +32,12 @@
             <b class="fw-bold fs-6">اطلاعات یکتا:</b>
             <div class="mb-3">
               <label class="form-label">نام کاربری</label>
-              <input type="text" class="form-control" autocomplete="username" name="uname" />
+              <input
+                type="text"
+                class="form-control"
+                autocomplete="username"
+                name="uname"
+              />
             </div>
           </div>
           <div class="tab">
@@ -52,12 +57,22 @@
             <b class="fw-bold fs-6">اطلاعات ورود:</b>
             <div class="mb-3">
               <label class="form-label">ایمیل</label>
-              <input type="email" class="form-control" name="email" autocomplete="email" />
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                autocomplete="email"
+              />
             </div>
 
             <div class="mb-3">
               <label class="form-label">رمز عبور</label>
-              <input type="password" name="pass" class="form-control" autocomplete="current-password"/>
+              <input
+                type="password"
+                name="pass"
+                class="form-control"
+                autocomplete="current-password"
+              />
             </div>
           </div>
 
@@ -88,6 +103,7 @@
           <label class="form-label">قبلا ثبت نام کرده اید؟</label>
           <a class="" href="login.html">ورود</a>
         </div>
+        <div id="error" class="text-danger"></div>
       </form>
     </main>
 
@@ -98,5 +114,15 @@
     ></script>
     <script src="/libs/pluslib/frontend/multistepform.js"></script>
     <script src="/libs/pluslib/frontend/formlib.js" type="module"></script>
+    <script>
+      window.addEventListener("load", () => {
+        let e = document.querySelector("#error");
+        window.FormLibInitializer.setting(
+          "[ajax-submit]",
+          () => (e.textContent = ""),
+          ({ err }) => (e.textContent = JSON.stringify(err))
+        ).init();
+      });
+    </script>
   </body>
 </html>
