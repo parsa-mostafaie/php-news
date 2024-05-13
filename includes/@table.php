@@ -55,7 +55,7 @@ function categories_table()
 {
   $actions = function ($data) {
     return '<a href="./pages/categories/edit.php?q=' . $data['ID'] . '" class="btn btn-sm btn-outline-dark">ویرایش</a>
-                  <a href="#" class="btn btn-sm btn-outline-danger">حذف</a>';
+                  <a href="' . c_url('/admin/pages/categories/rem.php?cat=') . $data['ID'] . '" class="btn btn-sm btn-outline-danger">حذف</a>';
   };
   $st = db()->TABLE('categories')->SELECT('ID, Name as `عنوان`')->Run();
   tablify($st, 'عملیات', $actions);
