@@ -1,14 +1,5 @@
 <?php include_once 'c-init.php';
 
-function colnames(PDOStatement $st)
-{
-  for ($i = 0; $i < $st->columnCount(); $i++) {
-    $col = $st->getColumnMeta($i);
-    $columns[] = $col['name'];
-  }
-  return $columns;
-}
-
 function tablify(PDOStatement $st, $h_actions = '', $actions = '', $echo = true, $hidden = [], $th_s = ['ID'])
 {
   $html = '<table class="table table-hover align-middle"><thead>';

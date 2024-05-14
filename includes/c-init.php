@@ -7,4 +7,15 @@ if (!defined('news')) {
   db('plus_news');
 }
 
+function colnames(PDOStatement $st)
+{
+  for ($i = 0; $i < $st->columnCount(); $i++) {
+    $col = $st->getColumnMeta($i);
+    $columns[] = $col['name'];
+  }
+  return $columns;
+}
+
+
 require_once '@table.php';
+require_once '@ul.php';
