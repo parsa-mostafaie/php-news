@@ -1,6 +1,6 @@
 <?php include_once '../../../includes/c-init.php';
 
-if (!is_numeric(intval(get_val('cat')))) {
+if (!is_numeric(get_val('cat'))) {
   _404_();
 } ?>
 <?php $cat = db()->TABLE('categories')->SELECT()->WHERE("ID=" . intval(get_val('cat')))->
