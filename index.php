@@ -52,7 +52,7 @@
 
 <!-- Content Section -->
 <section class="mt-4">
-  <div class="row">
+  <div class="row row-gap-4">
     <!-- Posts Content -->
     <div class="col-lg-8">
       <div class="row g-3">
