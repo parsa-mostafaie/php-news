@@ -4,9 +4,10 @@
   <div class="card">
     <div class="card-body">
       <p class="fw-bold fs-6">جستجو در وبلاگ</p>
-      <form action="<?=c_url('/search.php')?>">
+      <form action="<?= c_url('/search.php') ?>" method='get'>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="جستجو ..." />
+          <input type="text" class="form-control" name='search' placeholder="جستجو ..."
+            value="<?= $_GET['search'] ?? '' ?>" />
           <button class="btn btn-secondary" type="submit">
             <i class="bi bi-search"></i>
           </button>
@@ -18,7 +19,7 @@
   <!-- Categories Section -->
   <div class="card mt-4">
     <div class="fw-bold fs-6 card-header">دسته بندی ها</div>
-    <?php categories_list()?>
+    <?php categories_list() ?>
   </div>
 
   <!-- Subscribue Section -->
@@ -26,14 +27,14 @@
     <div class="card-body">
       <p class="fw-bold fs-6">عضویت در خبرنامه</p>
 
-      <form action='<?=c_url("/auth/signup.html")?>' method="get">
+      <form action='<?= c_url("/auth/signup.html") ?>' method="get">
         <div class="mb-3">
           <label class="form-label">نام</label>
-          <input type="text" class="form-control" name="name" id='username' autocomplete='username'/>
+          <input type="text" class="form-control" name="name" id='username' autocomplete='username' />
         </div>
         <div class="mb-3">
           <label class="form-label">ایمیل</label>
-          <input type="email" class="form-control" name="mail" id="email" autocomplete='email'/>
+          <input type="email" class="form-control" name="mail" id="email" autocomplete='email' />
         </div>
         <div class="d-grid gap-2">
           <button type="submit" class="btn btn-secondary">
