@@ -1,5 +1,5 @@
 <!-- Sidebar Section -->
-<div class="col-lg-4">
+<div class="col-lg-4 mt-3">
   <!-- Sesrch Section -->
   <div class="card">
     <div class="card-body">
