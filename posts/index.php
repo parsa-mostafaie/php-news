@@ -83,9 +83,7 @@ function comments($parent = NULL)
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <h5 class="card-title fw-bold"><?= $post->getColumn('title') ?></h5>
-                <div>
-                  <span class="badge text-bg-secondary"><?= $post->getColumn('category') ?></span>
-                </div>
+                <?= badge($post->getColumn('category')); ?>
               </div>
               <p class="card-text text-secondary text-justify pt-3"><?= $post->getColumn('content') ?>
               </p>

@@ -16,6 +16,13 @@ function colnames(PDOStatement $st)
   return $columns;
 }
 
+function badge($t)
+{
+  return '<div>
+                  <span class="badge text-bg-secondary">' . $t . '</span>
+                </div>';
+}
+
 
 require_once '@table.php';
 require_once '@ul.php';
