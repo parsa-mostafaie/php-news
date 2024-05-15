@@ -38,6 +38,7 @@
                 class="form-control"
                 autocomplete="username"
                 name="uname"
+                ffqs="name"
               />
             </div>
           </div>
@@ -63,6 +64,7 @@
                 class="form-control"
                 name="email"
                 autocomplete="email"
+                ffqs="mail"
               />
             </div>
 
@@ -115,6 +117,7 @@
     ></script>
     <script src="/libs/pluslib/frontend/multistepform.js"></script>
     <script src="/libs/pluslib/frontend/formlib.js" type="module"></script>
+    <script src="/libs/pluslib/frontend/ffqs.js"></script>
     <script>
       window.addEventListener("load", () => {
         let e = document.querySelector("#error");
@@ -123,6 +126,7 @@
           () => (e.textContent = ""),
           ({ err }) => (e.textContent = JSON.stringify(err))
         ).init();
+        ffqs();
       });
     </script>
   </body>

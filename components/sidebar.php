@@ -26,14 +26,14 @@
     <div class="card-body">
       <p class="fw-bold fs-6">عضویت در خبرنامه</p>
 
-      <form>
+      <form action='<?=c_url("/auth/signup.html")?>' method="get">
         <div class="mb-3">
           <label class="form-label">نام</label>
-          <input type="text" class="form-control" />
+          <input type="text" class="form-control" name="name" id='username' autocomplete='username'/>
         </div>
         <div class="mb-3">
           <label class="form-label">ایمیل</label>
-          <input type="email" class="form-control" />
+          <input type="email" class="form-control" name="mail" id="email" autocomplete='email'/>
         </div>
         <div class="d-grid gap-2">
           <button type="submit" class="btn btn-secondary">
