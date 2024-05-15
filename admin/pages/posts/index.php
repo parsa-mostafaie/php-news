@@ -15,7 +15,7 @@
   <!-- Posts -->
   <div class="mt-4">
     <div class="table-responsive small">
-      <?php posts_table() ?>
+      <?php posts_table(false) ?>
     </div>
   </div>
 </main>

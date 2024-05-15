@@ -9,7 +9,7 @@
   <!-- Comments -->
   <div class="mt-4">
     <div class="table-responsive small">
-      <?php comments_table()?>
+      <?php comments_table(false)?>
     </div>
   </div>
 </main>
