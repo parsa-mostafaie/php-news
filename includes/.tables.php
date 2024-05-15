@@ -13,10 +13,10 @@ function categories_table()
 function comments_table($last = true)
 {
   $actions = function ($data) {
-    $nv = '<a href="#" class="btn btn-sm btn-outline-info">در انتظار تایید</a>';
+    $nv = '<a href="' . c_url('/admin/pages/comments/verify.php?com=' . $data['ID']) . '" class="btn btn-sm btn-outline-info">در انتظار تایید</a>';
     $v = '<a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>';
     $vb = $data['verify'] ? $v : $nv;
-    return $vb . ' <a href="#" class="btn btn-sm btn-outline-danger">حذف</a>';
+    return $vb . ' <a href="' . c_url('/admin/pages/comments/rem.php?com=' . $data['ID']) . '" class="btn btn-sm btn-outline-danger">حذف</a>';
   };
   $st = db()->TABLE('comments as c', true)->SELECT('c.verify, c.ID, (CONCAT(u.firstname, " ",u.lastname)) as `نام`, Text as `متن کامنت`')->ON('u.ID = c.user_id', 'users as u');
   if ($last) {
