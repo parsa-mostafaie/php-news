@@ -11,8 +11,8 @@ if (!is_numeric($flp)) {
 }
 $post_id = intval($flp);
 $post =
-  db()->TABLE('posts as p', true)
-    ->SELECT('p.title, p.content, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
+  db()->TABLE('posts', true, 'p')
+    ->SELECT('p.ID, p.title, p.content, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
     ->ON('p.author = u.id', 'users as u')->ON('c.id = p.category', 'categories as c')
     ->WHERE('p.id=?')->getFirstRow([$post_id]);
 
@@ -33,7 +33,7 @@ function comment($cid)
   if (!$comment->found) {
     return '';
   }
-  return '<div class="card bg-light-subtle mb-3">
+  return '<div class="card bg-light-subtle mb-3" id="c' . $cid . '">
             <div class="card-body">
               <div class="d-flex align-items-center">
                 <img src="../assets/images/profile.png" width="45" height="45" alt="user-profle">
@@ -48,16 +48,24 @@ function comment($cid)
           </div>';
 }
 
-function comments($parent = 'NULL')
+function comments_fetch($parent = NULL)
 {
   global $post_id;
-  $verb = strtoupper($parent) == 'NULL' ? 'is' : '=';
+  $verb = strtoupper($parent) == NULL ? 'is' : '=';
   $comments = db()->TABLE('comments as c', true)->SELECT('id')
-    ->WHERE('c.post=' . $post_id)->WHERE('c.parent ' . $verb . ' ' . $parent)
-    ->Run();
+    ->WHERE('c.post=' . $post_id)->WHERE("c.parent $verb ?")
+    ->Run([$parent]);
   return $comments->fetchAll(PDO::FETCH_BOUND);
 }
 
+function comments($parent = NULL)
+{
+  $s = '';
+  foreach (comments_fetch($parent) as $comm) {
+    $s .= comment($comm);
+  }
+  return $s;
+}
 ?>
 <?php include ('../components/header.php') ?>
 
@@ -70,12 +78,13 @@ function comments($parent = 'NULL')
         <!-- Post Section -->
         <div class="col">
           <div class="card">
-            <img src="../assets/images/6.jpg" class="card-img-top" alt="post-image" />
+            <!-- <img src="../assets/images/6.jpg" /> -->
+            <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image"') ?>
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <h5 class="card-title fw-bold"><?= $post->getColumn('title') ?></h5>
                 <div>
-                  <span class="badge text-bg-secondary"><?=$post->getColumn('category')?></span>
+                  <span class="badge text-bg-secondary"><?= $post->getColumn('category') ?></span>
                 </div>
               </div>
               <p class="card-text text-secondary text-justify pt-3"><?= $post->getColumn('content') ?>
@@ -114,16 +123,14 @@ function comments($parent = 'NULL')
 
           <hr class="mt-4" />
           <!-- Comment Content -->
-          <p class="fw-bold fs-6">تعداد کامنت : <?= count(comments()) ?> </p>
+          <p class="fw-bold fs-6">تعداد کامنت : <?= count(comments_fetch()) ?> </p>
 
-           <?php foreach (comments() as $comm) {
-             echo comment($comm);
-           } ?>
+          <?= comments() ?>
         </div>
       </div>
     </div>
 
-     <?php include ('../components/sidebar.php') ?>
+    <?php include ('../components/sidebar.php') ?>
   </div>
 </section>
 <?php include ('../components/footer.php') ?>
