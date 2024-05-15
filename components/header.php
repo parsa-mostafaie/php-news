@@ -17,7 +17,7 @@
 <body>
   <div class="container py-3">
     <header class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
-      <a href="index.html" class="fs-4 fw-medium link-body-emphasis text-decoration-none">
+      <a href="<?= c_url('/') ?>" class="fs-4 fw-medium link-body-emphasis text-decoration-none">
         اخبار
       </a>
 
