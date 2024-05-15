@@ -44,25 +44,25 @@ function comment($cid)
               <p class="card-text pt-3 pr-3">
                 ' . $comment->getColumn('text') . '
               </p>
+            ' . comments($cid) . '
             </div>
           </div>';
 }
 
-function comments_fetch($parent = NULL)
+function comments_fetch($parent = 'NULL', $nop = false)
 {
   global $post_id;
-  $verb = strtoupper($parent) == NULL ? 'is' : '=';
-  $comments = db()->TABLE('comments as c', true)->SELECT('id')
-    ->WHERE('c.post=' . $post_id)->WHERE("c.parent $verb ?")
-    ->Run([$parent]);
-  return $comments->fetchAll(PDO::FETCH_BOUND);
+  $verb = strtoupper($parent) == 'NULL' ? 'is' : '=';
+  $coms = db()->TABLE('comments as c', true)->SELECT('id')
+    ->WHERE('c.post=' . $post_id)->WHERE($nop ? '1=1' : "c.parent $verb $parent");
+  return $coms->Run()->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function comments($parent = NULL)
+function comments($parent = 'NULL')
 {
   $s = '';
   foreach (comments_fetch($parent) as $comm) {
-    $s .= comment($comm);
+    $s .= comment($comm['id']);
   }
   return $s;
 }
@@ -121,7 +121,7 @@ function comments($parent = NULL)
 
           <hr class="mt-4" />
           <!-- Comment Content -->
-          <p class="fw-bold fs-6">تعداد کامنت : <?= count(comments_fetch()) ?> </p>
+          <p class="fw-bold fs-6">تعداد کامنت : <?= count(comments_fetch(nop: true)) ?> </p>
 
           <?= comments() ?>
         </div>
