@@ -1,7 +1,7 @@
 <?php include ('components/header.php') ?>
 <?php
 $__component__post_pdos = db()->TABLE('posts', alias: 'p')->SELECT('*')
-  ->LIMIT(15)->Run();
+  ->LIMIT(15)->ORDER_BY('date DESC')->Run();
 ?>
 <!-- Slider Section -->
 <section>

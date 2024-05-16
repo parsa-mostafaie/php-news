@@ -5,7 +5,7 @@ $cat_id = intval(get_val('cat')) ?? 0;
 [$condits, $fill] =
   sqlConditionGenerator::TextSearch($inp, 'p.title');
 $__component__post_pdos = db()->TABLE('posts', alias: 'p')->SELECT('*')
-  ->WHERE($condits)->WHERE($cat_id ? 'category = ?' : '0 = ?')
+  ->WHERE($condits)->WHERE($cat_id ? 'category = ?' : '0 = ?')->ORDER_BY('date desc')
   ->Run([...$fill, $cat_id]);
 $countres = $__component__post_pdos->rowCount();
 

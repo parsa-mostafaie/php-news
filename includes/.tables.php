@@ -18,7 +18,7 @@ function comments_table($last = true)
     $vb = $data['verify'] ? $v : $nv;
     return $vb . ' <a href="' . c_url('/admin/pages/comments/rem.php?com=' . $data['ID']) . '" class="btn btn-sm btn-outline-danger">حذف</a>';
   };
-  $st = db()->TABLE('comments as c', true)->SELECT('c.verify, c.ID, (CONCAT(u.firstname, " ",u.lastname)) as `نام`, Text as `متن کامنت`')->ON('u.ID = c.user_id', 'users as u');
+  $st = db()->TABLE('comments as c', true)->SELECT('c.verify, c.ID, (CONCAT(u.firstname, " ",u.lastname)) as `نام`, Text as `متن کامنت`')->ON('u.ID = c.user_id', 'users as u')->ORDER_BY('c.date desc');
   if ($last) {
     $st->LIMIT(5);
   }
@@ -38,7 +38,8 @@ function posts_table($last = true)
   $_ = 'p.verify, p.ID, Title as `عنوان`, (CONCAT(u.firstname, " ",u.lastname)) as `نویسنده`';
   $st = db()->TABLE('posts as p', true)->
     SELECT($_)->
-    ON('u.ID = p.author', 'users as u');
+    ON('u.ID = p.author', 'users as u')
+    ->ORDER_BY('p.date desc');
   if ($last) {
     $st->LIMIT(5);
   }
