@@ -1,3 +1,6 @@
+<?php
+$cats = db()->TABLE('categories')->SELECT('name, id')->Run()->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!-- Sidebar Section -->
 <div class="col-lg-4 mt-3">
   <!-- Sesrch Section -->
@@ -7,10 +10,22 @@
       <form action="<?= c_url('/search.php') ?>" method='get'>
         <div class="input-group mb-3">
           <input type="text" class="form-control" name='search' placeholder="جستجو ..."
-            value="<?= $_GET['search'] ?? '' ?>" />
+            value="<?= get_val('search') ?? '' ?>" />
+
           <button class="btn btn-secondary" type="submit">
             <i class="bi bi-search"></i>
           </button>
+        </div>
+        <div id="cats">
+          <?php foreach ($cats as $cat): ?>
+            <?php ['name' => $n, 'id' => $i] = $cat;
+            $attr = intval(get_val('cat')) === $i ? 'checked' : '';
+            ?>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="cat" id="cat<?= $i ?>" value="<?= $i ?>" <?= $attr ?>>
+              <label class="form-check-label" for="cat<?= $i ?>"><?= $n ?></label>
+            </div>
+          <?php endforeach; ?>
         </div>
       </form>
     </div>

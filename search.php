@@ -1,12 +1,15 @@
 <?php include ('components/header.php'); ?>
 <?php
-$inp = $_GET['search'] ?? '';
+$inp = get_val('search') ?? '';
+$cat_id = intval(get_val('cat')) ?? 0;
 [$condits, $fill] =
   sqlConditionGenerator::TextSearch($inp, 'p.title');
 $__component__post_pdos = db()->TABLE('posts', alias: 'p')->SELECT('*')
-  ->WHERE($condits)
-  ->Run($fill);
-$countres = $__component__post_pdos->rowCount(); ?>
+  ->WHERE($condits)->WHERE($cat_id ? 'category = ?' : '0 = ?')
+  ->Run([...$fill, $cat_id]);
+$countres = $__component__post_pdos->rowCount();
+
+?>
 <!-- Content Section -->
 <section class="mt-4">
   <div class="row">
@@ -36,4 +39,5 @@ $countres = $__component__post_pdos->rowCount(); ?>
     <?php include ('components/sidebar.php') ?>
   </div>
 </section>
+
 <?php include ('components/footer.php'); ?>
