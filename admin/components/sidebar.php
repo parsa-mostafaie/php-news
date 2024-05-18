@@ -26,7 +26,7 @@ function classIt($name)
         </li>
 
         <li class="nav-item">
-          <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?=classIt('/posts')?>"
+          <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= classIt('/posts') ?>"
             href="<?= $adminPages ?>posts/index.php">
             <i class="bi bi-file-earmark-image-fill fs-4 text-secondary"></i>
             <span class="fw-bold">مقالات</span>
@@ -44,11 +44,19 @@ function classIt($name)
 
         <li class="nav-item">
           <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2  <?= classIt('/com') ?>"
-            href="<?= $adminPages ?>comments/index.php"
-            >
+            href="<?= $adminPages ?>comments/index.php">
             <i class="bi bi-chat-left-text-fill fs-4 text-secondary"></i>
 
             <span class="fw-bold">کامنت ها</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 ?>"
+            href="/phpmyadmin/?db=<?= db()->db ?>">
+            <i class="bi bi-database-fill fs-4 text-secondary"></i>
+
+            <span class="fw-bold">مدیریت پایگاه داده</span>
           </a>
         </li>
 
