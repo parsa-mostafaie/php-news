@@ -26,17 +26,24 @@ if (!$post->getColumn('verify')) {
 function comment($cid)
 {
   $comment = db()->TABLE('comments as c', true)->
-    SELECT('CONCAT(u.firstname, " ", u.lastname) as fname, c.text')
+    SELECT('CONCAT(u.firstname, " ", u.lastname) as fname, c.text, u.profile')
     ->WHERE('c.ID=' . $cid)
     ->WHERE('verify = 1')
     ->ON('u.ID = c.user_id', 'users as u')->getFirstRow();
   if (!$comment->found) {
     return '';
   }
+  $und =
+    web_url(c_url('/assets/images/profile.png'));
+  $pimg = $comment->getAssetBasedCol('profile')->
+    get_img(
+      'width="45" height="45" alt="user-profile" class="rounded-circle"',
+      $und
+    );
   return '<div class="card bg-light-subtle mb-3" id="c' . $cid . '">
             <div class="card-body">
               <div class="d-flex align-items-center">
-                <img src="../assets/images/profile.png" width="45" height="45" alt="user-profle">
+                ' . $pimg . '
 
                 <h5 class="card-title me-2 mb-0">' . $comment->getColumn('fname') . '</h5>
               </div>
