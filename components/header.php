@@ -22,10 +22,17 @@
       </a>
 
       <nav class="d-inline-flex mt-2 mt-md-0 me-md-auto">
-        <a class="fw-bold me-3 py-2 link-body-emphasis text-decoration-none" href="#">طبیعت</a>
+        <!-- <a class="fw-bold me-3 py-2 link-body-emphasis text-decoration-none" href="#">طبیعت</a>
         <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">گردشگری</a>
         <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">تکنولوژی</a>
-        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">متفرقه</a>
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">متفرقه</a> -->
+        <?php if (canlogin()): ?>
+          <a href="<?= !isAdmin() ? c_url('/') : c_url('/admin/') ?>"
+            class="me-3 py-2 link-body-emphasis text-decoration-none <?= isAdmin() ? 'text-primary' : '' ?>"><?= getCurrentUserInfo_prop('firstname') . ' ' . getCurrentUserInfo_prop('lastname') ?></a>
+        <?php else: ?>
+          <a href="<?= c_url('/auth/login.html') ?>"
+            class="fw-bold me-3 py-2 link-body-emphasis text-decoration-none text-primary">ورود</a>
+        <?php endif; ?>
       </nav>
     </header>
 
