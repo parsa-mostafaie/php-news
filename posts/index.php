@@ -61,7 +61,7 @@ function comments_fetch($parent = 'NULL', $nop = false)
   global $post_id;
   $verb = strtoupper($parent) == 'NULL' ? 'is' : '=';
   $coms = db()->TABLE('comments as c', true)->SELECT('id')
-    ->WHERE('c.post=' . $post_id)->WHERE($nop ? '1=1' : "c.parent $verb $parent");
+    ->WHERE('c.post=' . $post_id)->WHERE($nop ? '1=1' : "c.parent $verb $parent")->WHERE('verify = 1');
   return $coms->Run()->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -73,6 +73,12 @@ function comments($parent = 'NULL')
   }
   return $s;
 }
+
+// comment
+include_once ('proc.php');
+// end
+
+['n' => $sessn, 'v' => $sessv] = secure_form();
 ?>
 <?php include ('../components/header.php') ?>
 
@@ -105,23 +111,33 @@ function comments($parent = 'NULL')
 
         <!-- Comment Section -->
         <div class="col">
+          <?= process_form() ?>
           <!-- Comment Form -->
-          <div class="card">
+          <div class="card" id="comments">
             <div class="card-body">
               <p class="fw-bold fs-5">ارسال کامنت</p>
 
-              <form>
+              <form method="post" action="./<?= $post_id ?>#comments">
+                <input type="hidden" name="sec_form_sess_n" value="<?= $sessn ?>">
+                <input type="hidden" name="sec_form_sess_v" value="<?= $sessv ?>">
                 <div class="mb-3">
                   <label class="form-label">نام</label>
-                  <input type="text" class="form-control" />
+                  <input type="text" class="form-control" disabled
+                    value="<?= getCurrentUserInfo_prop('firstname') . ' ' . getCurrentUserInfo_prop('lastname') ?>" />
                 </div>
                 <div class="mb-3">
                   <label class="form-label">متن کامنت</label>
-                  <textarea class="form-control" rows="3"></textarea>
+                  <textarea class="form-control" rows="3" name="ctext" <?= !canlogin() ? 'disabled' : '' ?>><?= !$_COND ? $ctext : '' ?></textarea>
+                  <?= errors('comment text') ?>
                 </div>
-                <button type="submit" class="btn btn-dark">
+                <button type="submit" class="btn btn-dark" <?= !canlogin() ? 'disabled' : '' ?> name="comment">
                   ارسال
                 </button>
+                <?php if (!canlogin()): ?>
+                  <a href="<?= c_url('/auth/login.html') ?>" class="btn btn-success">
+                    ورود به سایت
+                  </a>
+                <?php endif ?>
               </form>
             </div>
           </div>
@@ -138,4 +154,5 @@ function comments($parent = 'NULL')
     <?php include ('../components/sidebar.php') ?>
   </div>
 </section>
+<script src="/libs/pluslib/frontend/resubmit.js"></script>
 <?php include ('../components/footer.php') ?>
