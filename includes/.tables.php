@@ -6,8 +6,12 @@ function categories_table()
     return '<a href="' . c_url('/admin/pages/categories/edit.php?cat=') . $data['ID'] . '" class="btn btn-sm btn-outline-dark">ویرایش</a>
                   <a href="' . c_url('/admin/pages/categories/rem.php?cat=') . $data['ID'] . '" class="btn btn-sm btn-outline-danger">حذف</a>';
   };
+  $idl = function ($data) {
+    ['v' => $v] = $data;
+    return c_url('/search.php?cat=' . $v);
+  };
   $st = db()->TABLE('categories')->SELECT('ID, Name as `عنوان`')->Run();
-  tablify($st, 'عملیات', $actions);
+  tablify($st, 'عملیات', $actions, head_link: $idl);
 }
 
 function comments_table($last = true)
@@ -18,12 +22,25 @@ function comments_table($last = true)
     $vb = $data['verify'] ? $v : $nv;
     return $vb . ' <a href="' . c_url('/admin/pages/comments/rem.php?com=' . $data['ID']) . '" class="btn btn-sm btn-outline-danger">حذف</a>';
   };
-  $st = db()->TABLE('comments as c', true)->SELECT('c.verify, c.ID, (CONCAT(u.firstname, " ",u.lastname)) as `نام`, Text as `متن کامنت`')->ON('u.ID = c.user_id', 'users as u')->ORDER_BY('c.date desc');
+
+  $st =
+    db()->TABLE('comments as c', true)->
+      SELECT(
+        'c.verify, c.ID, (CONCAT(u.firstname, " ",u.lastname)) as `نام`, Text as `متن کامنت`'
+      )
+      ->ON('u.ID = c.user_id', 'users as u')->ORDER_BY('c.date desc');
   if ($last) {
     $st->LIMIT(5);
   }
   $st = $st->Run();
-  tablify($st, 'عملیات', $actions, hidden: ['verify']);
+  $idl = function ($data) {
+    ['v' => $v] = $data;
+    $post = db()->TABLE('comments', alias: 'c')
+      ->SELECT('p.id')->ON('p.id = c.post', 'posts as p')
+      ->WHERE('c.id = ' . $v)->Run()->fetchColumn();
+    return c_url('/posts/' . $post . '#c' . $v);
+  };
+  tablify($st, 'عملیات', $actions, hidden: ['verify'], head_link: $idl);
 }
 
 
@@ -44,5 +61,10 @@ function posts_table($last = true)
     $st->LIMIT(5);
   }
   $st = $st->Run();
-  tablify($st, 'عملیات', $actions, hidden: ['verify']);
+  $idl = function ($data) {
+    ['v' => $v] = $data;
+    return c_url('/posts/' . $v);
+  };
+
+  tablify($st, 'عملیات', $actions, hidden: ['verify'], head_link: $idl);
 }

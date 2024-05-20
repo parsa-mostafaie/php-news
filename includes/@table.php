@@ -1,7 +1,14 @@
 <?php include_once 'c-init.php';
 
-function tablify(PDOStatement $st, $h_actions = '', $actions = '', $echo = true, $hidden = [], $th_s = ['ID'])
-{
+function tablify(
+  PDOStatement $st,
+  $h_actions = '',
+  $actions = '',
+  $echo = true,
+  $hidden = [],
+  $th_s = ['ID'],
+  $head_link = '#'
+) {
   $html = '<table class="table table-hover align-middle"><thead>';
   $fetch = $st->fetchAll(PDO::FETCH_ASSOC);
   $headers = colnames($st);
@@ -23,8 +30,10 @@ function tablify(PDOStatement $st, $h_actions = '', $actions = '', $echo = true,
       }
       if (!in_array($k, $th_s))
         $html .= "<td>$cold</td>";
-      else
-        $html .= "<th>$cold</th>";
+      else {
+        $_cold = "<a href='" . valueof($head_link, ['k' => $k, 'v' => $cold]) . "'>$cold</a>";
+        $html .= "<th>$_cold</th>";
+      }
     }
     if ($h_actions and $actions) {
       $actions_ = valueof($actions, $data);
