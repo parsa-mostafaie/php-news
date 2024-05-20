@@ -8,41 +8,38 @@
 
   <!-- Posts -->
   <div class="mt-4">
-    <form class="row g-4">
+    <form class="row g-4" method="post" enctype="multipart/form-data">
       <div class="col-12 col-sm-6 col-md-4">
-        <label class="form-label">عنوان مقاله</label>
-        <input type="text" class="form-control" />
+        <label class="form-label" for="title">عنوان مقاله</label>
+        <input type="text" class="form-control" id="title" name="title" />
       </div>
 
       <div class="col-12 col-sm-6 col-md-4">
-        <label class="form-label">نویسنده مقاله</label>
-        <input type="text" class="form-control" />
+        <label class="form-label" for="author">نویسنده مقاله</label>
+        <input type="text" class="form-control" disabled id="author"
+          value="<?= getCurrentUserInfo_prop('firstname') . ' ' . getCurrentUserInfo_prop('lastname') ?>" />
       </div>
 
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label">دسته بندی مقاله</label>
-        <select class="form-select">
-          <option value="1">طبیعت</option>
-          <option value="2">گردشگری</option>
-          <option value="3">تکنولوژی</option>
-          <option value="4">متفرقه</option>
-        </select>
+        <?php categories_sel(default: get_val('cat')) ?>
       </div>
 
       <div class="col-12 col-sm-6 col-md-4">
         <label for="formFile" class="form-label">تصویر مقاله</label>
-        <input class="form-control" type="file" />
+        <input class="form-control" type="file" name="photo" />
       </div>
 
       <div class="col-12">
-        <label for="formFile" class="form-label">متن مقاله</label>
-        <textarea class="form-control" rows="6"></textarea>
+        <label for="content" class="form-label">متن مقاله</label>
+        <textarea class="form-control" rows="6" name="content" id="content"></textarea>
       </div>
 
       <div class="col-12">
-        <button type="submit" class="btn btn-dark">ایجاد</button>
+        <button type="submit" class="btn btn-dark" name="submit">ایجاد</button>
       </div>
     </form>
   </div>
 </main>
+<script src="/libs/pluslib/frontend/resubmit.js"></script>
 <?php include '../../components/footer.php' ?>

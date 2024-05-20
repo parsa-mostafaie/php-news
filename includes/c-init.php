@@ -26,3 +26,4 @@ function badge($t)
 
 require_once '@table.php';
 require_once '@ul.php';
+require_once '@selectopt.php';
