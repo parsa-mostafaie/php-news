@@ -1,5 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/libs/pluslib/init.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/libs/jdf/jdf.php';
 
 if (!defined('news')) {
   define('news', true);

@@ -12,7 +12,7 @@ if (!is_numeric($flp)) {
 $post_id = intval($flp);
 $post =
   db()->TABLE('posts', true, 'p')
-    ->SELECT('p.ID, p.title, p.content, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
+    ->SELECT('p.date, p.ID, p.title, p.content, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
     ->ON('p.author = u.id', 'users as u')->ON('c.id = p.category', 'categories as c')
     ->WHERE('p.id=?')->getFirstRow([$post_id]);
 
@@ -95,13 +95,18 @@ include_once ('proc.php');
             <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image"') ?>
             <div class="card-body">
               <div class="d-flex justify-content-between">
-                <h5 class="card-title fw-bold"><?= $post->getColumn('title') ?></h5>
+                <h5 class="card-title fw-bold">
+                  <?php if (isAdmin()): ?><a href="<?= c_url('/admin/pages/posts/edit.php?post=' . $post_id) ?>">
+                      <i class='bi bi-pencil-square text-secondary'></i></a><?php endif ?>
+                  <?= $post->getColumn('title') ?>
+                </h5>
                 <?= badge($post->getColumn('category')); ?>
               </div>
               <p class="card-text text-secondary text-justify pt-3"><?= $post->getColumn('content') ?>
               </p>
-              <div>
+              <div class="d-flex justify-content-between">
                 <p class="fs-6 mt-5 mb-0">نویسنده: <?= $post->getColumn('author') ?> </p>
+                <p class="fs-6 mt-5 mb-0"><?= jdate('j F Y در H:i:s ', strtotime($post->getColumn('date'))) ?> </p>
               </div>
             </div>
           </div>
