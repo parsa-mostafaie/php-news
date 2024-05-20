@@ -6,14 +6,8 @@ function listify(PDOStatement $st, $col, $link = '#', $class = '', $echo = true)
   $fetch = $st->fetchAll(PDO::FETCH_ASSOC);
   foreach ($fetch as $row) {
     $colv = $row[$col];
-    $link_ = $link;
-    if (is_callable($link_)) {
-      $link_ = $link_($row);
-    }
-    $class_ = $class;
-    if (is_callable($class_)) {
-      $class_ = $class_($row);
-    }
+    $link_ = valueof($link, $row);
+    $class_ = valueof($class, $row);
     $html .= "<li class='list-group-item'><a class='link-body-emphasis text-decoration-none $class_' href='$link_'>$colv</a></li>";
   }
   $html .= '</ul>';
@@ -30,7 +24,7 @@ function categories_list()
     return c_url("/search.php?search&cat=" . $row['ID']);
   };
   $class = function ($row) {
-    return get_val('cat') == $row['ID']? 'fw-bold':'';
+    return get_val('cat') == $row['ID'] ? 'fw-bold' : '';
   };
   listify($st, 'Name', $href, $class);
 }

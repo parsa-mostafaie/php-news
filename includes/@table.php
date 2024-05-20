@@ -27,10 +27,7 @@ function tablify(PDOStatement $st, $h_actions = '', $actions = '', $echo = true,
         $html .= "<th>$cold</th>";
     }
     if ($h_actions and $actions) {
-      $actions_ = $actions;
-      if (is_callable($actions)) {
-        $actions_ = $actions($data);
-      }
+      $actions_ = valueof($actions, $data);
       $html .= "<!-- 1 --><td>$actions_</td>";
     }
     $html .= '</tr>';
