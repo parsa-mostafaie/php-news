@@ -19,17 +19,19 @@ if (!$post->getColumn('verify')) {
 }
 ?>
 <div class="col-sm-6">
-  <div class="card">
-    <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image"') ?>
+  <div class="card h-100">
+    <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image"', web_url(c_url('/assets/images/1.jpg'))) ?>
 
     <div class="card-body">
       <div class="d-flex justify-content-between">
-        <h5 class="card-title fw-bold"><?=$post->getColumn('title')?></h5>
+        <h5 class="card-title fw-bold"><?= $post->getColumn('title') ?></h5>
         <?= badge($post->getColumn('category')) ?>
       </div>
       <p class="card-text text-secondary pt-3">
         <?= truncate($post->getColumn('content'), 275) ?>
       </p>
+    </div>
+    <div class="card-footer">
       <div class="d-flex justify-content-between align-items-center">
         <a href="<?= c_url('/posts/' . $post_id) ?>" class="btn btn-sm btn-dark">مشاهده</a>
 

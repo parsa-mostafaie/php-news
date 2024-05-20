@@ -92,7 +92,7 @@ include_once ('proc.php');
         <div class="col">
           <div class="card">
             <!-- <img src="../assets/images/6.jpg" /> -->
-            <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image"') ?>
+            <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image"', web_url(c_url('/assets/images/1.jpg'))) ?>
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <h5 class="card-title fw-bold">

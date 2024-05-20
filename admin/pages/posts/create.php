@@ -8,7 +8,7 @@
 
   <!-- Posts -->
   <div class="mt-4">
-    <form class="row g-4" method="post" enctype="multipart/form-data">
+    <form class="row g-4" submit-control form-wait="#wait" action="create-backend.php" enctype="multipart/form-data">
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label" for="title">عنوان مقاله</label>
         <input type="text" class="form-control" id="title" name="title" />
@@ -22,7 +22,7 @@
 
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label">دسته بندی مقاله</label>
-        <?php categories_sel(default: get_val('cat')) ?>
+        <?php categories_sel() ?>
       </div>
 
       <div class="col-12 col-sm-6 col-md-4">
@@ -35,11 +35,23 @@
         <textarea class="form-control" rows="6" name="content" id="content"></textarea>
       </div>
 
+      <div id="wait">لطفا صبر کنید!</div>
+      <div id="error" class='text-danger'></div>
       <div class="col-12">
-        <button type="submit" class="btn btn-dark" name="submit">ایجاد</button>
+        <button type="submit" class="btn btn-dark" ajax-submit name='create'>ایجاد</button>
       </div>
+      <script src="/libs/pluslib/frontend/formlib.js" type="module"></script>
+      <script>
+        window.addEventListener("load", () => {
+          let e = document.querySelector("#error");
+          window.FormLibInitializer.setting(
+            "[ajax-submit]",
+            () => (e.textContent = ""),
+            ({ err }) => (e.textContent = JSON.stringify(err))
+          ).init();
+        });
+      </script>
     </form>
   </div>
 </main>
-<script src="/libs/pluslib/frontend/resubmit.js"></script>
 <?php include '../../components/footer.php' ?>
