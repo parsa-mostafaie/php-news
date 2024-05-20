@@ -33,7 +33,7 @@ function posts_table($last = true)
     $nv = '<a href="' . c_url('/admin/pages/posts/verify.php?post=' . $data['ID']) . '" class="btn btn-sm btn-outline-info">در انتظار تایید</a>';
     $v = '<a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>';
     $vb = $data['verify'] ? $v : $nv;
-    return $vb . ' <a href="' . c_url('/admin/pages/edit.php') . '" class="btn btn-sm btn-outline-dark">ویرایش</a>' . ' <a href="#" class="btn btn-sm btn-outline-danger">حذف</a>';
+    return $vb . ' <a href="' . c_url('/admin/pages/edit.php') . '" class="btn btn-sm btn-outline-dark">ویرایش</a>' . ' <a href="' . c_url('/admin/pages/posts/rem.php?post=' . $data['ID']) . '" class="btn btn-sm btn-outline-danger">حذف</a>';
   };
   $_ = 'p.verify, p.ID, Title as `عنوان`, (CONCAT(u.firstname, " ",u.lastname)) as `نویسنده`';
   $st = db()->TABLE('posts as p', true)->
