@@ -9,13 +9,15 @@ const ajax = new ajaxAPI();
 $title = get_val('title');
 $cat = intval(get_val('cat'));
 $content = get_val('content');
+$desc = get_val('desc');
 $post_id = intval(get_val('post'));
 
-$_inps_arr = ['title' => $title, 'category' => $cat, 'content' => $content];
+$_inps_arr = ['title' => $title, 'category' => $cat, 'content' => $content, 'description' => $desc];
 $_inps_f = [
   'title' => 'string | required',
   'category' => 'int | required',
   'content' => 'string | required',
+  'description' => 'string | required'
 ];
 
 [$inputs, $errors] = filter($_inps_arr, $_inps_f);
@@ -27,7 +29,7 @@ $_COND = count($errors) == 0;
 
 // PROCESSOR
 $__PROCESS__CALLBACK__ = function () {
-  global $title, $cat, $content, $post_id;
+  global $title, $cat, $content, $post_id, $desc;
   // if (!secure_form(secure_form_enum::get)) {
   //   ajax->err('ارسال ناایمن');
   // }
@@ -37,8 +39,8 @@ $__PROCESS__CALLBACK__ = function () {
     getAssetBasedCol('image', prefix: 'post.photo.')->set_inp('photo');
 
   db()->TABLE('posts')
-    ->UPDATE('id=?')->SET('title=?, content=?, category = ?')
-    ->Run([$title, $content, $cat, $post_id]);
+    ->UPDATE('id=?')->SET('title=?, content=?, category = ?, description = ?')
+    ->Run([$title, $content, $cat, $desc, $post_id]);
 
 };
 

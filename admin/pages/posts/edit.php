@@ -9,7 +9,7 @@ if (!is_numeric($post_qs)) {
 $post_id = intval($post_qs);
 $post =
   db()->TABLE('posts', true, 'p')
-    ->SELECT('p.date, p.ID, p.title, p.content, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category, c.id as cid')
+    ->SELECT('p.date, p.ID, p.title, p.content, p.image, p.verify, p.description, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category, c.id as cid')
     ->ON('p.author = u.id', 'users as u')->ON('c.id = p.category', 'categories as c')
     ->WHERE('p.id=?')->getFirstRow([$post_id]);
 
@@ -50,6 +50,11 @@ if (!$post->found) {
       <div class="col-12 col-sm-6 col-md-4">
         <label for="formFile" class="form-label">تصویر جدید مقاله</label>
         <input class="form-control" type="file" name="photo" />
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <label class="form-label" for="desc">توضیحات مقاله</label>
+        <input type="text" class="form-control" id="desc" name="desc" value="<?=$post->getColumn('description')?>" />
       </div>
 
       <div class="col-12">
