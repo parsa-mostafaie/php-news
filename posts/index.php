@@ -92,7 +92,10 @@ include_once ('proc.php');
         <div class="col">
           <div class="card">
             <!-- <img src="../assets/images/6.jpg" /> -->
-            <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image"', web_url(c_url('/assets/images/1.jpg'))) ?>
+            <div class='position-relative'>
+              <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image"', web_url(c_url('/assets/images/1.jpg'))) ?>
+              <div class='position-absolute' style='top: 5px;left:5px'><?= badge($post->getColumn('category')) ?></div>
+            </div>
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <h5 class="card-title fw-bold">
@@ -100,12 +103,13 @@ include_once ('proc.php');
                       <i class='bi bi-pencil-square text-secondary'></i></a><?php endif ?>
                   <?= $post->getColumn('title') ?>
                 </h5>
-                <?= badge($post->getColumn('category')); ?>
+                <span><i class='bi bi-clock-history'></i>
+                  <?= jdate('j F Y', strtotime($post->getColumn('date'))) ?></span>
               </div>
               <?php if ($post->getColumn('desc')): ?>
                 <figure class="mt-1 bg-light p-3 rounded" style="border-right: .25rem solid #0a0b0caa;">
                   <blockquote class="fs-6 blockquote mb-0">
-                      <?= nl2br($post->getColumn('desc'), 275) ?>
+                    <?= nl2br($post->getColumn('desc'), 275) ?>
                   </blockquote>
                 </figure>
               <?php endif ?>

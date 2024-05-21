@@ -20,12 +20,15 @@ if (!$post->getColumn('verify')) {
 ?>
 <div class="col-sm-6">
   <div class="card h-100">
-    <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image" height="200"', web_url(c_url('/assets/images/1.jpg'))) ?>
+    <div class='position-relative'>
+      <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image" height="200"', web_url(c_url('/assets/images/1.jpg'))) ?>
+      <div class='position-absolute' style='top: 5px;left:5px'><?= badge($post->getColumn('category')) ?></div>
+    </div>
 
     <div class="card-body">
       <div class="d-flex justify-content-between">
         <h5 class="card-title fw-bold"><?= $post->getColumn('title') ?></h5>
-        <?= badge($post->getColumn('category')) ?>
+        <span><?= jdate('y/m/j', strtotime($post->getColumn('date'))) ?></span>
       </div>
       <?php if ($post->getColumn('desc')): ?>
         <p class="card-text pt-1 m-0 bg-gray p-1 px-2 bg-light rounded" style="border-right: .25rem solid #0a0b0caa;">
