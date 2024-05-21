@@ -7,7 +7,7 @@ if (!is_numeric($__component__post_id)) {
 $post_id = intval($__component__post_id);
 $post =
   db()->TABLE('posts', true, 'p')
-    ->SELECT('p.ID, p.title, p.content, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
+    ->SELECT('p.date, p.ID, p.title, p.description as `desc`, p.content, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
     ->ON('p.author = u.id', 'users as u')->ON('c.id = p.category', 'categories as c')
     ->WHERE('p.id=?')->getFirstRow([$post_id]);
 
@@ -20,14 +20,19 @@ if (!$post->getColumn('verify')) {
 ?>
 <div class="col-sm-6">
   <div class="card h-100">
-    <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image"', web_url(c_url('/assets/images/1.jpg'))) ?>
+    <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image" height="200"', web_url(c_url('/assets/images/1.jpg'))) ?>
 
     <div class="card-body">
       <div class="d-flex justify-content-between">
         <h5 class="card-title fw-bold"><?= $post->getColumn('title') ?></h5>
         <?= badge($post->getColumn('category')) ?>
       </div>
-      <p class="card-text text-secondary pt-3">
+      <?php if ($post->getColumn('desc')): ?>
+        <p class="card-text pt-1 m-0 bg-gray p-1 px-2 bg-light rounded" style="border-right: .25rem solid #0a0b0caa;">
+          <?= nl2br($post->getColumn('desc'), 275) ?>
+        </p>
+      <?php endif; ?>
+      <p class="card-text text-secondary pt-1">
         <?= truncate($post->getColumn('content'), 275) ?>
       </p>
     </div>

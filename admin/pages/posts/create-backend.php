@@ -10,12 +10,14 @@ $title = get_val('title');
 $author = getCurrentUserInfo_prop('ID');
 $cat = intval(get_val('cat'));
 $content = get_val('content');
+$desc = get_val('desc');
 
-$_inps_arr = ['title' => $title, 'category' => $cat, 'content' => $content];
+$_inps_arr = ['title' => $title, 'category' => $cat, 'content' => $content, 'description' => $desc];
 $_inps_f = [
   'title' => 'string | required',
   'category' => 'int | required',
   'content' => 'string | required',
+  'description' => 'string | required'
 ];
 
 [$inputs, $errors] = filter($_inps_arr, $_inps_f);
@@ -27,14 +29,14 @@ $_COND = count($errors) == 0;
 
 // PROCESSOR
 $__PROCESS__CALLBACK__ = function () {
-  global $title, $cat, $content, $author;
+  global $title, $cat, $content, $author, $desc;
   $upload = uploadFile_secure('photo', prefix: 'post.photo.');
   if (!$upload) {
     throw new Exception('Failed! Cant Upload File');
   }
   db()->TABLE('posts')
-    ->INSERT('title, content, category, author, image')->VALUES('?, ?, ?, ?, ?')
-    ->Run([$title, $content, $cat, $author, $upload]);
+    ->INSERT('title, content, category, author, image, description')->VALUES('?, ?, ?, ?, ?, ?')
+    ->Run([$title, $content, $cat, $author, $upload, $desc]);
 
   ajax->redirect('./');
 };

@@ -12,7 +12,7 @@ if (!is_numeric($flp)) {
 $post_id = intval($flp);
 $post =
   db()->TABLE('posts', true, 'p')
-    ->SELECT('p.date, p.ID, p.title, p.content, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
+    ->SELECT('p.date, p.ID, p.title, p.content, p.description as `desc`, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
     ->ON('p.author = u.id', 'users as u')->ON('c.id = p.category', 'categories as c')
     ->WHERE('p.id=?')->getFirstRow([$post_id]);
 
@@ -49,7 +49,7 @@ function comment($cid)
               </div>
 
               <p class="card-text pt-3 pr-3">
-                ' . $comment->getColumn('text') . '
+                ' . nl2br($comment->getColumn('text')) . '
               </p>
             ' . comments($cid) . '
             </div>
@@ -102,11 +102,18 @@ include_once ('proc.php');
                 </h5>
                 <?= badge($post->getColumn('category')); ?>
               </div>
-              <p class="card-text text-secondary text-justify pt-3"><?= $post->getColumn('content') ?>
+              <?php if ($post->getColumn('desc')): ?>
+                <figure class="mt-1 bg-light p-3 rounded" style="border-right: .25rem solid #0a0b0caa;">
+                  <blockquote class="fs-6 blockquote mb-0">
+                      <?= nl2br($post->getColumn('desc'), 275) ?>
+                  </blockquote>
+                </figure>
+              <?php endif ?>
+              <p class="card-text text-secondary text-justify pt-3"><?= nl2br($post->getColumn('content')) ?>
               </p>
               <div class="d-flex justify-content-between">
                 <p class="fs-6 mt-5 mb-0">نویسنده: <?= $post->getColumn('author') ?> </p>
-                <p class="fs-6 mt-5 mb-0"><?= jdate('j F Y در H:i:s ', strtotime($post->getColumn('date'))) ?> </p>
+                <p class="fs-6 mt-5 mb-0"><?= jdate('j F Y در H:i ', strtotime($post->getColumn('date'))) ?> </p>
               </div>
             </div>
           </div>

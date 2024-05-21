@@ -30,6 +30,11 @@
         <input class="form-control" type="file" name="photo" />
       </div>
 
+      <div class="col-12 col-sm-6 col-md-4">
+        <label class="form-label" for="desc">توضیحات مقاله</label>
+        <input type="text" class="form-control" id="desc" name="desc" />
+      </div>
+
       <div class="col-12">
         <label for="content" class="form-label">متن مقاله</label>
         <textarea class="form-control" rows="6" name="content" id="content"></textarea>
