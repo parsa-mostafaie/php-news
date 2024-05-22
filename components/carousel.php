@@ -11,15 +11,17 @@
   </div>
   <div class="carousel-inner rounded">
     <?php foreach ($__component__caro_pdos as $i => $post): ?>
-      <div class="carousel-item overlay carousel-height <?= $i == 0 ? 'active' : '' ?>">
-        <?= imageComponent($post['Image'], 'class="d-block w-100" alt="post-image"', web_url(c_url('/assets/images/1.jpg'))) ?>
-        <div class="carousel-caption d-none d-md-block">
-          <h5><?= $post['Title'] ?></h5>
-          <p>
-            <?= $post['description'] ?>
-          </p>
+      <a href="<?= c_url('/posts/' . $post['ID']) ?>">
+        <div class="carousel-item overlay carousel-height <?= $i == 0 ? 'active' : '' ?>">
+          <?= imageComponent($post['Image'], 'class="d-block w-100" alt="post-image"', web_url(c_url('/assets/images/1.jpg'))) ?>
+          <div class="carousel-caption d-none d-md-block">
+            <h5><?= $post['Title'] ?></h5>
+            <p>
+              <?= $post['description'] ?>
+            </p>
+          </div>
         </div>
-      </div>
+      </a>
     <?php endforeach; ?>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="next">
