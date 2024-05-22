@@ -19,7 +19,7 @@ $post =
 if (!$post->found) {
   _404_();
 }
-if (!$post->getColumn('verify')) {
+if (!$post->getColumn('verify') && !isAdmin()) {
   _404_();
 }
 
@@ -96,6 +96,11 @@ include_once ('proc.php');
             <div class='position-relative'>
               <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image"', web_url(c_url('/assets/images/1.jpg'))) ?>
               <div class='position-absolute' style='top: 5px;left:5px'><?= badge($post->getColumn('category')) ?></div>
+              <?php if (!$post->getColumn('verify')): ?>
+                <div class='position-absolute' style='top: 5px;right:5px'><a
+                    href="<?= c_url('/admin/pages/posts/index.php#' . $post_id) ?>"><span class="badge text-bg-danger">تایید
+                      نشده</span></a></div>
+              <?php endif; ?>
             </div>
             <div class="card-header d-flex justify-content-between">
               <div>

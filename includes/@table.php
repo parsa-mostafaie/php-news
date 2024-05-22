@@ -7,7 +7,8 @@ function tablify(
   $echo = true,
   $hidden = [],
   $th_s = ['ID'],
-  $head_link = '#'
+  $head_link = '#',
+  $rowid = ''
 ) {
   $html = '<table class="table table-hover align-middle"><thead>';
   $fetch = $st->fetchAll(PDO::FETCH_ASSOC);
@@ -23,7 +24,7 @@ function tablify(
   }
   $html .= "<tbody>";
   foreach ($fetch as $data) {
-    $html .= "<tr>";
+    $html .= "<tr id='" . valueof($rowid, $data) . "'>";
     foreach ($data as $k => $cold) {
       if (in_array($k, $hidden)) {
         continue;

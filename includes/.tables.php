@@ -65,6 +65,9 @@ function posts_table($last = true)
     ['v' => $v] = $data;
     return c_url('/posts/' . $v);
   };
+  $ril = function ($data) {
+    return $data['ID'];
+  };
 
-  tablify($st, 'عملیات', $actions, hidden: ['verify'], head_link: $idl);
+  tablify($st, 'عملیات', $actions, hidden: ['verify'], head_link: $idl, rowid: $ril);
 }
