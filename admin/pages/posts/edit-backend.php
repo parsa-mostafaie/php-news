@@ -30,9 +30,9 @@ $_COND = count($errors) == 0;
 // PROCESSOR
 $__PROCESS__CALLBACK__ = function () {
   global $title, $cat, $content, $post_id, $desc;
-  // if (!secure_form(secure_form_enum::get)) {
-  //   ajax->err('ارسال ناایمن');
-  // }
+  if (!secure_form(secure_form_enum::get)) {
+    ajax->err('ارسال ناایمن');
+  }
 
   db()->TABLE('posts')->SELECT('image, ID')->WHERE('id=?')->
     getFirstRow([$post_id])->
@@ -45,6 +45,7 @@ $__PROCESS__CALLBACK__ = function () {
 };
 
 $__PROCESS__SUCCESS__ = function () {
+  secure_form(secure_form_enum::expire);
   ajax->redirect('./');
 };
 

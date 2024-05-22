@@ -29,7 +29,7 @@ $__PROCESS__CALLBACK__ = function () {
 };
 
 $__PROCESS__SUCCESS__ = function () {
-  global $_SUBMITED;
+  secure_form(secure_form_enum::expire);
 };
 
 $__PROCESS__FAILED__ = $__DEFAULT__PROCESS_FAILED;
