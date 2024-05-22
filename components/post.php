@@ -21,23 +21,31 @@ if (!$post->getColumn('verify')) {
 <div class="col-sm-6">
   <div class="card h-100">
     <div class='position-relative'>
-      <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image" height="200"', web_url(c_url('/assets/images/1.jpg'))) ?>
+      <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image"', web_url(c_url('/assets/images/1.jpg'))) ?>
       <div class='position-absolute' style='top: 5px;left:5px'><?= badge($post->getColumn('category')) ?></div>
     </div>
-
-    <div class="card-body">
+    <div class="card-header d-flex justify-content-between">
+      <div>
+        <span><i class='bi bi-clock-history'></i>
+          <?= jdate('j F Y', strtotime($post->getColumn('date'))) ?></span>
+      </div>
+      <div class='d-sm-block d-none'>
+        <span><i class='bi bi-file-earmark-post-fill'></i>
+          <?= $post_id ?></span>
+      </div>
+    </div>
+    <div class="card-body" style='min-height: 190px'>
       <div class="d-flex justify-content-between">
         <h5 class="card-title fw-bold"><?= $post->getColumn('title') ?></h5>
-        <span><?= jdate('y/m/j', strtotime($post->getColumn('date'))) ?></span>
       </div>
       <?php if ($post->getColumn('desc')): ?>
-        <p class="card-text pt-1 m-0 bg-gray p-1 px-2 bg-light rounded" style="border-right: .25rem solid #0a0b0caa;">
-          <?= nl2br($post->getColumn('desc'), 275) ?>
-        </p>
+        <!-- <p class="card-text pt-1 m-0 bg-gray p-1 px-2 bg-light rounded" style="border-right: .25rem solid #0a0b0caa;"> -->
+        <?= nl2br($post->getColumn('desc'), 275) ?>
+        <!-- </p> -->
       <?php endif; ?>
-      <p class="card-text text-secondary pt-1">
+      <!-- <p class="card-text text-secondary pt-1">
         <?= truncate($post->getColumn('content'), 275) ?>
-      </p>
+      </p> -->
     </div>
     <div class="card-footer">
       <div class="d-flex justify-content-between align-items-center">
