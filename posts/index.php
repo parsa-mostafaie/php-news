@@ -98,7 +98,8 @@ include_once ('proc.php');
               <div class='position-absolute' style='top: 5px;left:5px'><?= badge($post->getColumn('category')) ?></div>
               <?php if (!$post->getColumn('verify')): ?>
                 <div class='position-absolute' style='top: 5px;right:5px'><a
-                    href="<?= c_url('/admin/pages/posts/index.php#' . $post_id) ?>"><span class="badge text-bg-danger">تایید
+                    href="<?= c_url('/admin/pages/posts/index.php#' . $post_id) ?>"><span
+                      class="badge text-bg-danger">تایید
                       نشده</span></a></div>
               <?php endif; ?>
             </div>
@@ -127,7 +128,7 @@ include_once ('proc.php');
                   </blockquote>
                 </figure>
               <?php endif ?>
-              <p class="card-text text-secondary text-justify pt-3"><?= nl2br($post->getColumn('content')) ?>
+              <p class="card-text text-secondary text-justify pt-3"><?= hts_xss(nl2br($post->getColumn('content'))) ?>
               </p>
               <div class="d-flex justify-content-between">
                 <p class="fs-6 mt-5 mb-0">نویسنده: <?= $post->getColumn('author') ?> </p>

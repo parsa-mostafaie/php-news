@@ -24,6 +24,10 @@ function badge($t)
                 </div>';
 }
 
+function hts_xss($html)
+{
+  return unti_xss(htmlspecialchars_decode($html));
+}
 
 require_once '@table.php';
 require_once '@ul.php';

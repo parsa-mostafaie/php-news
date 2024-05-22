@@ -9,7 +9,7 @@ const ajax = new ajaxAPI();
 $title = get_val('title');
 $author = getCurrentUserInfo_prop('ID');
 $cat = intval(get_val('cat'));
-$content = get_val('content');
+$content = get_val('tiny');
 $desc = get_val('desc');
 
 $_inps_arr = ['title' => $title, 'category' => $cat, 'content' => $content, 'description' => $desc];

@@ -1,4 +1,5 @@
-<?php $current_page = '/posts' ?>
+<?php $current_page = '/posts';
+$tiny_mce = true ?>
 <?php include '../../components/header.php' ?>
 <!-- Main Section -->
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -37,7 +38,7 @@
 
       <div class="col-12">
         <label for="content" class="form-label">متن مقاله</label>
-        <textarea class="form-control" rows="6" name="content" id="content"></textarea>
+        <textarea rows="9" name="id" id='tiny'></textarea>
       </div>
 
       <div id="wait">لطفا صبر کنید!</div>
@@ -52,7 +53,12 @@
           window.FormLibInitializer.setting(
             "[ajax-submit]",
             () => (e.textContent = ""),
-            ({ err }) => (e.textContent = JSON.stringify(err))
+            ({ err }) => (e.textContent = JSON.stringify(err)),
+            undefined,
+            (df) => {
+              const editorContent = tinymce.activeEditor.getContent({ format: 'html' });
+              df.set('tiny', editorContent);
+            }
           ).init();
         });
       </script>

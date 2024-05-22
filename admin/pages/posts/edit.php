@@ -18,6 +18,8 @@ if (!$post->found) {
 }
 
 ['n' => $sessn, 'v' => $sessv] = secure_form();
+
+$tiny_mce = true;
 ?>
 <?php include '../../components/header.php' ?>
 <!-- Main Section -->
@@ -54,13 +56,12 @@ if (!$post->found) {
 
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label" for="desc">توضیحات مقاله</label>
-        <input type="text" class="form-control" id="desc" name="desc" value="<?=$post->getColumn('description')?>" />
+        <input type="text" class="form-control" id="desc" name="desc" value="<?= $post->getColumn('description') ?>" />
       </div>
 
       <div class="col-12">
         <label for="content" class="form-label">متن مقاله</label>
-        <textarea class="form-control" rows="6" name="content"
-          id="content"><?= $post->getColumn('content') ?></textarea>
+        <textarea rows="6" name="tiny" id="tiny"><?= $post->getColumn('content') ?></textarea>
       </div>
 
 
@@ -81,7 +82,12 @@ if (!$post->found) {
           window.FormLibInitializer.setting(
             "[ajax-submit]",
             () => (e.textContent = ""),
-            ({ err }) => (e.textContent = JSON.stringify(err))
+            ({ err }) => (e.textContent = JSON.stringify(err)),
+            undefined,
+            (df) => {
+              const editorContent = tinymce.activeEditor.getContent({ format: 'html' });
+              df.set('tiny', editorContent);
+            }
           ).init();
         });
       </script>
