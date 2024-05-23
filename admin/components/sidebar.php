@@ -34,6 +34,15 @@ function classIt($name)
         </li>
 
         <li class="nav-item">
+          <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2"
+            href="<?= c_url('/') ?>">
+            <i class="bi bi-newspaper fs-4 text-secondary"></i>
+
+            <span class="fw-bold">اخبار</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= classIt('/posts') ?>"
             href="<?= $adminPages ?>posts/index.php">
             <i class="bi bi-file-earmark-image-fill fs-4 text-secondary"></i>
@@ -63,7 +72,7 @@ function classIt($name)
           <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2  <?= classIt('/usr') ?>"
             href="<?= $adminPages ?>users/index.php">
             <i class="bi bi-person-fill fs-4 text-secondary"></i>
-        
+
             <span class="fw-bold">کاربران</span>
           </a>
         </li>
