@@ -8,10 +8,17 @@ function tablify(
   $hidden = [],
   $th_s = ['ID'],
   $head_link = '#',
-  $rowid = ''
+  $rowid = '',
+  $empty_msg = null
 ) {
   $html = '<table class="table table-hover align-middle"><thead>';
   $fetch = $st->fetchAll(PDO::FETCH_ASSOC);
+  if (!$st->rowCount() && $empty_msg) {
+    if ($echo) {
+      echo $empty_msg;
+    }
+    return $empty_msg;
+  }
   $headers = colnames($st);
   foreach ($headers as $header) {
     if (in_array($header, $hidden)) {

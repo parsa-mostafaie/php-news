@@ -14,7 +14,7 @@ function categories_table()
   tablify($st, 'عملیات', $actions, head_link: $idl);
 }
 
-function comments_table($last = true)
+function comments_table($last = true, $by = null)
 {
   $actions = function ($data) {
     $nv = '<a href="' . c_url('/admin/pages/comments/verify.php?com=' . $data['ID']) . '" class="btn btn-sm btn-outline-info">در انتظار تایید</a>';
@@ -32,7 +32,10 @@ function comments_table($last = true)
   if ($last) {
     $st->LIMIT(5);
   }
-  $st = $st->Run();
+  if ($by) {
+    $st->WHERE('u.id = ?');
+  }
+  $st = $st->Run($by ? [$by] : []);
   $idl = function ($data) {
     ['v' => $v] = $data;
     $post = db()->TABLE('comments', alias: 'c')
@@ -40,11 +43,18 @@ function comments_table($last = true)
       ->WHERE('c.id = ' . $v)->Run()->fetchColumn();
     return c_url('/posts/' . $post . '#c' . $v);
   };
-  tablify($st, 'عملیات', $actions, hidden: ['verify'], head_link: $idl);
+  tablify(
+    $st,
+    isAdmin() ? 'عملیات' : null,
+    $actions,
+    hidden: ['verify'],
+    head_link: $idl,
+    empty_msg: '<div class="alert alert-dark">هیچ کامنتی پیدا نشد!</div>'
+  );
 }
 
 
-function posts_table($last = true)
+function posts_table($last = true, $by = null)
 {
   $actions = function ($data) {
     $nv = '<a href="' . c_url('/admin/pages/posts/verify.php?post=' . $data['ID']) . '" class="btn btn-sm btn-outline-info">در انتظار تایید</a>';
@@ -60,7 +70,10 @@ function posts_table($last = true)
   if ($last) {
     $st->LIMIT(5);
   }
-  $st = $st->Run();
+  if ($by) {
+    $st->WHERE('p.author = ?');
+  }
+  $st = $st->Run($by ? [$by] : []);
   $idl = function ($data) {
     ['v' => $v] = $data;
     return c_url('/posts/' . $v);
@@ -69,5 +82,13 @@ function posts_table($last = true)
     return $data['ID'];
   };
 
-  tablify($st, 'عملیات', $actions, hidden: ['verify'], head_link: $idl, rowid: $ril);
+  tablify(
+    $st,
+    isAdmin() ? 'عملیات' : null,
+    $actions,
+    hidden: ['verify'],
+    head_link: $idl,
+    rowid: $ril,
+    empty_msg: '<div class="alert alert-dark">هیچ پستی پیدا نشد!</div>'
+  );
 }

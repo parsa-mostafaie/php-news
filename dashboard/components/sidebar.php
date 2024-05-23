@@ -19,54 +19,37 @@ function classIt($name)
       <ul class="nav flex-column pe-3">
         <li class="nav-item">
           <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= classIt('/') ?>"
-            href="<?= $admin ?>">
-            <i class="bi bi-person-fill fs-4 text-secondary"></i>
-            <span class="fw-bold">پنل ادمین</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2"
-            href="<?= c_url('/dashboard/') ?>">
+            href="<?= $dashboard ?>">
             <i class="bi bi-house-fill fs-4 text-secondary"></i>
             <span class="fw-bold">داشبورد</span>
           </a>
         </li>
-
+        <?php if (isAdmin()): ?>
+          <li class="nav-item">
+            <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2"
+              href="<?= c_url('/admin/') ?>">
+              <i class="bi bi-person-fill fs-4 text-secondary"></i>
+              <span class="fw-bold">پنل ادمین</span>
+            </a>
+          </li>
+        <?php endif ?>
         <li class="nav-item">
           <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= classIt('/posts') ?>"
-            href="<?= $adminPages ?>posts/index.php">
+            href="<?= $dashboardPages ?>posts/index.php">
             <i class="bi bi-file-earmark-image-fill fs-4 text-secondary"></i>
             <span class="fw-bold">مقالات</span>
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2  <?= classIt('/cat') ?>"
-            href="<?= $adminPages ?>categories/index.php">
-            <i class="bi bi-folder-fill fs-4 text-secondary"></i>
-
-            <span class="fw-bold">دسته بندی</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
           <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2  <?= classIt('/com') ?>"
-            href="<?= $adminPages ?>comments/index.php">
+            href="<?= $dashboardPages ?>comments/index.php">
             <i class="bi bi-chat-left-text-fill fs-4 text-secondary"></i>
 
             <span class="fw-bold">کامنت ها</span>
           </a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 ?>"
-            href="/phpmyadmin/?db=<?= db()->db ?>">
-            <i class="bi bi-database-fill fs-4 text-secondary"></i>
-
-            <span class="fw-bold">مدیریت پایگاه داده</span>
-          </a>
-        </li>
 
         <li class="nav-item">
           <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2"
