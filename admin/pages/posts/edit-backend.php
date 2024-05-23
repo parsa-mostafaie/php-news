@@ -17,7 +17,7 @@ $_inps_f = [
   'title' => 'string | required',
   'category' => 'int | required',
   'content' => 'string | required',
-  'description' => 'string | required'
+  'description' => 'string'
 ];
 
 [$inputs, $errors] = filter($_inps_arr, $_inps_f);
