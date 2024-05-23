@@ -1,6 +1,12 @@
 <?php
 $cats = db()->TABLE('categories')->SELECT('name, id')->Run()->fetchAll(PDO::FETCH_ASSOC);
 ?>
+<style>
+  .accordion-button::after {
+    margin-left: 0;
+    margin-right: auto;
+  }
+</style>
 <!-- Sidebar Section -->
 <div class="col-lg-4 mt-3">
   <!-- Sesrch Section -->
@@ -18,29 +24,46 @@ $cats = db()->TABLE('categories')->SELECT('name, id')->Run()->fetchAll(PDO::FETC
           </button>
 
         </div>
-        <div class='mb-3 d-flex gap-1'>
-          <button class="btn btn-danger" type="button" onclick="form_unselect_all('author')">
-            <i class="bi bi-file-earmark-person-fill"></i>
-            همه
-          </button>
-          <div class='flex-grow-1'>
-            <?php authors_sel(default: intval(get_val('author')) ?? 0) ?>
-          </div>
-        </div>
-        <div id="cats">
-          <button class="btn btn-danger" type="button" onclick="form_uncheck_all('cat')">
-            <i class="bi bi-tags-fill"></i>
-            همه
-          </button>
-          <?php foreach ($cats as $cat): ?>
-            <?php ['name' => $n, 'id' => $i] = $cat;
-            $attr = intval(get_val('cat')) === $i ? 'checked' : '';
-            ?>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="cat" id="cat<?= $i ?>" value="<?= $i ?>" <?= $attr ?>>
-              <label class="form-check-label" for="cat<?= $i ?>"><?= $n ?></label>
+        <div class="accordion" id="accordionSearch">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#searchCollapse" aria-controls="searchCollapse" aria-expanded="false">
+                جستجو ی پیشرفته
+              </button>
+            </h2>
+            <div id="searchCollapse" class="accordion-collapse collapse" data-bs-parent="#accordionSearch">
+              <div class="accordion-body">
+                <p class="fw-bold">نویسنده: </p>
+                <div class='mb-3 d-flex gap-1'>
+                  <button class="btn btn-danger" type="button" onclick="form_unselect_all('author')">
+                    <i class="bi bi-file-earmark-person-fill"></i>
+                    همه
+                  </button>
+                  <div class='flex-grow-1'>
+                    <?php authors_sel(default: intval(get_val('author')) ?? 0) ?>
+                  </div>
+                </div>
+                <hr>
+                <p class="fw-bold">دسته بندی: </p>
+                <div id="cats">
+                  <button class="btn btn-danger" type="button" onclick="form_uncheck_all('cat')">
+                    <i class="bi bi-tags-fill"></i>
+                    همه
+                  </button>
+                  <?php foreach ($cats as $cat): ?>
+                    <?php ['name' => $n, 'id' => $i] = $cat;
+                    $attr = intval(get_val('cat')) === $i ? 'checked' : '';
+                    ?>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="cat" id="cat<?= $i ?>" value="<?= $i ?>" <?= $attr ?>>
+                      <label class="form-check-label" for="cat<?= $i ?>"><?= $n ?></label>
+                    </div>
+                  <?php endforeach; ?>
+                </div>
+              </div>
             </div>
-          <?php endforeach; ?>
+          </div>
         </div>
       </form>
     </div>
