@@ -16,12 +16,12 @@
 
 <body>
   <div class="container py-3">
-    <header class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+    <header class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom justify-content-between">
       <a href="<?= c_url('/') ?>" class="fs-4 fw-medium link-body-emphasis text-decoration-none">
         اخبار
       </a>
 
-      <nav class="d-inline-flex mt-2 mt-md-0 me-md-auto">
+      <nav class="d-inline-flex">
         <!-- <a class="fw-bold me-3 py-2 link-body-emphasis text-decoration-none" href="#">طبیعت</a>
         <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">گردشگری</a>
         <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">تکنولوژی</a>

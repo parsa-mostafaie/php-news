@@ -24,7 +24,7 @@ if (!$post->getColumn('verify')) {
       <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image"', web_url(c_url('/assets/images/1.jpg'))) ?>
       <div class='position-absolute' style='top: 5px;left:5px'><?= badge($post->getColumn('category')) ?></div>
     </div>
-    <div class="card-header d-flex justify-content-between">
+    <div class="card-header d-flex justify-content-between align-items-center flex-column flex-sm-row">
       <div>
         <span><i class='bi bi-clock-history'></i>
           <?= jdate('j F Y', strtotime($post->getColumn('date'))) ?></span>
@@ -48,7 +48,7 @@ if (!$post->getColumn('verify')) {
       </p> -->
     </div>
     <div class="card-footer">
-      <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex justify-content-between gap-2 align-items-center flex-sm-row flex-column">
         <a href="<?= c_url('/posts/' . $post_id) ?>" class="btn btn-sm btn-dark">مشاهده</a>
 
         <p class="fs-7 mb-0">نویسنده: <?= $post->getColumn('author') ?> </p>
