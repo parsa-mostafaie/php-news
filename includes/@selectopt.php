@@ -1,9 +1,14 @@
 <?php include_once 'c-init.php';
 
-function selectOpt(PDOStatement $st, $col, $valRow = 'ID', $inpname = '', $def = null, $class = '', $echo = true)
+function selectOpt(PDOStatement $st, $col, $valRow = 'ID', $inpname = '', $def = null, $all = null, $class = '', $echo = true)
 {
   $html = '<select class="form-select" name="' . $inpname . '">';
   $fetch = $st->fetchAll(PDO::FETCH_ASSOC);
+  if ($all) {
+    $sfetch = $fetch;
+    $fetch = [$all];
+    array_push($fetch, ...$sfetch);
+  }
   foreach ($fetch as $row) {
     $colv = $row[$col];
     $attr = '';
@@ -30,5 +35,5 @@ function authors_sel($inpname = 'author', $default = null)
 {
   $st = db()->TABLE('users')->SELECT('ID, CONCAT(firstname, " ", lastname) as Name')
     ->WHERE('admin > 0')->Run();
-  selectOpt($st, 'Name', inpname: $inpname, def: $default);
+  selectOpt($st, 'Name', inpname: $inpname, def: $default, all: ['ID' => '0', 'Name' => 'همه']);
 }

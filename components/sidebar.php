@@ -9,17 +9,29 @@ $cats = db()->TABLE('categories')->SELECT('name, id')->Run()->fetchAll(PDO::FETC
       <p class="fw-bold fs-6">جستجو در وبلاگ</p>
       <form action="<?= c_url('/search.php') ?>" method='get'>
         <div class="input-group mb-3">
+
           <input type="text" class="form-control" name='search' placeholder="جستجو ..."
             value="<?= get_val('search') ?? '' ?>" />
 
           <button class="btn btn-secondary" type="submit">
             <i class="bi bi-search"></i>
           </button>
+
         </div>
-        <div class='mb-3'>
-          <?php authors_sel() ?>
+        <div class='mb-3 d-flex gap-1'>
+          <button class="btn btn-danger" type="button" onclick="form_unselect_all('author')">
+            <i class="bi bi-file-earmark-person-fill"></i>
+            همه
+          </button>
+          <div class='flex-grow-1'>
+            <?php authors_sel(default: intval(get_val('author')) ?? 0) ?>
+          </div>
         </div>
         <div id="cats">
+          <button class="btn btn-danger" type="button" onclick="form_uncheck_all('cat')">
+            <i class="bi bi-tags-fill"></i>
+            همه
+          </button>
           <?php foreach ($cats as $cat): ?>
             <?php ['name' => $n, 'id' => $i] = $cat;
             $attr = intval(get_val('cat')) === $i ? 'checked' : '';
@@ -77,3 +89,4 @@ $cats = db()->TABLE('categories')->SELECT('name, id')->Run()->fetchAll(PDO::FETC
     </div>
   </div>
 </div>
+<script src='<?= c_url('/assets/js/formall.js') ?>'></script>
