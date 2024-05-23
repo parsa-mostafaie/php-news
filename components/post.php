@@ -12,10 +12,10 @@ $post =
     ->WHERE('p.id=?')->getFirstRow([$post_id]);
 
 if (!$post->found) {
-  die();
+  return;
 }
 if (!$post->getColumn('verify')) {
-  die();
+  return;
 }
 ?>
 <div class="col-sm-6">

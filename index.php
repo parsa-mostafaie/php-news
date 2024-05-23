@@ -4,7 +4,8 @@ $__component__post_pdos = db()->TABLE('posts', alias: 'p')->SELECT('*')
   ->LIMIT(15)->ORDER_BY('date DESC')->Run();
 
 $__component__caro_pdos = db()->TABLE('posts', alias: 'p')->SELECT('*')
-  ->LIMIT(3)->ORDER_BY('date DESC')->Run()->fetchAll(PDO::FETCH_ASSOC);
+  ->WHERE('p.verify = 1')
+  ->LIMIT(5)->ORDER_BY('date DESC')->Run()->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!-- Slider Section -->
 <section>
