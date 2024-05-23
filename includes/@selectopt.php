@@ -25,3 +25,10 @@ function categories_sel($inpname = 'cat', $default = null)
   $st = db()->TABLE('categories')->SELECT('ID, Name')->Run();
   selectOpt($st, 'Name', inpname: $inpname, def: $default);
 }
+
+function authors_sel($inpname = 'author', $default = null)
+{
+  $st = db()->TABLE('users')->SELECT('ID, CONCAT(firstname, " ", lastname) as Name')
+    ->WHERE('admin > 0')->Run();
+  selectOpt($st, 'Name', inpname: $inpname, def: $default);
+}

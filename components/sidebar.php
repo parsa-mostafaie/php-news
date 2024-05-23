@@ -16,6 +16,9 @@ $cats = db()->TABLE('categories')->SELECT('name, id')->Run()->fetchAll(PDO::FETC
             <i class="bi bi-search"></i>
           </button>
         </div>
+        <div class='mb-3'>
+          <?php authors_sel() ?>
+        </div>
         <div id="cats">
           <?php foreach ($cats as $cat): ?>
             <?php ['name' => $n, 'id' => $i] = $cat;

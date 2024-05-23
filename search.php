@@ -2,11 +2,18 @@
 <?php
 $inp = get_val('search') ?? '';
 $cat_id = intval(get_val('cat')) ?? 0;
+$u_id = intval(get_val('author')) ?? 0;
+
 [$condits, $fill] =
   sqlConditionGenerator::TextSearch($inp, 'p.title');
+
 $__component__post_pdos = db()->TABLE('posts', alias: 'p')->SELECT('*')
-  ->WHERE($condits)->WHERE($cat_id ? 'category = ?' : '0 = ?')->ORDER_BY('date desc')
-  ->Run([...$fill, $cat_id]);
+  ->WHERE($condits)
+  ->WHERE($cat_id ? 'category = ?' : '0 = ?')
+  ->WHERE($u_id ? 'p.author = ?' : '0 = ?')
+  ->ORDER_BY('p.date desc')
+  ->Run([...$fill, $cat_id, $u_id]);
+
 $countres = $__component__post_pdos->rowCount();
 
 ?>
