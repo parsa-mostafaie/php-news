@@ -33,6 +33,11 @@ $countres = $__component__post_pdos->rowCount();
               مقاله مورد نظر پیدا نشد !!!!
             </div>
           <?php endif; ?>
+          <?php if ($countres): ?>
+            <div class="alert alert-success">
+              <?=$countres?> نتیجه یافت شد!
+            </div>
+          <?php endif; ?>
         </div>
       </div>
 
