@@ -61,7 +61,7 @@ $tiny_mce = true;
 
       <div class="col-12">
         <label for="content" class="form-label">متن مقاله</label>
-        <textarea rows="6" name="tiny" id="tiny"><?= $post->getColumn('content') ?></textarea>
+        <textarea rows="6" name="tiny" id="tiny"><?= nl2br($post->getColumn('content')) ?></textarea>
       </div>
 
 
