@@ -14,6 +14,27 @@ function categories_table()
   tablify($st, 'عملیات', $actions, head_link: $idl);
 }
 
+function users_table($last = true)
+{
+  $actions = function ($data) {
+    if ($data['ID'] == getCurrentUserInfo_prop('ID')) {
+      return '';
+    }
+    return !$data['admin'] ?
+      '<a href="' . c_url('/admin/pages/users/grw.php?usr=') . $data['ID'] . '" class="btn btn-sm btn-outline-dark">ارتقا</a>'
+      : '<a href="' . c_url('/admin/pages/users/shrnk.php?usr=') . $data['ID'] . '" class="btn btn-sm btn-danger">تنزل</a>';
+  };
+  $idl = function ($data) {
+    return '#';
+  };
+  $st = db()->TABLE('users')->SELECT('ID, CONCAT(firstname, " ", lastname) as `نام`, admin')->ORDER_BY('date desc');
+  if ($last) {
+    $st->LIMIT(5);
+  }
+  $st = $st->Run();
+  tablify($st, 'عملیات', $actions, head_link: $idl, hidden: ['admin']);
+}
+
 function comments_table($last = true, $by = null)
 {
   $actions = function ($data) {

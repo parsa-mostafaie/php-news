@@ -20,7 +20,7 @@ function classIt($name)
         <li class="nav-item">
           <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= classIt('/') ?>"
             href="<?= $admin ?>">
-            <i class="bi bi-person-fill fs-4 text-secondary"></i>
+            <i class="bi bi-person-check-fill fs-4 text-secondary"></i>
             <span class="fw-bold">پنل ادمین</span>
           </a>
         </li>
@@ -56,6 +56,15 @@ function classIt($name)
             <i class="bi bi-chat-left-text-fill fs-4 text-secondary"></i>
 
             <span class="fw-bold">کامنت ها</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2  <?= classIt('/usr') ?>"
+            href="<?= $adminPages ?>users/index.php">
+            <i class="bi bi-person-fill fs-4 text-secondary"></i>
+        
+            <span class="fw-bold">کاربران</span>
           </a>
         </li>
 

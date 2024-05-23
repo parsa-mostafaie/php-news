@@ -29,5 +29,13 @@
       <?php categories_table(); ?>
     </div>
   </div>
+
+  <!-- users -->
+  <div class="mt-4">
+    <h4 class="text-secondary fw-bold">کاربران</h4>
+    <div class="table-responsive small">
+      <?php users_table(); ?>
+    </div>
+  </div>
 </main>
 <?php include 'components/footer.php' ?>
