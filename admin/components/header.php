@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/../../includes/c-init.php'; ?>
 <?php authAdmin() ?>
-<?php $adminPages = c_url('/admin/pages/'); ?>
-<?php $admin = c_url('/admin/'); ?>
+<?php $adminPages = web_url(c_url('/admin/pages/')); ?>
+<?php $admin = web_url(c_url('/admin/')); ?>
 <!DOCTYPE html>
 <html dir="rtl" lang="fa">
 
@@ -28,7 +28,8 @@
           'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
         ],
         toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
-          'bullist numlist checklist outdent indent | removeformat | code table help'
+          'bullist numlist checklist outdent indent | removeformat | code table help',
+        images_upload_url: '<?=$adminPages.'posts/tnymceul.php'?>'
       })
     </script>
     <!-- end TinyMCE -->
