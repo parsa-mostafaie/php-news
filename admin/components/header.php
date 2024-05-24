@@ -22,6 +22,7 @@
     <script>
       tinymce.init({
         selector: 'textarea#tiny',
+        content_css:'<?=$admin?>assets/css/style.css',
         plugins: [
           'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'markdown',
           'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
@@ -29,7 +30,7 @@
         ],
         toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
           'bullist numlist checklist outdent indent | removeformat | code table help',
-        images_upload_url: '<?=$adminPages.'posts/tnymceul.php'?>'
+        images_upload_url: '<?= $adminPages . 'posts/tnymceul.php' ?>'
       })
     </script>
     <!-- end TinyMCE -->
