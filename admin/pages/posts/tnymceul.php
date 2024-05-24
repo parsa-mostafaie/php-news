@@ -25,9 +25,7 @@ try {
     _500_();
   }
   // Successfull:
-  $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? "https://" : "http://";
-  $baseurl = $protocol . $_SERVER["HTTP_HOST"];
-  echo json_encode(array('location' => $baseurl . web_url(urlOfUpload($file))));
+  echo json_encode(array('location' => http_baseurl() . web_url(urlOfUpload($file))));
 } catch (Exception $ex) {
   $status = $ex->getCode();
   if ($status == 400) {
