@@ -66,7 +66,7 @@ $tiny_mce = true;
 
 
       <div class="col-12 col-sm-6 col-md-4 d-flex flex-column">
-        <?= $post->getAssetBasedCol('image')->get_img('class = "rounded w-100"', web_url(c_url('/assets/images/1.jpg'))) ?>
+        <?= $post->getAssetBasedCol('image')->get_img('class = "w-100 img-thumbnail"', web_url(c_url('/assets/images/1.jpg'))) ?>
         <b class="text-dark text-center mt-1">تصویر فعلی</b>
       </div>
 
