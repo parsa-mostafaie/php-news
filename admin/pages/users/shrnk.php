@@ -10,6 +10,6 @@ if (!$user) {
   _404_();
 }
 
-db()->TABLE('users')->UPDATE('id = ?')->SET('admin = 0')->Run([$user]);
+growUpUser($user);
 
 redirect('./');
