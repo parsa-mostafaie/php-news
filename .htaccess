@@ -1,1 +1,5 @@
 Options -Indexes
+<FilesMatch "secret.json">
+Order deny,allow
+Deny from all
+</FilesMatch>
