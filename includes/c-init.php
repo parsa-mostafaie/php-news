@@ -29,6 +29,14 @@ function hts_xss($html)
   return anti_xss(htmlspecialchars_decode($html));
 }
 
+function readtime(sqlRow $post)
+{
+  $content = $post->getColumn('content');
+  $count_words = str_word_count(strip_tags($content), );
+
+  return ceil($count_words / 250);
+}
+
 require_once '@table.php';
 require_once '@ul.php';
 require_once '@selectopt.php';

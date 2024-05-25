@@ -103,10 +103,11 @@ include_once ('proc.php');
                       نشده</span></a></div>
               <?php endif; ?>
             </div>
-            <div class="card-header d-flex justify-content-between">
-              <div>
+            <div class="card-header d-flex flex-wrap justify-content-between">
+              <div class="d-flex flex-wrap column-gap-4">
                 <span><i class='bi bi-clock-history'></i>
-                  <?= jdate('j F Y', strtotime($post->getColumn('date'))) ?></span>
+                  <?= jdate('j F Y', strtotime($post->getColumn('date'))) ?></span> <span><i class="bi bi-clock"></i>
+                  <?= readtime($post) ?> دقیقه</span>
               </div>
               <div>
                 <span><i class='bi bi-file-earmark-post-fill'></i>
