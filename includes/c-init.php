@@ -26,7 +26,7 @@ function badge($t)
 
 function hts_xss($html)
 {
-  return unti_xss(htmlspecialchars_decode($html));
+  return anti_xss(htmlspecialchars_decode($html));
 }
 
 require_once '@table.php';
