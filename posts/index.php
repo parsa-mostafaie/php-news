@@ -118,6 +118,8 @@ include_once ('proc.php');
                 <h5 class="card-title fw-bold">
                   <?php if (isAdmin()): ?><a href="<?= c_url('/admin/pages/posts/edit.php?post=' . $post_id) ?>">
                       <i class='bi bi-pencil-square text-secondary'></i></a><?php endif ?>
+                  <?php if (isAdmin()): ?><a href="<?= c_url('/admin/pages/posts/#' . $post_id) ?>">
+                      <i class='bi bi-newspaper text-secondary'></i></a><?php endif ?>
                   <?= $post->getColumn('title') ?>
                 </h5>
               </div>
