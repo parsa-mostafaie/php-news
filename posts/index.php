@@ -12,7 +12,7 @@ if (!is_numeric($flp)) {
 $post_id = intval($flp);
 $post =
   db()->TABLE('posts', true, 'p')
-    ->SELECT('p.date, p.ID, p.title, p.content, p.description as `desc`, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
+    ->SELECT('c.id as catid, p.date, p.ID, p.title, p.content, p.description as `desc`, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
     ->ON('p.author = u.id', 'users as u')->ON('c.id = p.category', 'categories as c')
     ->WHERE('p.id=?')->getFirstRow([$post_id]);
 
@@ -22,6 +22,8 @@ if (!$post->found) {
 if (!$post->getColumn('verify') && !isAdmin()) {
   _404_();
 }
+
+$_GET['cat'] = $post->getColumn('catid');// bold category in categories_list
 
 function comment($cid)
 {
