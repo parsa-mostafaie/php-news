@@ -112,10 +112,10 @@ $sidebarTemplate = [
   ],
 ];
 
-function navGenerate($template, $sub = false, $spn = null)
+function navGenerate($template, $sub = false, $supOpen = false)
 {
   $navClass = 'nav flex-column pe-3';
-  $subClass = 'submenu ' . supermenu_classit($spn);
+  $subClass = 'submenu collapse ' . ($supOpen ? 'show' : '');
   $Class = $sub ? $subClass : $navClass;
   global $supermenu;
   ?>
@@ -129,8 +129,8 @@ function navGenerate($template, $sub = false, $spn = null)
 
       $sup = $route['sup'] ?? null;
 
-      $open = $sub || $sup ? $supermenu == ($spn ?? $sup) : true;
-      $lnkClass = $open ? classIt($routePath) : '';
+      $open = $sup ? $supermenu == $sup : false;
+      $lnkClass = $open || $supOpen ? classIt($routePath) : '';
 
       $subs = $route['subs'] ?? [];
 
@@ -140,7 +140,7 @@ function navGenerate($template, $sub = false, $spn = null)
             <i class="bi bi-<?= $routeIcon ?> fs-4 text-secondary"></i>
             <span class="fw-bold"><?= $routeTitle ?></span>
           </a>
-          <?php $sup ? navGenerate($subs, true, $sup) : '' ?>
+          <?php $sup ? navGenerate($subs, true, $open) : '' ?>
         </li><?php
       }
     }
