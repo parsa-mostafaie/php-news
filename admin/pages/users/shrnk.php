@@ -10,6 +10,6 @@ if (!$user) {
   _404_();
 }
 
-growUpUser($user);
+shrinkDownUser($user);
 
 redirect('./');
