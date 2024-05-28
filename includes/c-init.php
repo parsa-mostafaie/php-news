@@ -1,12 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/libs/pluslib/init.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/libs/jdf/jdf.php';
-
-if (!defined('news')) {
-  define('news', true);
-  HOME_URL('/news');
-  db('plus_news');
-}
+require_once __DIR__ . '/../configs/config.php';
 
 function colnames(PDOStatement $st)
 {
