@@ -64,12 +64,16 @@ function comments_table($last = true, $by = null)
       ->WHERE('c.id = ' . $v)->Run()->fetchColumn();
     return c_url('/posts/' . $post . '#c' . $v);
   };
+  $ril = function ($data) {
+    return $data['ID'];
+  };
   tablify(
     $st,
     isAdmin() ? 'عملیات' : null,
     $actions,
     hidden: ['verify'],
     head_link: $idl,
+    rowid: $ril,
     empty_msg: '<div class="alert alert-dark">هیچ کامنتی پیدا نشد!</div>'
   );
 }
