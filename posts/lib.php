@@ -1,13 +1,17 @@
 <?php
+function pcl_usid_cond()
+{
+  return canlogin() ? 'user_id = ' . getCurrentUserInfo_prop('ID') . ')' : '0 = 0';
+}
 function comment($cid)
 {
-  $comment = db()->TABLE('comments as c', true)->
+  $comment = db()->TABLE('comments', alias: 'c')->
     SELECT('CONCAT(u.firstname, " ", u.lastname) as fname, c.text, u.profile, c.verify')
     ->WHERE('c.ID=' . $cid)
     ->ON('u.ID = c.user_id', 'users as u');
 
   if (!isAdmin()) {
-    $comment = $comment->WHERE('(verify = 1 OR user_id = ' . getCurrentUserInfo_prop('ID') . ')');
+    $comment = $comment->WHERE('(verify = 1 OR ' . pcl_usid_cond() . ')');
   }
 
   $comment = $comment->getFirstRow();
@@ -55,7 +59,7 @@ function comments_fetch($parent = 'NULL', $nop = false)
   $coms = db()->TABLE('comments as c', true)->SELECT('id')
     ->WHERE('c.post=' . $post_id)->WHERE($nop ? '1=1' : "c.parent $verb $parent");
   if (!isAdmin()) {
-    $coms = $coms->WHERE('1=1 AND (verify = 1 OR user_id = ' . getCurrentUserInfo_prop('ID') . ')');
+    $coms = $coms->WHERE('1=1 AND (verify = 1 OR ' . pcl_usid_cond() . ')');
   }
   return $coms->Run()->fetchAll(PDO::FETCH_ASSOC);
 }
