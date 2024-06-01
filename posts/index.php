@@ -1,15 +1,14 @@
 <?php
 require_once '../includes/c-init.php';
 
-$exps_arr = explode('/', $_SERVER['REQUEST_URI']);
-$posts_index = array_search('posts', $exps_arr);
-$lp = array_splice($exps_arr, $posts_index + 1);
-$flp = $lp[0];
+include_once ('lib.php');
 
-if (!is_numeric($flp)) {
+$post_id = postID();
+
+if (!is_numeric($post_id)) {
   _404_();
 }
-$post_id = intval($flp);
+$post_id = intval($post_id);
 $post =
   db()->TABLE('posts', true, 'p')
     ->SELECT('c.id as catid, p.date, p.ID, p.title, p.content, p.description as `desc`, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
@@ -25,14 +24,21 @@ if (!$post->getColumn('verify') && !isAdmin()) {
 
 $_GET['cat'] = $post->getColumn('catid');// bold category in categories_list
 
-include_once ('lib.php');
-
 // comment
 include_once ('proc.php');
 // end
 
+$sfu_e_title = str_replace(['/', '\\'], '', $post->getColumn('title'));
+$sfu_e = urlencode($sfu_e_title);
+$seoFriendly_URL = web_url(c_url('/posts/' . $post_id . '/' . $sfu_e . '/'));
+
 ['n' => $sessn, 'v' => $sessv] = secure_form();
 ?>
+<?php if ($_SERVER['REQUEST_URI'] != $seoFriendly_URL): ?>
+  <script>
+    window.history.replaceState({}, '', "<?= $seoFriendly_URL ?>"+window.location.hash)
+  </script>
+<?php endif; ?>
 <?php include ('../components/header.php') ?>
 
 <!-- Content -->

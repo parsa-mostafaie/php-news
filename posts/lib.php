@@ -71,4 +71,10 @@ function comments($parent = 'NULL')
     $s .= comment($comm['id']);
   }
   return $s;
-} ?>
+}
+
+function postID()
+{
+  sscanf($_SERVER['REQUEST_URI'], c_url('/posts/%d', false), $d);
+  return $d;
+}
