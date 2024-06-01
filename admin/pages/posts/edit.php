@@ -30,7 +30,7 @@ $tiny_mce = true;
 
   <!-- Posts -->
   <div class="mt-4">
-    <form class="row g-4" submit-control form-wait="#wait" action="edit-backend.php" enctype="multipart/form-data">
+    <form class="row g-4" submit-control form-wait="#wait" form-action="edit-backend.php" enctype="multipart/form-data">
       <input type="hidden" name="sec_form_sess_n" value="<?= $sessn ?>">
       <input type="hidden" name="sec_form_sess_v" value="<?= $sessv ?>">
       <input type="hidden" name="post" value="<?= $post_id ?>" ?>

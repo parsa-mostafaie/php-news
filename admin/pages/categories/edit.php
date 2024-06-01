@@ -18,7 +18,7 @@ if (!$cat->found) {
 
   <!-- Posts -->
   <div class="mt-4">
-    <form class="row g-4" submit-control form-wait="#wait" action="edit-backend.php">
+    <form class="row g-4" submit-control form-wait="#wait" form-action="edit-backend.php">
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label">عنوان دسته بندی</label>
         <input type="text" class="form-control" name='catn' value="<?= $cat->getColumn('Name') ?>" />

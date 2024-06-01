@@ -9,7 +9,7 @@ $tiny_mce = true ?>
 
   <!-- Posts -->
   <div class="mt-4">
-    <form class="row g-4" submit-control form-wait="#wait" action="create-backend.php" enctype="multipart/form-data">
+    <form class="row g-4" submit-control form-wait="#wait" form-action="create-backend.php" enctype="multipart/form-data">
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label" for="title">عنوان مقاله</label>
         <input type="text" class="form-control" id="title" name="title" />
