@@ -102,10 +102,10 @@ $seoFriendly_URL = normalRoute();
 
         <!-- Comment Section -->
         <div class="col">
-          <?= process_form() ?>
           <!-- Comment Form -->
           <div class="card" id="comments">
             <div class="card-body">
+              <div class="text-center" dir="ltr"><?= process_form() ?></div>
               <p class="fw-bold fs-5">ارسال کامنت</p>
 
               <form method="post" action="./<?= $post_id ?>#comments">
@@ -119,7 +119,7 @@ $seoFriendly_URL = normalRoute();
                 <div class="mb-3">
                   <label class="form-label">متن کامنت</label>
                   <textarea class="form-control" rows="3" name="ctext" <?= !canlogin() ? 'disabled' : '' ?>><?= !$_COND ? $ctext : '' ?></textarea>
-                  <?= errors('comment text') ?>
+                  <p class="text-danger fw-bold text-center" dir="ltr"><?= errors('comment text') ?></p>
                 </div>
                 <button type="submit" class="btn btn-dark" <?= !canlogin() ? 'disabled' : '' ?> name="comment">
                   ارسال

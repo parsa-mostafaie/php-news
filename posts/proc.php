@@ -30,6 +30,7 @@ $__PROCESS__CALLBACK__ = function () {
 
 $__PROCESS__SUCCESS__ = function () {
   secure_form(secure_form_enum::expire);
+  echo '<div class="alert alert-success" dir="rtl">کامنت در صف تایید است!</div>';
 };
 
 $__PROCESS__FAILED__ = $__DEFAULT__PROCESS_FAILED;
