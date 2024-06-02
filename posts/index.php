@@ -28,9 +28,7 @@ $_GET['cat'] = $post->getColumn('catid');// bold category in categories_list
 include_once ('proc.php');
 // end
 
-$sfu_e_title = str_replace(['/', '\\'], '', $post->getColumn('title'));
-$sfu_e = urlencode($sfu_e_title);
-$seoFriendly_URL = web_url(c_url('/posts/' . $post_id . '/' . $sfu_e . '/'));
+$seoFriendly_URL = normalRoute();
 
 ['n' => $sessn, 'v' => $sessv] = secure_form();
 ?>

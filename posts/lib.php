@@ -78,3 +78,14 @@ function postID()
   sscanf($_SERVER['REQUEST_URI'], c_url('/posts/%d', false), $d);
   return $d;
 }
+
+function normalRoute()
+{
+  global $post, $post_id;
+  $slug_ttl = $post->getColumn('title');
+  $slug_ttl = slugify($slug_ttl);
+  $slug_ttl = truncate($slug_ttl, 50, '');
+  $sfu_e = urlencode($slug_ttl);
+  $seoFriendly_URL = c_url('/posts/' . $post_id . '/' . $sfu_e . '/', false);
+  return $seoFriendly_URL;
+}
