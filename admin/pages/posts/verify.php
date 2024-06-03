@@ -10,6 +10,7 @@ if (!$post) {
   _404_();
 }
 
-db()->TABLE('posts')->UPDATE('id = ?')->SET('verify = 1')->Run([$post]);
+db()->TABLE('posts')->UPDATE('id = ?')
+  ->SET('verify = 1, verify_date=current_timestamp()')->Run([$post]);
 
 redirect('./');

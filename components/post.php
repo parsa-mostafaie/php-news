@@ -7,7 +7,7 @@ if (!is_numeric($__component__post_id)) {
 $post_id = intval($__component__post_id);
 $post =
   db()->TABLE('posts', true, 'p')
-    ->SELECT('p.date, p.ID, p.title, p.description as `desc`, p.content, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
+    ->SELECT('p.verify_date as `date`, p.ID, p.title, p.description as `desc`, p.content, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
     ->ON('p.author = u.id', 'users as u')->ON('c.id = p.category', 'categories as c')
     ->WHERE('p.id=?')->getFirstRow([$post_id]);
 

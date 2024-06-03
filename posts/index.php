@@ -11,7 +11,7 @@ if (!is_numeric($post_id)) {
 $post_id = intval($post_id);
 $post =
   db()->TABLE('posts', true, 'p')
-    ->SELECT('c.id as catid, p.date, p.ID, p.title, p.content, p.description as `desc`, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
+    ->SELECT('c.id as catid, p.date, p.ID, p.title, p.content, p.description as `desc`, p.verify_date as `vdate`, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
     ->ON('p.author = u.id', 'users as u')->ON('c.id = p.category', 'categories as c')
     ->WHERE('p.id=?')->getFirstRow([$post_id]);
 
@@ -31,6 +31,9 @@ include_once ('proc.php');
 $seoFriendly_URL = normalRoute();
 
 ['n' => $sessn, 'v' => $sessv] = secure_form();
+
+$postVDATE = $post->getColumn('vdate');
+$postDate = !empty($postVDATE) ? $postVDATE : $post->getColumn('date');
 ?>
 <?php if ($_SERVER['REQUEST_URI'] != $seoFriendly_URL): ?>
   <script>
@@ -63,7 +66,7 @@ $seoFriendly_URL = normalRoute();
             <div class="card-header d-flex flex-wrap justify-content-between">
               <div class="d-flex flex-wrap column-gap-4">
                 <span><i class='bi bi-clock-history'></i>
-                  <?= jdate('j F Y', strtotime($post->getColumn('date'))) ?></span> <span><i class="bi bi-clock"></i>
+                  <?= jdate('j F Y', strtotime($postDate)) ?></span> <span><i class="bi bi-clock"></i>
                   <?= readtime($post) ?> دقیقه</span>
               </div>
               <div>
@@ -92,7 +95,7 @@ $seoFriendly_URL = normalRoute();
               </p>
               <div class="d-flex justify-content-between">
                 <p class="fs-6 mt-5 mb-0">نویسنده: <?= $post->getColumn('author') ?> </p>
-                <p class="fs-6 mt-5 mb-0"><?= jdate('j F Y در H:i ', strtotime($post->getColumn('date'))) ?> </p>
+                <p class="fs-6 mt-5 mb-0"><?= jdate('j F Y در H:i ', strtotime($postDate)) ?> </p>
               </div>
             </div>
           </div>
