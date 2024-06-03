@@ -42,4 +42,10 @@ body {
   width: 100dvw;
   display: flex;
   justify-content: center;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html:has(#wait:not(.d-none)) {
+  overflow: hidden;
 }
