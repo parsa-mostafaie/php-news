@@ -57,7 +57,8 @@ function comments_fetch($parent = 'NULL', $nop = false)
   global $post_id;
   $verb = strtoupper($parent) == 'NULL' ? 'is' : '=';
   $coms = db()->TABLE('comments as c', true)->SELECT('id')
-    ->WHERE('c.post=' . $post_id)->WHERE($nop ? '1=1' : "c.parent $verb $parent");
+    ->WHERE('c.post=' . $post_id)->WHERE($nop ? '1=1' : "c.parent $verb $parent")
+    ->ORDER_BY('c.date desc');
   if (!isAdmin()) {
     $coms = $coms->WHERE('1=1 AND (verify = 1 OR ' . pcl_usid_cond() . ')');
   }
