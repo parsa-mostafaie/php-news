@@ -11,7 +11,7 @@ function tablify(
   $rowid = '',
   $empty_msg = null
 ) {
-  $html = '<table class="table table-hover align-middle"><thead>';
+  $html = '<table class="table table-hover align-middle text-nowrap"><thead>';
   $fetch = $st->fetchAll(PDO::FETCH_ASSOC);
   if (!$st->rowCount() && $empty_msg) {
     if ($echo) {
