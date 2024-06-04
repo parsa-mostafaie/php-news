@@ -10,19 +10,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>اخبار</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
-
+  <?php useBootstrap() ?>
   <link rel="stylesheet" href="<?= c_url('/admin') ?>/assets/css/style.css" />
 
   <?php if ($tiny_mce ?? false): ?>
     <!-- TinyMCE -->
-    <script src="/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    <?php useTinyMCE(); ?>
+
     <script>
       tinymce.init({
         selector: 'textarea#tiny',
-        content_css:'<?=$admin?>assets/css/style.css',
+        content_css: '<?= $admin ?>assets/css/style.css',
         plugins: [
           'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'markdown',
           'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
