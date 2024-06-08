@@ -14,7 +14,7 @@ $pres = db()->TABLE('posts', alias: 'p')->SELECT('*')
   ->WHERE($condits)
   ->WHERE($cat_id ? 'category = ?' : '0 = ?')
   ->WHERE($u_id ? 'p.author = ?' : '0 = ?')
-  ->ORDER_BY('p.date desc')
+  ->ORDER_BY('p.created_at desc')
   ->pagination(4, $page, $stmt_params);
 
 

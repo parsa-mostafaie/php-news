@@ -39,7 +39,7 @@ $__PROCESS__CALLBACK__ = function () {
     getAssetBasedCol('image', prefix: 'post.photo.')->set_inp('photo');
 
   db()->TABLE('posts')
-    ->UPDATE('id=?')->SET('title=?, content=?, category = ?, description = ?')
+    ->UPDATE('id=?')->SET('title=?, content=?, category = ?, description = ?, updated_at = current_timestamp()')
     ->Run([$title, $content, $cat, $desc, $post_id]);
 
 };

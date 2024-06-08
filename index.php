@@ -1,11 +1,11 @@
 <?php include ('components/header.php') ?>
 <?php
 $__component__post_pdos = db()->TABLE('posts', alias: 'p')->SELECT('*')
-  ->LIMIT(15)->ORDER_BY('date DESC')->Run();
+  ->LIMIT(15)->ORDER_BY('created_at DESC')->Run();
 
 $__component__caro_pdos = db()->TABLE('posts', alias: 'p')->SELECT('*')
   ->WHERE('p.verify = 1')
-  ->LIMIT(5)->ORDER_BY('date DESC')->Run()->fetchAll(PDO::FETCH_ASSOC);
+  ->LIMIT(5)->ORDER_BY('created_at DESC')->Run()->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!-- Slider Section -->
 <section>

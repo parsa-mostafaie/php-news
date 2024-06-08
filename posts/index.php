@@ -11,7 +11,7 @@ if (!is_numeric($post_id)) {
 $post_id = intval($post_id);
 $post =
   db()->TABLE('posts', true, 'p')
-    ->SELECT('c.id as catid, p.date, p.ID, p.title, p.content, p.description as `desc`, p.verify_date as `vdate`, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
+    ->SELECT('c.id as catid, p.created_at as `date`, p.updated_at as `edit`, p.ID, p.title, p.content, p.description as `desc`, p.verify_date as `vdate`, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
     ->ON('p.author = u.id', 'users as u')->ON('c.id = p.category', 'categories as c')
     ->WHERE('p.id=?')->getFirstRow([$post_id]);
 
@@ -32,9 +32,15 @@ $seoFriendly_URL = normalRoute();
 
 ['n' => $sessn, 'v' => $sessv] = secure_form();
 
-$postVDATE = $post->getColumn('vdate');
-$postDate = !empty($postVDATE) ? $postVDATE : $post->getColumn('date');
-?>
+// Edition >= Creation
+// Verify > Creation
+// Edition <=> Verify
+$post_edit = $post->edit; // edition
+$post_date = $post->date; // Creation
+$post_vdate = $post->vdate; // Verify (Publish)
+$date = empty($post_vdate) ? '-' : jdate('j F Y', strtotime(max($post_vdate, $post_edit)));
+$editdate = $post_edit > $post_vdate ? ' <b class="text-info">ویرایش شده</b>' : ''
+  ?>
 <?php if ($_SERVER['REQUEST_URI'] != $seoFriendly_URL): ?>
   <script>
     window.history.replaceState({}, '', "<?= $seoFriendly_URL ?>"+window.location.hash)
@@ -66,7 +72,7 @@ $postDate = !empty($postVDATE) ? $postVDATE : $post->getColumn('date');
             <div class="card-header d-flex flex-wrap justify-content-between">
               <div class="d-flex flex-wrap column-gap-4">
                 <span><i class='bi bi-clock-history'></i>
-                  <?= jdate('j F Y', strtotime($postDate)) ?></span> <span><i class="bi bi-clock"></i>
+                  <?= $date ?></span> <span><i class="bi bi-clock"></i>
                   <?= readtime($post) ?> دقیقه</span>
               </div>
               <div>
@@ -95,7 +101,7 @@ $postDate = !empty($postVDATE) ? $postVDATE : $post->getColumn('date');
               </p>
               <div class="d-flex justify-content-between">
                 <p class="fs-6 mt-5 mb-0">نویسنده: <?= $post->getColumn('author') ?> </p>
-                <p class="fs-6 mt-5 mb-0"><?= jdate('j F Y در H:i ', strtotime($postDate)) ?> </p>
+                <p class="fs-6 mt-5 mb-0"><?= $date ?> <?= $editdate ?> </p>
               </div>
             </div>
           </div>

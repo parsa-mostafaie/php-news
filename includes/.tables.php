@@ -27,7 +27,7 @@ function users_table($last = true)
   $idl = function ($data) {
     return '#';
   };
-  $st = db()->TABLE('users')->SELECT('ID, CONCAT(firstname, " ", lastname) as `نام`, admin')->ORDER_BY('date desc');
+  $st = db()->TABLE('users')->SELECT('ID, CONCAT(firstname, " ", lastname) as `نام`, admin')->ORDER_BY('created_at desc');
   if ($last) {
     $st->LIMIT(5);
   }
@@ -91,7 +91,7 @@ function posts_table($last = true, $by = null)
   $st = db()->TABLE('posts as p', true)->
     SELECT($_)->
     ON('u.ID = p.author', 'users as u')
-    ->ORDER_BY('p.date desc');
+    ->ORDER_BY('p.created_at desc');
   if ($last) {
     $st->LIMIT(5);
   }
