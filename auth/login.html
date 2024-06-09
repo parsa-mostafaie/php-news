@@ -19,6 +19,7 @@
     <main class="form-signin w-100 m-auto">
       <div class="fs-2 fw-bold text-center mb-4">اخبار</div>
       <form submit-control form-wait="#wait" form-action="login.php">
+        <input type="hidden" name="back" ffqs="back" />
         <div class="mb-3">
           <label class="form-label">نام کاربری</label>
           <input
@@ -69,7 +70,10 @@
           () => (e.textContent = ""),
           ({ err }) => (e.textContent = JSON.stringify(err))
         ).init();
+      ffqs();
       });
     </script>
+
+    <script src="/libs/pluslib/frontend/ffqs.js"></script>
   </body>
 </html>

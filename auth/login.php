@@ -25,13 +25,11 @@ $__PROCESS__CALLBACK__ = function () {
   global $uname, $pword;
   if (!loginWith($uname, $pword)) {
     throw new Exception('Login Failed! Username or password is incorrect!');
-  } else {
-    ajax->redirect(c_url('/', false));
   }
 };
 
 $__PROCESS__SUCCESS__ = function () {
-  ajax->redirect(c_url('/', false));
+  ajax->redirect(redirectBack(c_url('/', false), true));
 };
 
 $__PROCESS__FAILED__ = function (Exception $ex, $isPDO) {
