@@ -112,4 +112,4 @@ $cats = db()->TABLE('categories')->SELECT('name, id')->Run()->fetchAll(PDO::FETC
     </div>
   </div>
 </div>
-<script src='<?= c_url('/assets/js/formall.js') ?>'></script>
+<?php useFormall();?>

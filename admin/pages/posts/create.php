@@ -9,7 +9,8 @@ $tiny_mce = true ?>
 
   <!-- Posts -->
   <div class="mt-4">
-    <form class="row g-4" submit-control form-wait="#wait" form-action="create-backend.php" enctype="multipart/form-data">
+    <form class="row g-4" submit-control form-wait="#wait" form-action="create-backend.php"
+      enctype="multipart/form-data">
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label" for="title">عنوان مقاله</label>
         <input type="text" class="form-control" id="title" name="title" />
@@ -46,22 +47,8 @@ $tiny_mce = true ?>
       <div class="col-12">
         <button type="submit" class="btn btn-dark" ajax-submit name='create'>ایجاد</button>
       </div>
-      <script src="/libs/pluslib/frontend/formlib.js" type="module"></script>
-      <script>
-        window.addEventListener("load", () => {
-          let e = document.querySelector("#error");
-          window.FormLibInitializer.setting(
-            "[ajax-submit]",
-            () => (e.textContent = ""),
-            ({ err }) => (e.textContent = JSON.stringify(err)),
-            undefined,
-            (df) => {
-              const editorContent = tinymce.activeEditor.getContent({ format: 'html' });
-              df.set('tiny', editorContent);
-            }
-          ).init();
-        });
-      </script>
+      <?php useFormlibAjax(); ?>
+      <?php useAjaxInit2(); ?>
     </form>
   </div>
 </main>

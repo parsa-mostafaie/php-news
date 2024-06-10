@@ -11,24 +11,15 @@
     <form class="row g-4" submit-control form-wait="#wait" form-action="create-backend.php">
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label">عنوان دسته بندی</label>
-        <input type="text" class="form-control" name='cat'/>
+        <input type="text" class="form-control" name='cat' />
       </div>
       <div id="wait">لطفا صبر کنید!</div>
       <div id="error" class='text-danger'></div>
       <div class="col-12">
         <button type="submit" class="btn btn-dark" ajax-submit name='create'>ایجاد</button>
       </div>
-      <script src="/libs/pluslib/frontend/formlib.js" type="module"></script>
-      <script>
-        window.addEventListener("load", () => {
-          let e = document.querySelector("#error");
-          window.FormLibInitializer.setting(
-            "[ajax-submit]",
-            () => (e.textContent = ""),
-            ({ err }) => (e.textContent = JSON.stringify(err))
-          ).init();
-        });
-      </script>
+      <?php useFormlibAjax() ?>
+      <?php useAjaxInit1() ?>
     </form>
   </div>
 </main>

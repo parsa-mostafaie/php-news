@@ -29,17 +29,8 @@ if (!$cat->found) {
         <button type="submit" class="btn btn-dark" ajax-submit name='update'
           value='<?= intval(get_val('cat')) ?>'>ایجاد</button>
       </div>
-      <script src="/libs/pluslib/frontend/formlib.js" type="module"></script>
-      <script>
-        window.addEventListener("load", () => {
-          let e = document.querySelector("#error");
-          window.FormLibInitializer.setting(
-            "[ajax-submit]",
-            () => (e.textContent = ""),
-            ({ err }) => (e.textContent = JSON.stringify(err))
-          ).init();
-        });
-      </script>
+      <?php useFormlibAjax(); ?>
+      <?php useAjaxInit1(); ?>
     </form>
   </div>
 </main>

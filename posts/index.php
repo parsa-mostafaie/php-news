@@ -154,5 +154,5 @@ $editdate = $post_edit > $post_vdate ? ' <b class="text-info">ویرایش شد�
     <?php include ('../components/sidebar.php') ?>
   </div>
 </section>
-<script src="/libs/pluslib/frontend/resubmit.js"></script>
+<?php useResubmit();?>
 <?php include ('../components/footer.php') ?>

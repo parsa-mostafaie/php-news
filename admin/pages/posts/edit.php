@@ -75,22 +75,8 @@ $tiny_mce = true;
       <div class="col-12">
         <button type="submit" class="btn btn-dark" ajax-submit name='edit'>ویرایش</button>
       </div>
-      <script src="/libs/pluslib/frontend/formlib.js" type="module"></script>
-      <script>
-        window.addEventListener("load", () => {
-          let e = document.querySelector("#error");
-          window.FormLibInitializer.setting(
-            "[ajax-submit]",
-            () => (e.textContent = ""),
-            ({ err }) => (e.textContent = JSON.stringify(err)),
-            undefined,
-            (df) => {
-              const editorContent = tinymce.activeEditor.getContent({ format: 'html' });
-              df.set('tiny', editorContent);
-            }
-          ).init();
-        });
-      </script>
+      <?php useFormlibAjax();?>
+      <?php useAjaxInit2();?>
     </form>
   </div>
 </main>
