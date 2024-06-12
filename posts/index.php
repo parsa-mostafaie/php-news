@@ -38,8 +38,8 @@ $seoFriendly_URL = normalRoute();
 $post_edit = $post->edit; // edition
 $post_date = $post->date; // Creation
 $post_vdate = $post->vdate; // Verify (Publish)
-$date = empty($post_vdate) ? '-' : jdate('j F Y', strtotime(max($post_vdate, $post_edit)));
-$editdate = $post_edit > $post_vdate ? ' <b class="text-info">ویرایش شده</b>' : ''
+$date = empty($post_vdate) ? '<b class="text-success">تایید نشده</b>' : jdate('j F Y', strtotime(max($post_vdate, $post_edit)));
+$editdate = $post_edit > $post_vdate && $post_vdate ? ' <b class="text-info">ویرایش شده</b>' : ''
   ?>
 <?php if ($_SERVER['REQUEST_URI'] != $seoFriendly_URL): ?>
   <script>
@@ -154,5 +154,5 @@ $editdate = $post_edit > $post_vdate ? ' <b class="text-info">ویرایش شد�
     <?php include ('../components/sidebar.php') ?>
   </div>
 </section>
-<?php useResubmit();?>
+<?php useResubmit(); ?>
 <?php include ('../components/footer.php') ?>
