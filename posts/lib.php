@@ -77,7 +77,7 @@ function comments($parent = 'NULL')
 function postID()
 {
   sscanf($_SERVER['REQUEST_URI'], c_url('/posts/%d', false), $d);
-  return $d;
+  return ScanRoute('/posts/%d', $d)[0];
 }
 
 function normalRoute()
