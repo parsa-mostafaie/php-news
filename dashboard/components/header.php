@@ -1,5 +1,5 @@
 <?php require_once __DIR__ . '/../../includes/c-init.php'; ?>
-<?php canlogin() || redirect(c_url('/auth/login.html')) ?>
+<?php canlogin() || redirect(c_url('/auth/login.html', false), true) ?>
 <?php $dashboardPages = c_url('/dashboard/pages/'); ?>
 <?php $dashboard = c_url('/dashboard/'); ?>
 <!DOCTYPE html>
