@@ -11,3 +11,7 @@ if (!defined('news')) {
 }
 
 Config::$passwordHash_SHA256 = false;
+Config::$devMode = true;
+Config::$login_page = c_url('/auth/login.html', false);
+
+Config::init();
