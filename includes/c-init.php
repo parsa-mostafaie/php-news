@@ -36,3 +36,5 @@ require_once '@table.php';
 require_once '@ul.php';
 require_once '@use_lib.php';
 require_once '@selectopt.php';
+
+require_once __DIR__ . '/../libs/MVC/ubc.php';

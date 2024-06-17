@@ -21,7 +21,7 @@ if (!$post->getColumn('verify')) {
 <div class="col-sm-6">
   <div class="card h-100">
     <div class='position-relative'>
-      <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image"', web_url(c_url('/assets/images/1.jpg'))) ?>
+      <?= PostImage::get_img($post_id, 'class="card-img-top" alt="post-image"') ?>
       <div class='position-absolute' style='top: 5px;left:5px'><?= badge($post->getColumn('category')) ?></div>
     </div>
     <div class="card-header d-flex justify-content-between align-items-center flex-column flex-sm-row">

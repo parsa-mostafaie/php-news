@@ -66,7 +66,7 @@ $tiny_mce = true;
 
 
       <div class="col-12 col-sm-6 col-md-4 d-flex flex-column">
-        <?= $post->getAssetBasedCol('image')->get_img('class = "w-100 img-thumbnail"', web_url(c_url('/assets/images/1.jpg'))) ?>
+        <?= PostImage::get_img($post_id, 'class = "w-100 img-thumbnail"') ?>
         <b class="text-dark text-center mt-1">تصویر فعلی</b>
       </div>
 
@@ -75,8 +75,8 @@ $tiny_mce = true;
       <div class="col-12">
         <button type="submit" class="btn btn-dark" ajax-submit name='edit'>ویرایش</button>
       </div>
-      <?php useFormlibAjax();?>
-      <?php useAjaxInit2();?>
+      <?php useFormlibAjax(); ?>
+      <?php useAjaxInit2(); ?>
     </form>
   </div>
 </main>

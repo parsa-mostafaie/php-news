@@ -30,14 +30,21 @@ $_COND = count($errors) == 0;
 // PROCESSOR
 $__PROCESS__CALLBACK__ = function () {
   global $title, $cat, $content, $author, $desc;
-  $upload = uploadFile_secure('photo', prefix: 'post.photo.');
+
+  // $upload = uploadFile_secure('photo', prefix: 'post.photo.');
+
+  db()->TABLE('posts')
+    ->INSERT('title, content, category, author, description')->VALUES('?, ?, ?, ?, ?')
+    ->Run([$title, $content, $cat, $author, $desc]);
+
+  $id = db()->lastInsertId();
+
+  $upload = PostImage::setFromInput($id, 'photo');
+
   if (!$upload) {
+    db()->TABLE('posts')->DELETE('id = ?')->Run([$id]); // Delete Record on upload fail!
     throw new Exception('Failed! Cant Upload File');
   }
-  db()->TABLE('posts')
-    ->INSERT('title, content, category, author, image, description')->VALUES('?, ?, ?, ?, ?, ?')
-    ->Run([$title, $content, $cat, $author, $upload, $desc]);
-
   ajax->redirect('./');
 };
 

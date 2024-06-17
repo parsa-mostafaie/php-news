@@ -6,7 +6,7 @@ function pcl_usid_cond()
 function comment($cid)
 {
   $comment = db()->TABLE('comments', alias: 'c')->
-    SELECT('CONCAT(u.firstname, " ", u.lastname) as fname, c.text, u.profile, c.verify')
+    SELECT('CONCAT(u.firstname, " ", u.lastname) as fname, c.text, u.profile, c.verify, u.id as uid')
     ->WHERE('c.ID=' . $cid)
     ->ON('u.ID = c.user_id', 'users as u');
 
@@ -19,12 +19,10 @@ function comment($cid)
   if (!$comment->found) {
     return '';
   }
-  $und =
-    web_url(c_url('/assets/images/profile.png'));
-  $pimg = $comment->getAssetBasedCol('profile')->
+  $pimg = UserProfile::
     get_img(
-      'width="45" height="45" alt="user-profile" class="rounded-circle"',
-      $und
+      $comment->uid,
+      'width="45" height="45" alt="user-profile" class="rounded-circle"'
     );
 
   $vhref = isAdmin() ? c_url('/admin/pages/comments/index.php#' . $cid) : '#c' . $cid;

@@ -60,7 +60,7 @@ $editdate = $post_edit > $post_vdate && $post_vdate ? ' <b class="text-info">ÙˆÛ
 
             <!-- <img src="../assets/images/6.jpg" /> -->
             <div class='position-relative'>
-              <?= $post->getAssetBasedCol('image')->get_img('class="card-img-top" alt="post-image"', web_url(c_url('/assets/images/1.jpg'))) ?>
+              <?= PostImage::get_img($post_id, 'class="card-img-top" alt="post-image"') ?>
               <div class='position-absolute' style='top: 5px;left:5px'><?= badge($post->getColumn('category')) ?></div>
               <?php if (!$post->getColumn('verify')): ?>
                 <div class='position-absolute' style='top: 5px;right:5px'><a

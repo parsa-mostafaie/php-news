@@ -34,9 +34,7 @@ $__PROCESS__CALLBACK__ = function () {
     ajax->err('ارسال ناایمن');
   }
 
-  db()->TABLE('posts')->SELECT('image, ID')->WHERE('id=?')->
-    getFirstRow([$post_id])->
-    getAssetBasedCol('image', prefix: 'post.photo.')->set_inp('photo');
+  PostImage::setFromInput($post_id, 'photo');
 
   db()->TABLE('posts')
     ->UPDATE('id=?')->SET('title=?, content=?, category = ?, description = ?, updated_at = current_timestamp()')
