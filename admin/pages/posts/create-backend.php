@@ -34,7 +34,13 @@ $__PROCESS__CALLBACK__ = function () {
   // $upload = uploadFile_secure('photo', prefix: 'post.photo.');
 
   db()->TABLE('posts')
-    ->INSERT('title, content, category, author, description')->VALUES('?, ?, ?, ?, ?')
+    ->INSERT([
+      'title' => '?',
+      'content' => '?',
+      'category' => '?',
+      'author' => '?',
+      'description' => '?'
+    ])
     ->Run([$title, $content, $cat, $author, $desc]);
 
   $id = db()->lastInsertId();

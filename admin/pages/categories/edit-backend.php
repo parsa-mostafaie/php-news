@@ -24,7 +24,7 @@ $_COND = count($errors) == 0;
 // PROCESSOR
 $__PROCESS__CALLBACK__ = function () {
   global $cat, $catn;
-  db()->TABLE('categories')->UPDATE('ID = ' . $cat)->SET('Name = ?')->Run([$catn]);
+  db()->TABLE('categories')->UPDATE('ID = ' . $cat)->SET(['Name' => '?'])->Run([$catn]);
 };
 
 $__PROCESS__SUCCESS__ = function () {

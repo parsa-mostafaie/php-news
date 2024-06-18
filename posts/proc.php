@@ -23,9 +23,8 @@ $__PROCESS__CALLBACK__ = function () {
     throw new Exception('ابتدا وارد شوید');
   }
 
-  db()->TABLE('comments')->INSERT('user_id, text, post')
-    ->VALUES(getCurrentUserInfo_prop('ID') . ', ?, ' . $post_id)
-    ->Run([$ctext]);
+  db()->TABLE('comments')->INSERT(['user_id' => '?', 'text' => '?', 'post' => '?'])
+    ->Run([getCurrentUserInfo_prop('ID'), $ctext, $post_id]);
 };
 
 $__PROCESS__SUCCESS__ = function () {

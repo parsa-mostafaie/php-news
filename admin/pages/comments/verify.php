@@ -10,6 +10,6 @@ if (!$com) {
   _404_();
 }
 
-db()->TABLE('comments')->UPDATE('id = ?')->SET('verify = 1')->Run([$com]);
+db()->TABLE('comments')->UPDATE('id = ?')->SET(['verify' => 1])->Run([$com]);
 
 redirect('./');

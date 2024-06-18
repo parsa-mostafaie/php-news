@@ -37,7 +37,15 @@ $__PROCESS__CALLBACK__ = function () {
   PostImage::setFromInput($post_id, 'photo');
 
   db()->TABLE('posts')
-    ->UPDATE('id=?')->SET('title=?, content=?, category = ?, description = ?, updated_at = current_timestamp()')
+    ->UPDATE('id=?')->SET(
+      [
+        'title' => '?',
+        'content' => '?',
+        'category' => '?',
+        'description' => '?',
+        'updated_at' => 'current_timestamp()'
+      ]
+    )
     ->Run([$title, $content, $cat, $desc, $post_id]);
 
 };

@@ -23,7 +23,7 @@ $_COND = count($errors) == 0;
 // PROCESSOR
 $__PROCESS__CALLBACK__ = function () {
   global $cat;
-  db()->TABLE('categories')->INSERT('name')->VALUES('?')->Run([$cat]);
+  db()->TABLE('categories')->INSERT(['name' => '?'])->Run([$cat]);
   ajax->redirect('./');
 };
 
