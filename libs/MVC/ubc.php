@@ -7,15 +7,15 @@ defined('ABSPATH') || exit;
 
 class PostImage extends UploadBaseColumn
 {
+  protected ?string $table = 'posts';
+  protected string $colName = 'image';
+  protected string $prefix = 'post.photo';
 
   function __construct()
   {
     parent::__construct();
 
-    $this->tbl = db()->TABLE('posts');
-    $this->prefix = 'post.photo.';
-    $this->colName = 'image';
-    $this->altImage = web_url(c_url('/assets/images/1.jpg'));
+    $this->altImage = c_url('/assets/images/1.jpg', false);
   }
 }
 
@@ -25,6 +25,6 @@ class UserProfile extends DefaultsUserProfile
   {
     parent::__construct();
 
-    $this->altImage = web_url(c_url('/assets/images/profile.png'));
+    $this->altImage = c_url('/assets/images/profile.png', false);
   }
 }
