@@ -9,6 +9,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>اخبار</title>
+  <link rel="shortcut icon" href="<?= c_url('favicon.ico', false) ?>" type="image/x-icon">
 
   <?php useBootstrap() ?>
   <link rel="stylesheet" href="<?= $dashboard ?>assets/css/style.css" />
