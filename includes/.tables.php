@@ -4,7 +4,7 @@ function categories_table()
 {
   $actions = function ($data) {
     return '<a href="' . c_url('/admin/pages/categories/edit.php?cat=') . $data['ID'] . '" class="btn btn-sm btn-outline-dark">ویرایش</a>
-                  <a href="' . c_url('/admin/pages/categories/rem.php?cat=') . $data['ID'] . '" class="btn btn-sm btn-outline-danger">حذف</a>';
+                  <a type="submit" http-method="DELETE" href="' . c_url('/admin/pages/categories/rem.php?cat=') . $data['ID'] . '" class="btn btn-sm btn-outline-danger">حذف</a>';
   };
   $idl = function ($data) {
     ['v' => $v] = $data;
@@ -12,6 +12,7 @@ function categories_table()
   };
   $st = db()->TABLE('categories')->SELECT('ID, Name as `عنوان`')->Run();
   tablify($st, 'عملیات', $actions, head_link: $idl);
+  useHTTPLink();
 }
 
 function users_table($last = true)

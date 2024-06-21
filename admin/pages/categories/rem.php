@@ -1,12 +1,14 @@
 <?php require_once '../../../includes/c-init.php';
 
+pls_validate_http_method('delete');
+
 API_header();
 
 authAdmin();
 
 $cat = get_val('cat');
 
-if(!$cat){
+if (!$cat) {
   _404_();
 }
 

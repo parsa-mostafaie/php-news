@@ -8,7 +8,7 @@
 
   <!-- Posts -->
   <div class="mt-4">
-    <form class="row g-4" submit-control form-wait="#wait" form-action="create-backend.php">
+    <form class="row g-4" submit-control form-wait="#wait" form-method="PUT" form-action="create-backend.php">
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label">عنوان دسته بندی</label>
         <input type="text" class="form-control" name='cat' />

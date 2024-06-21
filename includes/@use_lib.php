@@ -37,6 +37,18 @@ function useFormlibAjax()
   <?php
 }
 
+function useHTTPLink()
+{
+  static $imported = false;
+  if ($imported)
+    return;
+  ?>
+  <script src="/libs/pluslib/frontend/httplink.js" defer type="module"></script>
+  <?php
+  $imported = true;
+}
+
+
 function useAjaxInit1()
 {
   ?>

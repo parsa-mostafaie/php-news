@@ -1,5 +1,7 @@
 <?php require_once '../../../includes/c-init.php';
 
+pls_validate_http_method('put');
+
 API_header();
 
 authAdmin();
@@ -24,7 +26,6 @@ $_COND = count($errors) == 0;
 $__PROCESS__CALLBACK__ = function () {
   global $cat;
   db()->TABLE('categories')->INSERT(['name' => '?'])->Run([$cat]);
-  ajax->redirect('./');
 };
 
 $__PROCESS__SUCCESS__ = function () {
