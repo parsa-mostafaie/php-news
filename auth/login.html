@@ -63,14 +63,9 @@
       crossorigin="anonymous"
     ></script>
     <script src="/libs/pluslib/frontend/formlib.js" type="module"></script>
+    <script src="../assets/js/ajaxInit1.js"></script>
     <script>
       window.addEventListener("load", () => {
-        let e = document.querySelector("#error");
-        window.FormLibInitializer.setting(
-          "[ajax-submit]",
-          () => (e.textContent = ""),
-          ({ err }) => (e.textContent = JSON.stringify(err))
-        ).init();
         ffqs();
         let $urlparams = new URLSearchParams(location.href);
         let $why = document.querySelector(".why");

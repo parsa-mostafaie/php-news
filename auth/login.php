@@ -24,7 +24,7 @@ $_COND = count($errors) == 0;
 $__PROCESS__CALLBACK__ = function () {
   global $uname, $pword;
   if (!loginWith($uname, $pword)) {
-    throw new Exception('Login Failed! Username or password is incorrect!');
+    throw new Exception('<b>لاگین شکست خورد!</b> نام کاربری یا پسورد اشتباه است!');
   }
 };
 

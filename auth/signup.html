@@ -81,6 +81,7 @@
 
           <div id="wait">لطفا صبر کنید!</div>
 
+          <div id="error" class="text-danger"></div>
           <div style="overflow: auto">
             <div class="mt-3 d-flex justify-content-center gap-1">
               <button type="button" id="prevBtn" class="btn btn-dark">
@@ -106,7 +107,6 @@
           <label class="form-label">قبلا ثبت نام کرده اید؟</label>
           <a class="" href="login.html">ورود</a>
         </div>
-        <div id="error" class="text-danger"></div>
       </form>
     </main>
 
@@ -118,14 +118,9 @@
     <script src="/libs/pluslib/frontend/multistepform.js"></script>
     <script src="/libs/pluslib/frontend/formlib.js" type="module"></script>
     <script src="/libs/pluslib/frontend/ffqs.js"></script>
+    <script src="../assets/js/ajaxInit1.js"></script>
     <script>
       window.addEventListener("load", () => {
-        let e = document.querySelector("#error");
-        window.FormLibInitializer.setting(
-          "[ajax-submit]",
-          () => (e.textContent = ""),
-          ({ err }) => (e.textContent = JSON.stringify(err))
-        ).init();
         ffqs();
       });
     </script>
