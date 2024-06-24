@@ -43,7 +43,10 @@ function useHTTPLink()
   if ($imported)
     return;
   ?>
-  <script src="/libs/pluslib/frontend/httplink.js" defer type="module"></script>
+  <script type="module">
+    import { httplinksInit } from '/libs/pluslib/frontend/httplink.js';
+    window.addEventListener('load', () => httplinksInit())
+  </script>
   <?php
   $imported = true;
 }
