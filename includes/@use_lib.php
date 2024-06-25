@@ -72,3 +72,15 @@ function useFormall()
   <script src='<?= c_url('/assets/js/formall.js') ?>'></script>
   <?php
 }
+
+function useSweetAlert()
+{
+  static $imported = false;
+  if ($imported) {
+    return;
+  }
+  ?>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <?php
+  $imported = true;
+}
