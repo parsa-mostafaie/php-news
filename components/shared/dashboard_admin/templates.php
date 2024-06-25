@@ -80,5 +80,6 @@ $sidebarTemplate = [
     'icon' => 'box-arrow-left',
     'title' => 'خروج',
     'href' => c_url('/auth/signout.php'),
+    'danger' => true
   ],
 ];

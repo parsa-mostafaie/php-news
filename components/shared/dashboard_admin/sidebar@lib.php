@@ -39,7 +39,7 @@ function navGenerate($template, $sub = false, $supOpen = false)
 
       if (!$route['hide']) { ?>
         <li class="nav-item">
-          <a class="<?= sidebarItemClass ?> <?= $lnkClass ?>" href="<?= $routeLnk ?>">
+          <a class="<?= sidebarItemClass ?> <?= $lnkClass ?>" href="<?= $routeLnk ?>" <?= $route['danger']??false ? 'danger-btn' : '' ?>>
             <i class="bi bi-<?= $routeIcon ?> fs-4 text-secondary"></i>
             <span class="fw-bold"><?= $routeTitle ?></span>
           </a>

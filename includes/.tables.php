@@ -4,7 +4,7 @@ function categories_table()
 {
   $actions = function ($data) {
     return '<a href="' . c_url('/admin/pages/categories/edit.php?cat=') . $data['ID'] . '" class="btn btn-sm btn-outline-dark">ویرایش</a>
-                  <a type="submit" http-method="DELETE" href="' . c_url('/admin/pages/categories/rem.php?cat=') . $data['ID'] . '" class="btn btn-sm btn-outline-danger">حذف</a>';
+                  <a type="submit" http-method="DELETE" danger-btn href="' . c_url('/admin/pages/categories/rem.php?cat=') . $data['ID'] . '" class="btn btn-sm btn-outline-danger">حذف</a>';
   };
   $idl = function ($data) {
     ['v' => $v] = $data;
@@ -12,6 +12,7 @@ function categories_table()
   };
   $st = db()->TABLE('categories')->SELECT('ID, Name as `عنوان`')->Run();
   tablify($st, 'عملیات', $actions, head_link: $idl);
+  useDangerButtons();
   useHTTPLink();
 }
 
@@ -42,7 +43,7 @@ function comments_table($last = true, $by = null)
     $nv = '<a href="' . c_url('/admin/pages/comments/verify.php?com=' . $data['ID']) . '" class="btn btn-sm btn-outline-info">در انتظار تایید</a>';
     $v = '<a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>';
     $vb = $data['verify'] ? $v : $nv;
-    return $vb . ' <a href="' . c_url('/admin/pages/comments/rem.php?com=' . $data['ID']) . '" class="btn btn-sm btn-outline-danger">حذف</a>';
+    return $vb . ' <a danger-btn href="' . c_url('/admin/pages/comments/rem.php?com=' . $data['ID']) . '" class="btn btn-sm btn-outline-danger">حذف</a>';
   };
 
   $st =
@@ -77,6 +78,7 @@ function comments_table($last = true, $by = null)
     rowid: $ril,
     empty_msg: '<div class="alert alert-dark">هیچ کامنتی پیدا نشد!</div>'
   );
+  useDangerButtons();
 }
 
 
@@ -86,7 +88,7 @@ function posts_table($last = true, $by = null)
     $nv = '<a href="' . c_url('/admin/pages/posts/verify.php?post=' . $data['ID']) . '" class="btn btn-sm btn-outline-info">در انتظار تایید</a>';
     $v = '<a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>';
     $vb = $data['verify'] ? $v : $nv;
-    return $vb . ' <a href="' . c_url('/admin/pages/posts/edit.php?post=' . $data['ID']) . '" class="btn btn-sm btn-outline-dark">ویرایش</a>' . ' <a href="' . c_url('/admin/pages/posts/rem.php?post=' . $data['ID']) . '" class="btn btn-sm btn-outline-danger">حذف</a>';
+    return $vb . ' <a href="' . c_url('/admin/pages/posts/edit.php?post=' . $data['ID']) . '" class="btn btn-sm btn-outline-dark">ویرایش</a>' . ' <a href="' . c_url('/admin/pages/posts/rem.php?post=' . $data['ID']) . '" danger-btn class="btn btn-sm btn-outline-danger">حذف</a>';
   };
   $_ = 'p.verify, p.ID, Title as `عنوان`, (CONCAT(u.firstname, " ",u.lastname)) as `نویسنده`';
   $st = db()->TABLE('posts as p', true)->
@@ -117,4 +119,6 @@ function posts_table($last = true, $by = null)
     rowid: $ril,
     empty_msg: '<div class="alert alert-dark">هیچ پستی پیدا نشد!</div>'
   );
+
+  useDangerButtons();
 }

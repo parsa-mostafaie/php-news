@@ -124,3 +124,4 @@ include_once 'templates.php';
   });
   // DOMContentLoaded  end
 </script>
+<?php useDangerButtons()?>

@@ -84,3 +84,11 @@ function useSweetAlert()
   <?php
   $imported = true;
 }
+
+function useDangerButtons()
+{
+  useSweetAlert();
+  ?>
+  <script src="<?= www_url(c_url('/assets/js/dangerbtn.js', false)) ?>"></script>
+<?php
+}
