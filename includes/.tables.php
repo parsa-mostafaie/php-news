@@ -40,10 +40,10 @@ function users_table($last = true)
 function comments_table($last = true, $by = null)
 {
   $actions = function ($data) {
-    $nv = '<a href="' . c_url('/admin/pages/comments/verify.php?com=' . $data['ID']) . '" class="btn btn-sm btn-outline-info">در انتظار تایید</a>';
+    $nv = '<a http-method="PUT" href="' . c_url('/admin/pages/comments/verify.php?com=' . $data['ID']) . '" class="btn btn-sm btn-outline-info">در انتظار تایید</a>';
     $v = '<a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>';
     $vb = $data['verify'] ? $v : $nv;
-    return $vb . ' <a danger-btn href="' . c_url('/admin/pages/comments/rem.php?com=' . $data['ID']) . '" class="btn btn-sm btn-outline-danger">حذف</a>';
+    return $vb . ' <a danger-btn http-method="DELETE" href="' . c_url('/admin/pages/comments/rem.php?com=' . $data['ID']) . '" class="btn btn-sm btn-outline-danger">حذف</a>';
   };
 
   $st =
@@ -79,16 +79,17 @@ function comments_table($last = true, $by = null)
     empty_msg: '<div class="alert alert-dark">هیچ کامنتی پیدا نشد!</div>'
   );
   useDangerButtons();
+  useHTTPLink();
 }
 
 
 function posts_table($last = true, $by = null)
 {
   $actions = function ($data) {
-    $nv = '<a href="' . c_url('/admin/pages/posts/verify.php?post=' . $data['ID']) . '" class="btn btn-sm btn-outline-info">در انتظار تایید</a>';
+    $nv = '<a http-method="PUT" href="' . c_url('/admin/pages/posts/verify.php?post=' . $data['ID']) . '" class="btn btn-sm btn-outline-info">در انتظار تایید</a>';
     $v = '<a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>';
     $vb = $data['verify'] ? $v : $nv;
-    return $vb . ' <a href="' . c_url('/admin/pages/posts/edit.php?post=' . $data['ID']) . '" class="btn btn-sm btn-outline-dark">ویرایش</a>' . ' <a href="' . c_url('/admin/pages/posts/rem.php?post=' . $data['ID']) . '" danger-btn class="btn btn-sm btn-outline-danger">حذف</a>';
+    return $vb . ' <a href="' . c_url('/admin/pages/posts/edit.php?post=' . $data['ID']) . '" class="btn btn-sm btn-outline-dark">ویرایش</a>' . ' <a href="' . c_url('/admin/pages/posts/rem.php?post=' . $data['ID']) . '" danger-btn class="btn btn-sm btn-outline-danger" http-method="DELETE">حذف</a>';
   };
   $_ = 'p.verify, p.ID, Title as `عنوان`, (CONCAT(u.firstname, " ",u.lastname)) as `نویسنده`';
   $st = db()->TABLE('posts as p', true)->
@@ -121,4 +122,5 @@ function posts_table($last = true, $by = null)
   );
 
   useDangerButtons();
+  useHTTPLink();
 }
