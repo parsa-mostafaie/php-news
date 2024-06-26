@@ -25,7 +25,7 @@ try {
     _500_();
   }
   // Successfull:
-  echo json_encode(array('location' => http_baseurl() . web_url(urlOfUpload($file))));
+  echo json_encode(array('location' => web_url(urlOfUpload($file))));
 } catch (Exception $ex) {
   $status = $ex->getCode();
   if ($status == 400) {
