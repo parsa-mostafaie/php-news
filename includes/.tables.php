@@ -23,8 +23,8 @@ function users_table($last = true)
       return '';
     }
     return !$data['admin'] ?
-      '<a href="' . c_url('/admin/pages/users/grw.php?usr=') . $data['ID'] . '" class="btn btn-sm btn-outline-dark">ارتقا</a>'
-      : '<a href="' . c_url('/admin/pages/users/shrnk.php?usr=') . $data['ID'] . '" class="btn btn-sm btn-danger">تنزل</a>';
+      '<a http-method="patch" href="' . c_url('/admin/pages/users/grw.php?usr=') . $data['ID'] . '" class="btn btn-sm btn-outline-dark">ارتقا</a>'
+      : '<a http-method="patch" href="' . c_url('/admin/pages/users/shrnk.php?usr=') . $data['ID'] . '" class="btn btn-sm btn-danger">تنزل</a>';
   };
   $idl = function ($data) {
     return '#';
@@ -35,6 +35,7 @@ function users_table($last = true)
   }
   $st = $st->Run();
   tablify($st, 'عملیات', $actions, head_link: $idl, hidden: ['admin']);
+  useHTTPLink();
 }
 
 function comments_table($last = true, $by = null)
