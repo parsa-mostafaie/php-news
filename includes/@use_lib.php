@@ -55,14 +55,14 @@ function useHTTPLink()
 function useAjaxInit1()
 {
   ?>
-  <script src="<?= www_url(c_url('/assets/js/ajaxInit1.js', false)) ?>"></script>
+  <script src="<?= www_url(c_url('/assets/js/ajaxInit1.js', false)) ?>" type="module"></script>
   <?php
 }
 
 function useAjaxInit2()
 {
   ?>
-  <script src="<?= www_url(c_url('/assets/js/ajaxInit2.js', false)) ?>"></script>
+  <script src="<?= www_url(c_url('/assets/js/ajaxInit2.js', false)) ?>" type="module"></script>
   <?php
 }
 
@@ -90,5 +90,5 @@ function useDangerButtons()
   useSweetAlert();
   ?>
   <script src="<?= www_url(c_url('/assets/js/dangerbtn.js', false)) ?>"></script>
-<?php
+  <?php
 }
