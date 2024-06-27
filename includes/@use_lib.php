@@ -88,7 +88,24 @@ function useSweetAlert()
 function useDangerButtons()
 {
   useSweetAlert();
+  static $imported = false;
+  if ($imported) {
+    return;
+  }
   ?>
   <script src="<?= www_url(c_url('/assets/js/dangerbtn.js', false)) ?>"></script>
   <?php
+  $imported = true;
+}
+
+function useAjaxContent()
+{
+  static $imported = false;
+  if ($imported) {
+    return;
+  }
+  ?>
+  <script src="/<?= RELPATH ?>frontend/ajax-content.js" type="module"></script>
+  <?php
+  $imported = true;
 }
