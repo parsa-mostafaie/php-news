@@ -11,49 +11,58 @@ function tablify(
   $rowid = '',
   $empty_msg = null
 ) {
-  $html = '<table class="table table-hover align-middle text-nowrap"><thead>';
-  $fetch = $st->fetchAll(PDO::FETCH_ASSOC);
-  if (!$st->rowCount() && $empty_msg) {
-    if ($echo) {
-      echo $empty_msg;
+  ?>
+  <table class="table table-hover align-middle text-nowrap">
+    <thead><?php
+    $fetch = $st->fetchAll(PDO::FETCH_ASSOC);
+    if (!$st->rowCount() && $empty_msg) {
+      if ($echo) {
+        echo $empty_msg;
+      }
+      return $empty_msg;
     }
-    return $empty_msg;
-  }
-  $headers = colnames($st);
-  foreach ($headers as $header) {
-    if (in_array($header, $hidden)) {
-      continue;
-    }
-    $html .= "<th>$header</th>";
-  }
-  if ($h_actions and $actions) {
-    $html .= "<th>$h_actions</th>";
-  }
-  $html .= "<tbody>";
-  foreach ($fetch as $data) {
-    $html .= "<tr id='" . valueof($rowid, $data) . "'>";
-    foreach ($data as $k => $cold) {
-      if (in_array($k, $hidden)) {
+    $headers = colnames($st);
+    foreach ($headers as $header) {
+      if (in_array($header, $hidden)) {
         continue;
       }
-      if (!in_array($k, $th_s))
-        $html .= "<td>$cold</td>";
-      else {
-        $_cold = "<a href='" . valueof($head_link, ['k' => $k, 'v' => $cold]) . "'>$cold</a>";
-        $html .= "<th>$_cold</th>";
-      }
+      ?>
+        <th><?= $header ?></th><?php
     }
     if ($h_actions and $actions) {
-      $actions_ = valueof($actions, $data);
-      $html .= "<!-- 1 --><td>$actions_</td>";
+      ?>
+        <th><?= $h_actions ?></th><?php
     }
-    $html .= '</tr>';
-  }
+    ?>
+    <tbody><?php
+    foreach ($fetch as $data) {
+      ?>
+        <tr id='<?= valueof($rowid, $data) ?>'>
+          <?php
+          foreach ($data as $k => $cold) {
+            if (in_array($k, $hidden)) {
+              continue;
+            }
+            if (!in_array($k, $th_s)) {
+              ?>
+              <td><?= $cold ?></td><?php
+            } else {
+              ?>
+              <th><a href='<?= valueof($head_link, [' k' => $k, 'v' => $cold]) ?>'><?= $cold ?></a></th><?php
+            }
+          }
+          if ($h_actions and $actions) {
+            ?>
+            <td><?= valueof($actions, $data) ?></td>
+            <?php
+          }
+          ?>
+        </tr><?php
+    }
 
-  $html .= '</tbody></table>';
-  if ($echo)
-    echo $html;
-  return $html;
+    ?>
+    </tbody>
+  </table><?php
 }
 
 include ('.tables.php');

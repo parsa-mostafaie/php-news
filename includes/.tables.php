@@ -3,8 +3,14 @@
 function categories_table()
 {
   $actions = function ($data) {
-    return '<a href="' . c_url('/admin/pages/categories/edit.php?cat=') . $data['ID'] . '" class="btn btn-sm btn-outline-dark">ویرایش</a>
-                  <a type="submit" http-method="DELETE" danger-btn href="' . c_url('/admin/pages/categories/rem.php?cat=') . $data['ID'] . '" class="btn btn-sm btn-outline-danger">حذف</a>';
+    ?>
+    <a href="<?= c_url('/admin/pages/categories/edit.php?cat=') . $data['ID'] ?>"
+      class="btn btn-sm btn-outline-dark">ویرایش</a>
+    <a type="submit" http-method="DELETE" danger-btn
+      href="<?= c_url('/admin/pages/categories/rem.php?cat=') . $data['ID'] ?>"
+      class="btn btn-sm btn-outline-danger">حذف</a>
+    <?php
+    return '';
   };
   $idl = function ($data) {
     ['v' => $v] = $data;
@@ -22,9 +28,13 @@ function users_table($last = true)
     if ($data['ID'] == getCurrentUserInfo_prop('ID')) {
       return '';
     }
-    return !$data['admin'] ?
-      '<a http-method="patch" href="' . c_url('/admin/pages/users/grw.php?usr=') . $data['ID'] . '" class="btn btn-sm btn-outline-dark">ارتقا</a>'
-      : '<a http-method="patch" href="' . c_url('/admin/pages/users/shrnk.php?usr=') . $data['ID'] . '" class="btn btn-sm btn-danger">تنزل</a>';
+    if (!$data['admin']): ?>
+      <a http-method="patch" href="<?= c_url('/admin/pages/users/grw.php?usr=') . $data['ID'] ?>"
+        class="btn btn-sm btn-outline-dark">ارتقا</a>
+    <?php else: ?>
+      <a http-method="patch" href="<?= c_url('/admin/pages/users/shrnk.php?usr=') . $data['ID'] ?>"
+        class="btn btn-sm btn-danger">تنزل</a>
+    <?php endif;
   };
   $idl = function ($data) {
     return '#';
@@ -41,10 +51,15 @@ function users_table($last = true)
 function comments_table($last = true, $by = null)
 {
   $actions = function ($data) {
-    $nv = '<a http-method="PUT" href="' . c_url('/admin/pages/comments/verify.php?com=' . $data['ID']) . '" class="btn btn-sm btn-outline-info">در انتظار تایید</a>';
-    $v = '<a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>';
-    $vb = $data['verify'] ? $v : $nv;
-    return $vb . ' <a danger-btn http-method="DELETE" href="' . c_url('/admin/pages/comments/rem.php?com=' . $data['ID']) . '" class="btn btn-sm btn-outline-danger">حذف</a>';
+    if (!$data['verify']): ?>
+      <a http-method="PUT" href="<?= c_url('/admin/pages/comments/verify.php?com=' . $data['ID']) ?>"
+        class="btn btn-sm btn-outline-info">در انتظار تایید</a>
+    <?php else: ?>
+      <a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>
+    <?php endif; ?>
+    <a danger-btn http-method="DELETE" href="<?= c_url('/admin/pages/comments/rem.php?com=' . $data['ID']) ?>"
+      class="btn btn-sm btn-outline-danger">حذف</a>
+    <?php
   };
 
   $st =
@@ -87,10 +102,16 @@ function comments_table($last = true, $by = null)
 function posts_table($last = true, $by = null)
 {
   $actions = function ($data) {
-    $nv = '<a http-method="PUT" href="' . c_url('/admin/pages/posts/verify.php?post=' . $data['ID']) . '" class="btn btn-sm btn-outline-info">در انتظار تایید</a>';
-    $v = '<a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>';
-    $vb = $data['verify'] ? $v : $nv;
-    return $vb . ' <a href="' . c_url('/admin/pages/posts/edit.php?post=' . $data['ID']) . '" class="btn btn-sm btn-outline-dark">ویرایش</a>' . ' <a href="' . c_url('/admin/pages/posts/rem.php?post=' . $data['ID']) . '" danger-btn class="btn btn-sm btn-outline-danger" http-method="DELETE">حذف</a>';
+    if (!$data['verify']): ?>
+      <a http-method="PUT" href="<?= c_url('/admin/pages/posts/verify.php?post=' . $data['ID']) ?>"
+        class="btn btn-sm btn-outline-info">در انتظار تایید</a>
+    <?php else: ?>
+      <a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>
+    <?php endif; ?>
+    <a href="<?= c_url('/admin/pages/posts/edit.php?post=' . $data['ID']) ?>" class="btn btn-sm btn-outline-dark">ویرایش</a>
+    <a href="<?= c_url('/admin/pages/posts/rem.php?post=' . $data['ID']) ?>" danger-btn
+      class="btn btn-sm btn-outline-danger" http-method="DELETE">حذف</a>
+    <?php
   };
   $_ = 'p.verify, p.ID, Title as `عنوان`, (CONCAT(u.firstname, " ",u.lastname)) as `نویسنده`';
   $st = db()->TABLE('posts as p', true)->
