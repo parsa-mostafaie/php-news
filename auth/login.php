@@ -7,10 +7,15 @@ const ajax = new ajaxAPI();
 $pword = get_val('pass');
 $uname = get_val('uname');
 
+function is_usermail(...$p)
+{
+  return is_username(...$p) || is_email(...$p);
+}
+
 $_inps_arr = ['password' => $pword, 'username' => $uname];
 $_inps_f = [
   'password' => 'string | required',
-  'username' => 'string | username | required',
+  'username' => 'string | usermail | required',
 ];
 
 [$inputs, $errors] = filter($_inps_arr, $_inps_f);
