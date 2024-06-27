@@ -134,7 +134,7 @@ $editdate = $post_edit > $post_vdate && $post_vdate ? ' <b class="text-info">و�
                   ارسال
                 </button>
                 <?php if (!canlogin()): ?>
-                  <a href="<?= c_url('/auth/login.html') ?>" class="btn btn-success">
+                  <a href="<?= redirect(c_url('/auth/login.html'),true, gen:true) ?>" class="btn btn-success">
                     ورود به سایت
                   </a>
                 <?php endif ?>

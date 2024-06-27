@@ -40,7 +40,7 @@ $__PROCESS__SUCCESS__ = function () {
   global $uname, $pword;
   loginWith($uname, $pword);
 
-  ajax->redirect(c_url('/', false));
+  ajax->redirect(redirectBack(c_url('/', false), true));
 };
 
 $__PROCESS__FAILED__ = function (Exception $ex, $isPDO) {

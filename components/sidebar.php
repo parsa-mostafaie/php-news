@@ -80,7 +80,8 @@ $cats = db()->TABLE('categories')->SELECT('name, id')->Run()->fetchAll(PDO::FETC
     <div class="card-body">
       <p class="fw-bold fs-6">عضویت در خبرنامه</p>
 
-      <form action='<?= c_url("/auth/signup.html") ?>' method="get">
+      <form action='<?= c_url("/auth/signup.html", false) ?>' method="get">
+        <input type="hidden" name="back" value="<?= $_SERVER['REQUEST_URI'] ?>">
         <div class="mb-3">
           <label class="form-label">نام</label>
           <input type="text" class="form-control" name="name" id='username' autocomplete='username' />
@@ -112,4 +113,4 @@ $cats = db()->TABLE('categories')->SELECT('name, id')->Run()->fetchAll(PDO::FETC
     </div>
   </div>
 </div>
-<?php useFormall();?>
+<?php useFormall(); ?>
