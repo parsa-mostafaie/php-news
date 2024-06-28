@@ -103,6 +103,7 @@ function useAjaxContent()
   }
   ?>
   <script src="/<?= RELPATH ?>frontend/ajax-content.js" type="module"></script>
+  <script>window.httplinksConfig = { refreshOn: 2 }</script>
   <?php
   $imported = true;
 }
