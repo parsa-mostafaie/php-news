@@ -6,7 +6,7 @@ function categories_table()
     ?>
     <a href="<?= c_url('/admin/pages/categories/edit.php?cat=') . $data['ID'] ?>"
       class="btn btn-sm btn-outline-dark">ویرایش</a>
-    <a type="submit" http-method="DELETE" danger-btn
+    <a type="submit" http-method="DELETE" danger-btn ajax-reload='#a_cats_tbl'
       href="<?= c_url('/admin/pages/categories/rem.php?cat=') . $data['ID'] ?>"
       class="btn btn-sm btn-outline-danger">حذف</a>
     <?php
@@ -18,8 +18,6 @@ function categories_table()
   };
   $st = db()->TABLE('categories')->SELECT('ID, Name as `عنوان`')->Run();
   tablify($st, 'عملیات', $actions, head_link: $idl);
-  useDangerButtons();
-  useHTTPLink();
 }
 
 function users_table($last = true)

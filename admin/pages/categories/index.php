@@ -9,14 +9,15 @@
       <a href="./create.php" class="btn btn-sm btn-dark">
         ایجاد دسته بندی
       </a>
+      <a ajax-reload="#a_cats_tbl" class="btn btn-sm btn-primary me-1">
+        تازه سازی
+      </a>
     </div>
   </div>
 
   <!-- Categories -->
   <div class="mt-4">
-    <div class="table-responsive small">
-      <?php categories_table() ?>
-    </div>
+    <?php view('a_cats_tbl.php') ?>
   </div>
 </main>
 <?php include '../../components/footer.php' ?>

@@ -26,7 +26,7 @@
   <div class="mt-4">
     <h4 class="text-secondary fw-bold">دسته بندی</h4>
     <div class="table-responsive small">
-      <?php categories_table(); ?>
+      <?php view('a_cats_tbl.php'); ?>
     </div>
   </div>
 

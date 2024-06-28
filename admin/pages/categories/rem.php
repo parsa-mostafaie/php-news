@@ -13,5 +13,3 @@ if (!$cat) {
 }
 
 db()->TABLE('categories')->DELETE('id = ?')->Run([$cat]);
-
-redirect('./');
