@@ -8,12 +8,13 @@ function view($url, $id = null)
   $www = www_url($url);
 
   ?>
-  <div ajax-container id="<?= $id ?? basename($url) ?>">
-    <div class="loading">لطفا صبر کنید!</div>
+  <div ajax-container id="<?= $id ?? pathinfo($etc, PATHINFO_FILENAME) ?>">
+    <div class="loading d-none">لطفا صبر کنید!</div>
     <div ajax-content href="<?= $www ?>" loading=".loading">
-      <?= file_get_contents($www) ?><!-- For SEO -->
     </div>
   </div>
   <?php
+  useDangerButtons();
   useAjaxContent();
+  useHTTPLink();
 }
