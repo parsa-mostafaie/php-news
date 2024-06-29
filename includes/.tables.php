@@ -20,17 +20,17 @@ function categories_table()
   tablify($st, 'عملیات', $actions, head_link: $idl);
 }
 
-function users_table($last = true)
+function users_table($last = true, $id = "a_users_tbl")
 {
-  $actions = function ($data) {
+  $actions = function ($data) use ($id) {
     if ($data['ID'] == getCurrentUserInfo_prop('ID')) {
       return '';
     }
     if (!$data['admin']): ?>
-      <a http-method="patch" href="<?= c_url('/admin/pages/users/grw.php?usr=') . $data['ID'] ?>"
+      <a http-method="patch" ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/users/grw.php?usr=') . $data['ID'] ?>"
         class="btn btn-sm btn-outline-dark">ارتقا</a>
     <?php else: ?>
-      <a http-method="patch" href="<?= c_url('/admin/pages/users/shrnk.php?usr=') . $data['ID'] ?>"
+      <a http-method="patch" ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/users/shrnk.php?usr=') . $data['ID'] ?>"
         class="btn btn-sm btn-danger">تنزل</a>
     <?php endif;
   };
@@ -43,7 +43,6 @@ function users_table($last = true)
   }
   $st = $st->Run();
   tablify($st, 'عملیات', $actions, head_link: $idl, hidden: ['admin']);
-  useHTTPLink();
 }
 
 function comments_table($last = true, $by = null)

@@ -13,5 +13,3 @@ if (!$user) {
 }
 
 shrinkDownUser($user);
-
-redirect('./');

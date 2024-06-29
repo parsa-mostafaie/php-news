@@ -13,5 +13,3 @@ if (!$user) {
 }
 
 growUpUser($user);
-
-redirect('./');

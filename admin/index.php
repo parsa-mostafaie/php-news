@@ -34,7 +34,7 @@
   <div class="mt-4">
     <h4 class="text-secondary fw-bold">کاربران</h4>
     <div class="table-responsive small">
-      <?php users_table(); ?>
+      <?php view('l_users_tbl.php') ?>
     </div>
   </div>
 </main>
