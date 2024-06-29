@@ -9,7 +9,7 @@ function view($url, $id = null)
 
   ?>
   <div ajax-container id="<?= $id ?? pathinfo($etc, PATHINFO_FILENAME) ?>">
-    <div class="loading d-none">لطفا صبر کنید!</div>
+    <div class="loading">لطفا صبر کنید!</div>
     <div ajax-content http-method="post" href="<?= redirect($www, back: true, gen: true) ?>" loading=".loading">
     </div>
   </div>
