@@ -13,5 +13,3 @@ if (!$com) {
 }
 
 db()->TABLE('comments')->UPDATE('id = ?')->SET(['verify' => 1])->Run([$com]);
-
-redirect('./');

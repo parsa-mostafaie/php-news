@@ -45,17 +45,17 @@ function users_table($last = true, $id = "a_users_tbl")
   tablify($st, 'عملیات', $actions, head_link: $idl, hidden: ['admin']);
 }
 
-function comments_table($last = true, $by = null)
+function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
 {
-  $actions = function ($data) {
+  $actions = function ($data) use ($id) {
     if (!$data['verify']): ?>
-      <a http-method="PUT" href="<?= c_url('/admin/pages/comments/verify.php?com=' . $data['ID']) ?>"
+      <a http-method="PUT" ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/comments/verify.php?com=' . $data['ID']) ?>"
         class="btn btn-sm btn-outline-info">در انتظار تایید</a>
     <?php else: ?>
       <a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>
     <?php endif; ?>
-    <a danger-btn http-method="DELETE" href="<?= c_url('/admin/pages/comments/rem.php?com=' . $data['ID']) ?>"
-      class="btn btn-sm btn-outline-danger">حذف</a>
+    <a danger-btn http-method="DELETE" ajax-reload="#<?= $id ?>"
+      href="<?= c_url('/admin/pages/comments/rem.php?com=' . $data['ID']) ?>" class="btn btn-sm btn-outline-danger">حذف</a>
     <?php
   };
 

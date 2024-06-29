@@ -13,5 +13,3 @@ if(!$com){
 }
 
 db()->TABLE('comments')->DELETE('id = ?')->Run([$com]);
-
-redirect('./');
