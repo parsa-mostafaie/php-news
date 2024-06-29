@@ -49,8 +49,9 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
 {
   $actions = function ($data) use ($id) {
     if (!$data['verify']): ?>
-      <a http-method="PUT" ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/comments/verify.php?com=' . $data['ID']) ?>"
-        class="btn btn-sm btn-outline-info">در انتظار تایید</a>
+      <a http-method="PUT" ajax-reload="#<?= $id ?>"
+        href="<?= c_url('/admin/pages/comments/verify.php?com=' . $data['ID']) ?>" class="btn btn-sm btn-outline-info">در
+        انتظار تایید</a>
     <?php else: ?>
       <a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>
     <?php endif; ?>
@@ -91,22 +92,20 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
     rowid: $ril,
     empty_msg: '<div class="alert alert-dark">هیچ کامنتی پیدا نشد!</div>'
   );
-  useDangerButtons();
-  useHTTPLink();
 }
 
 
-function posts_table($last = true, $by = null)
+function posts_table($last = true, $by = null, $id = "a_posts_tbl")
 {
-  $actions = function ($data) {
+  $actions = function ($data) use ($id) {
     if (!$data['verify']): ?>
-      <a http-method="PUT" href="<?= c_url('/admin/pages/posts/verify.php?post=' . $data['ID']) ?>"
+      <a http-method="PUT" ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/posts/verify.php?post=' . $data['ID']) ?>"
         class="btn btn-sm btn-outline-info">در انتظار تایید</a>
     <?php else: ?>
       <a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>
     <?php endif; ?>
     <a href="<?= c_url('/admin/pages/posts/edit.php?post=' . $data['ID']) ?>" class="btn btn-sm btn-outline-dark">ویرایش</a>
-    <a href="<?= c_url('/admin/pages/posts/rem.php?post=' . $data['ID']) ?>" danger-btn
+    <a ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/posts/rem.php?post=' . $data['ID']) ?>" danger-btn
       class="btn btn-sm btn-outline-danger" http-method="DELETE">حذف</a>
     <?php
   };
@@ -139,7 +138,4 @@ function posts_table($last = true, $by = null)
     rowid: $ril,
     empty_msg: '<div class="alert alert-dark">هیچ پستی پیدا نشد!</div>'
   );
-
-  useDangerButtons();
-  useHTTPLink();
 }

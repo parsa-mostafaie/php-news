@@ -10,7 +10,7 @@
   <div class="mt-4">
     <h4 class="text-secondary fw-bold">مقالات اخیر</h4>
     <div class="table-responsive small">
-      <?php posts_table() ?>
+      <?php view('posts_tbl.php?last', 'l_posts_tbl') ?>
     </div>
   </div>
 

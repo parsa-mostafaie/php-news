@@ -13,5 +13,3 @@ if(!$post){
 }
 
 db()->TABLE('posts')->DELETE('id = ?')->Run([$post]);
-
-redirect('./');

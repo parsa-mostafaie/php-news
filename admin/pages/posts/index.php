@@ -9,13 +9,16 @@
       <a href="./create.php" class="btn btn-sm btn-dark">
         ایجاد مقاله
       </a>
+      <a ajax-reload="#a_posts_tbl" class="btn btn-sm btn-primary me-1">
+        تازه سازی
+      </a>
     </div>
   </div>
 
   <!-- Posts -->
   <div class="mt-4">
     <div class="table-responsive small">
-      <?php posts_table(false) ?>
+      <?php view('posts_tbl.php', 'a_posts_tbl') ?>
     </div>
   </div>
 </main>
