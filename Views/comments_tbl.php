@@ -1,4 +1,5 @@
 <?php include 'inc.php';
+authAdmin();
 $last = urlParam_Sended('last');
 $by = urlParam_Sended('by');
 $prefix = ($last ? 'l' : 'a') . ($by ? 's' : ''); // ls l as a
