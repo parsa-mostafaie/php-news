@@ -18,7 +18,7 @@
   <div class="mt-4">
     <h4 class="text-secondary fw-bold">کامنت های اخیر</h4>
     <div class="table-responsive small">
-      <?php view('comments_tbl.php?last') ?>
+      <?php view('comments_tbl.php?last', 'l_comments_tbl') ?>
     </div>
   </div>
 
