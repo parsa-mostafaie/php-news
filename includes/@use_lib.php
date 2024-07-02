@@ -56,6 +56,14 @@ function useAjaxInit1()
   <?php
 }
 
+function useAjaxCommentsInit()
+{
+  useFormlibAjax();
+  ?>
+  <script src="<?= www_url(c_url('/assets/js/CommentAJAX.js', false)) ?>" type="module"></script>
+  <?php
+}
+
 function useAjaxInit2()
 {
   ?>

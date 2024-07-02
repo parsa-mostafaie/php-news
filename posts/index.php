@@ -24,10 +24,6 @@ if (!$post->getColumn('verify') && !isAdmin()) {
 
 $_GET['cat'] = $post->getColumn('catid');// bold category in categories_list
 
-// comment
-include_once ('proc.php');
-// end
-
 $seoFriendly_URL = normalRoute();
 
 ['n' => $sessn, 'v' => $sessv] = secure_form();
@@ -43,7 +39,7 @@ $editdate = $post_edit > $post_vdate && $post_vdate ? ' <b class="text-info">و�
   ?>
 <?php if ($_SERVER['REQUEST_URI'] != $seoFriendly_URL): ?>
   <script>
-    window.history.replaceState({}, '', "<?= $seoFriendly_URL ?>"+window.location.hash)
+    window.history.replaceState({}, '', "<?= $seoFriendly_URL ?>" + window.location.hash)
   </script>
 <?php endif; ?>
 <?php include ('../components/header.php') ?>
@@ -114,12 +110,13 @@ $editdate = $post_edit > $post_vdate && $post_vdate ? ' <b class="text-info">و�
           <!-- Comment Form -->
           <div class="card" id="comments">
             <div class="card-body">
-              <div class="text-center" dir="ltr"><?= process_form() ?></div>
+              <div id="logs"></div>
               <p class="fw-bold fs-5">ارسال کامنت</p>
 
-              <form method="post" action="./<?= $post_id ?>#comments">
+              <form form-action="<?= c_url('/posts/public/apis/comments.php'); ?>" submit-control form-wait="#wait">
                 <input type="hidden" name="sec_form_sess_n" value="<?= $sessn ?>">
                 <input type="hidden" name="sec_form_sess_v" value="<?= $sessv ?>">
+                <input type="hidden" name="post" value="<?= $post_id ?>">
                 <div class="mb-3">
                   <label class="form-label">نام</label>
                   <input type="text" class="form-control" disabled
@@ -127,26 +124,27 @@ $editdate = $post_edit > $post_vdate && $post_vdate ? ' <b class="text-info">و�
                 </div>
                 <div class="mb-3">
                   <label class="form-label">متن کامنت</label>
-                  <textarea class="form-control" rows="3" name="ctext" <?= !canlogin() ? 'disabled' : '' ?>><?= !$_COND ? $ctext : '' ?></textarea>
-                  <p class="text-danger fw-bold text-center" dir="ltr"><?= errors('comment text') ?></p>
+                  <textarea class="form-control" rows="3" name="ctext" <?= !canlogin() ? 'disabled' : '' ?>></textarea>
                 </div>
-                <button type="submit" class="btn btn-dark" <?= !canlogin() ? 'disabled' : '' ?> name="comment">
+                <div id="wait">لطفا صبر کنید!</div>
+                <div id="error" class="text-danger pb-1"></div>
+                <button type="submit" ajax-submit class="btn btn-dark" <?= !canlogin() ? 'disabled' : '' ?>
+                  name="comment">
                   ارسال
                 </button>
                 <?php if (!canlogin()): ?>
-                  <a href="<?= redirect(c_url('/auth/login.html'),true, gen:true) ?>" class="btn btn-success">
+                  <a href="<?= redirect(c_url('/auth/login.html'), true, gen: true) ?>" class="btn btn-success">
                     ورود به سایت
                   </a>
                 <?php endif ?>
               </form>
+              <?php useAjaxCommentsInit() ?>
             </div>
           </div>
 
           <hr class="mt-4" />
           <!-- Comment Content -->
-          <p class="fw-bold fs-6">تعداد کامنت : <?= count(comments_fetch(nop: true)) ?> </p>
-
-          <?= comments() ?>
+          <?= view("post/comment.php?post=$post_id") ?>
         </div>
       </div>
     </div>
