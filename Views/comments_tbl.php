@@ -8,7 +8,7 @@ $prefix = ($last ? 'l' : 'a') . ($by ? 's' : ''); // ls l as a
   <?php comments_table($last, $by ? getCurrentUserInfo_prop('ID') : null, $prefix . '_comments_tbl') ?>
 </div>
 <script>
-  httplinksInit();
   dangerbtns();
+  httplinksInit();
   ajaxContentReLoads();
 </script>

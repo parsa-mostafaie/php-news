@@ -8,7 +8,7 @@ $prefix = ($last ? 'l' : 'a') . ($by ? 's' : ''); // ls l as a
   <?php posts_table($last, $by ? getCurrentUserInfo_prop('ID') : null, $prefix . '_posts_tbl') ?>
 </div>
 <script>
-  httplinksInit();
   dangerbtns();
+  httplinksInit();
   ajaxContentReLoads();
 </script>
