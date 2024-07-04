@@ -23,12 +23,18 @@ function categories_table()
 function users_table($last = true, $id = "a_users_tbl")
 {
   $actions = function ($data) use ($id) {
-    if ($data['ID'] == getCurrentUserInfo_prop('ID')) {
+    $c_admin = getCurrentUserInfo_prop('admin');
+    if ($data['ID'] == getCurrentUserInfo_prop('ID') || $c_admin < 2) {
       return '';
-    }
-    if (!$data['admin']): ?>
+    } ?>
+    <?php if ($data['admin'] == 1): ?>
+      <a http-method="patch" ajax-reload="#<?= $id ?>"
+        href="<?= c_url('/admin/pages/users/grw.php?admin&usr=') . $data['ID'] ?>" class="btn btn-sm btn-outline-dark">ارتقا
+        به ادمین</a>
+    <?php endif;
+    if ($data['admin'] < 1): ?>
       <a http-method="patch" ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/users/grw.php?usr=') . $data['ID'] ?>"
-        class="btn btn-sm btn-outline-dark">ارتقا</a>
+        class="btn btn-sm btn-outline-dark">ارتقا به نویسنده</a>
     <?php else: ?>
       <a http-method="patch" ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/users/shrnk.php?usr=') . $data['ID'] ?>"
         class="btn btn-sm btn-danger">تنزل</a>
@@ -50,14 +56,17 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
   $actions = function ($data) use ($id) {
     if (!$data['verify']): ?>
       <a http-method="PUT" ajax-reload="#<?= $id ?>"
-        href="<?= c_url('/admin/pages/comments/verify.php?com=' . $data['ID']) ?>" class="btn btn-sm btn-outline-info">در
+        href="<?= Auth::isRole(2) ? c_url('/admin/pages/comments/verify.php?com=' . $data['ID']) : '#' ?>"
+        class="btn btn-sm btn-outline-info">در
         انتظار تایید</a>
     <?php else: ?>
       <a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>
     <?php endif; ?>
-    <a danger-btn http-method="DELETE" ajax-reload="#<?= $id ?>"
-      href="<?= c_url('/admin/pages/comments/rem.php?com=' . $data['ID']) ?>" class="btn btn-sm btn-outline-danger">حذف</a>
-    <?php
+    <?php if (Auth::isRole(2)): ?>
+      <a danger-btn http-method="DELETE" ajax-reload="#<?= $id ?>"
+        href="<?= c_url('/admin/pages/comments/rem.php?com=' . $data['ID']) ?>" class="btn btn-sm btn-outline-danger">حذف</a>
+    <?php endif ?>
+  <?php
   };
 
   $st =
@@ -85,7 +94,7 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
   };
   tablify(
     $st,
-    isAdmin() ? 'عملیات' : null,
+    Auth::isRole(1) ? 'عملیات' : null,
     $actions,
     hidden: ['verify'],
     head_link: $idl,
@@ -99,15 +108,20 @@ function posts_table($last = true, $by = null, $id = "a_posts_tbl")
 {
   $actions = function ($data) use ($id) {
     if (!$data['verify']): ?>
-      <a http-method="PUT" ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/posts/verify.php?post=' . $data['ID']) ?>"
+      <a http-method="PUT" ajax-reload="#<?= $id ?>"
+        href="<?= Auth::isRole(2) ? c_url('/admin/pages/posts/verify.php?post=' . $data['ID']) : '#' ?>"
         class="btn btn-sm btn-outline-info">در انتظار تایید</a>
     <?php else: ?>
       <a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>
     <?php endif; ?>
-    <a href="<?= c_url('/admin/pages/posts/edit.php?post=' . $data['ID']) ?>" class="btn btn-sm btn-outline-dark">ویرایش</a>
-    <a ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/posts/rem.php?post=' . $data['ID']) ?>" danger-btn
-      class="btn btn-sm btn-outline-danger" http-method="DELETE">حذف</a>
-    <?php
+    <?php if (Post::canEdited($data['ID'])): ?>
+      <a href="<?= c_url('/writer/edit.php?post=' . $data['ID']) ?>" class="btn btn-sm btn-outline-dark">ویرایش</a>
+    <?php endif; ?>
+    <?php if (Auth::isRole(2)): ?>
+      <a ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/posts/rem.php?post=' . $data['ID']) ?>" danger-btn
+        class="btn btn-sm btn-outline-danger" http-method="DELETE">حذف</a>
+    <?php endif; ?>
+  <?php
   };
   $_ = 'p.verify, p.ID, Title as `عنوان`, (CONCAT(u.firstname, " ",u.lastname)) as `نویسنده`';
   $st = db()->TABLE('posts as p', true)->
@@ -131,7 +145,7 @@ function posts_table($last = true, $by = null, $id = "a_posts_tbl")
 
   tablify(
     $st,
-    isAdmin() ? 'عملیات' : null,
+    Auth::isRole(1) ? 'عملیات' : null,
     $actions,
     hidden: ['verify'],
     head_link: $idl,

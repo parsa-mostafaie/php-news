@@ -4,7 +4,7 @@ pls_validate_http_method(['post', 'put', 'options', 'patch']);
 
 API_header();
 
-authAdmin();
+Auth::authAdmin(2);
 
 $user = get_val('usr');
 
@@ -12,4 +12,8 @@ if (!$user) {
   _404_();
 }
 
-shrinkDownUser($user);
+$user = new User(intval($user));
+
+$user->admin -= 1;
+
+$user->update();

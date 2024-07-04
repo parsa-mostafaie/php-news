@@ -11,7 +11,7 @@ include_once '../../../includes/c-init.php';
 $imageFolder = web_url(c_url('/images/'));
 
 API_header();
-authAdmin();
+Auth::authAdmin();
 
 // Don't attempt to process the upload on an OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {

@@ -1,5 +1,5 @@
 <?php $current_page = '/posts' ?>
-<?php require_once '../../../includes/c-init.php';
+<?php require_once 'init.php';
 
 $post_qs = get_val('post');
 
@@ -7,6 +7,9 @@ if (!is_numeric($post_qs)) {
   _404_();
 }
 $post_id = intval($post_qs);
+
+EditAllowed($post_id);
+
 $post =
   db()->TABLE('posts', true, 'p')
     ->SELECT('p.created_at, p.ID, p.title, p.content, p.image, p.verify, p.description, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category, c.id as cid')
@@ -21,7 +24,7 @@ if (!$post->found) {
 
 $tiny_mce = true;
 ?>
-<?php include '../../components/header.php' ?>
+<?php include 'components/header.php' ?>
 <!-- Main Section -->
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -80,4 +83,4 @@ $tiny_mce = true;
     </form>
   </div>
 </main>
-<?php include '../../components/footer.php' ?>
+<?php include 'components/footer.php' ?>

@@ -1,10 +1,10 @@
-<?php require_once '../../../includes/c-init.php';
+<?php require_once 'init.php';
 
 pls_validate_http_method('post'); // Should be post, for file uploads
 
 API_header();
 
-authAdmin();
+Auth::authAdmin();
 
 const ajax = new ajaxAPI();
 
@@ -13,6 +13,8 @@ $cat = intval(get_val('cat'));
 $content = get_val('tiny');
 $desc = get_val('desc');
 $post_id = intval(get_val('post'));
+
+EditAllowed($post_id);
 
 $_inps_arr = ['title' => $title, 'category' => $cat, 'content' => $content, 'description' => $desc];
 $_inps_f = [

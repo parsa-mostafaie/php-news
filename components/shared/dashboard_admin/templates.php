@@ -25,7 +25,7 @@ $sidebarTemplate = [
     ]
   ],
   [
-    'hide' => !isAdmin(),
+    'hide' => !Auth::isRole(2),
     'route' => '/',
     'icon' => 'person-check-fill',
     'title' => 'پنل ادمین',
@@ -70,7 +70,7 @@ $sidebarTemplate = [
     'href' => c_url('/'),
   ],
   [
-    'hide' => !isAdmin(),
+    'hide' => !Auth::isRole(2),
     'icon' => 'database-fill',
     'title' => 'مدیریت پایگاه داده',
     'href' => '/phpmyadmin/'

@@ -1,6 +1,6 @@
 <?php $current_page = '/posts';
 $tiny_mce = true ?>
-<?php include '../../components/header.php' ?>
+<?php include 'components/header.php' ?>
 <!-- Main Section -->
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -52,4 +52,4 @@ $tiny_mce = true ?>
     </form>
   </div>
 </main>
-<?php include '../../components/footer.php' ?>
+<?php include 'components/footer.php' ?>

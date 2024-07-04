@@ -25,7 +25,7 @@ $__PROCESS__CALLBACK__ = function () {
     throw new Exception('ارسال ناایمن');
   }
 
-  if (!canlogin()) {
+  if (!Auth::canlogin()) {
     throw new Exception('ابتدا وارد شوید');
   }
 

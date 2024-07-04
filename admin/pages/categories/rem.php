@@ -4,7 +4,7 @@ pls_validate_http_method('delete');
 
 API_header();
 
-authAdmin();
+Auth::authAdmin(2);
 
 $cat = get_val('cat');
 

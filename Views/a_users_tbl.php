@@ -1,5 +1,5 @@
 <?php include 'inc.php';
-authAdmin(); ?>
+Auth::authAdmin(2); ?>
 <div class="table-responsive small">
   <?php users_table(false) ?>
 </div>

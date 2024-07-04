@@ -6,7 +6,7 @@
     <h1 class="fs-3 fw-bold">مقالات</h1>
 
     <div class="btn-toolbar mb-2 mb-md-0">
-      <a href="./create.php" class="btn btn-sm btn-dark">
+      <a href="<?= c_url('/writer/create.php') ?>" class="btn btn-sm btn-dark">
         ایجاد مقاله
       </a>
       <a ajax-reload="#a_posts_tbl" class="btn btn-sm btn-primary me-1">

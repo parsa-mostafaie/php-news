@@ -18,7 +18,7 @@ $post =
 if (!$post->found) {
   _404_();
 }
-if (!$post->getColumn('verify') && !isAdmin()) {
+if (!$post->getColumn('verify') && !Auth::isRole()) {
   _404_();
 }
 
@@ -79,9 +79,10 @@ $editdate = $post_edit > $post_vdate && $post_vdate ? ' <b class="text-info">و�
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <h5 class="card-title fw-bold">
-                  <?php if (isAdmin()): ?><a href="<?= c_url('/admin/pages/posts/edit.php?post=' . $post_id) ?>">
+                  <?php if (Post::CanEdited($post_id)): ?><a
+                      href="<?= c_url('/writer/edit.php?post=' . $post_id) ?>">
                       <i class='bi bi-pencil-square text-secondary'></i></a><?php endif ?>
-                  <?php if (isAdmin()): ?><a href="<?= c_url('/admin/pages/posts/#' . $post_id) ?>">
+                  <?php if (Auth::isRole(2)): ?><a href="<?= c_url('/admin/pages/posts/#' . $post_id) ?>">
                       <i class='bi bi-newspaper text-secondary'></i></a><?php endif ?>
                   <?= $post->getColumn('title') ?>
                 </h5>
@@ -124,15 +125,15 @@ $editdate = $post_edit > $post_vdate && $post_vdate ? ' <b class="text-info">و�
                 </div>
                 <div class="mb-3">
                   <label class="form-label">متن کامنت</label>
-                  <textarea class="form-control" rows="3" name="ctext" <?= !canlogin() ? 'disabled' : '' ?>></textarea>
+                  <textarea class="form-control" rows="3" name="ctext" <?= !Auth::canlogin() ? 'disabled' : '' ?>></textarea>
                 </div>
                 <div id="wait">لطفا صبر کنید!</div>
                 <div id="error" class="text-danger pb-1"></div>
-                <button type="submit" ajax-submit class="btn btn-dark" <?= !canlogin() ? 'disabled' : '' ?>
+                <button type="submit" ajax-submit class="btn btn-dark" <?= !Auth::canlogin() ? 'disabled' : '' ?>
                   name="comment">
                   ارسال
                 </button>
-                <?php if (!canlogin()): ?>
+                <?php if (!Auth::canlogin()): ?>
                   <a href="<?= redirect(c_url('/auth/login.html'), true, gen: true) ?>" class="btn btn-success">
                     ورود به سایت
                   </a>

@@ -4,7 +4,7 @@ pls_validate_http_method('put');
 
 API_header();
 
-authAdmin();
+Auth::authAdmin(2);
 
 $com = get_val('com');
 

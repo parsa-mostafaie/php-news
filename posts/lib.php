@@ -1,7 +1,7 @@
 <?php
 function pcl_usid_cond()
 {
-  return canlogin() ? 'user_id = ' . getCurrentUserInfo_prop('ID') : '0 = 0';
+  return Auth::canlogin() ? 'user_id = ' . getCurrentUserInfo_prop('ID') : '0 = 0';
 }
 function comment($cid)
 {

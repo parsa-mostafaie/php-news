@@ -6,8 +6,8 @@
     <h1 class="fs-3 fw-bold">مقالات شما</h1>
 
     <div class="btn-toolbar mb-2 mb-md-0">
-      <?php if (isAdmin()): ?>
-        <a href="<?= c_url('/admin/pages/posts/create.php') ?>" class="btn btn-sm btn-dark">
+      <?php if (Auth::isRole()): ?>
+        <a href="<?= c_url('/writer/create.php') ?>" class="btn btn-sm btn-dark">
           ایجاد مقاله
         </a>
       <?php endif ?>

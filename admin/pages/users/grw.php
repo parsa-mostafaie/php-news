@@ -4,7 +4,7 @@ pls_validate_http_method(['post', 'put', 'options', 'patch']);
 
 API_header();
 
-authAdmin();
+Auth::authAdmin(2);
 
 $user = get_val('usr');
 
@@ -12,4 +12,10 @@ if (!$user) {
   _404_();
 }
 
-growUpUser($user);
+$role = urlParam_Sended('admin') ? 2 : 1;
+
+$user = new User(intval($user));
+
+$user->admin = $role;
+
+$user->update();

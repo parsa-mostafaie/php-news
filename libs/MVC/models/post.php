@@ -12,4 +12,13 @@ class Post extends BaseModel
     'category' => array(self::BELONGS_TO, 'Category', 'Category'),
     'author' => array(self::BELONGS_TO, 'User', 'Author'),
   );
+
+  public static function canEdited($post_id)
+  {
+    $post = new static($post_id);
+    if(!$post->loaded()){
+      return false;
+    }
+    return $post->Author == getCurrentUserInfo_prop('ID') || \Auth::isRole(2);
+  }
 }

@@ -1,10 +1,10 @@
-<?php require_once '../../../includes/c-init.php';
+<?php require_once 'init.php';
 
 pls_validate_http_method('post'); // Should be post, for file uploads
 
 API_header();
 
-authAdmin();
+Auth::authAdmin();
 
 const ajax = new ajaxAPI();
 
