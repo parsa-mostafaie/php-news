@@ -11,5 +11,6 @@ class Comment extends BaseModel
     '_post' => array(self::HAS_ONE, 'Post', 'post'),
     '_parent' => array(self::BELONGS_TO, 'Comment', 'parent'),
     'author' => array(self::BELONGS_TO, 'User', 'user_id'),
+    'replies' => array(self::HAS_MANY, 'Comment', 'parent')
   );
 }
