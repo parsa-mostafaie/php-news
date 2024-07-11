@@ -28,7 +28,7 @@
         ],
         toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
           'bullist numlist checklist outdent indent | removeformat | code table help',
-        images_upload_url: '<?= $writer . 'posts/tnymceul.php' ?>'
+        images_upload_url: '<?= $writer . 'tnymceul.php' ?>'
       })
     </script>
     <!-- end TinyMCE -->

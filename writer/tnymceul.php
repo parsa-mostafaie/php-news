@@ -1,5 +1,5 @@
 <?php
-include_once '../../../includes/c-init.php';
+include_once 'init.php';
 // /***************************************************
 //  * Only these origins are allowed to upload images *
 //  ***************************************************/
