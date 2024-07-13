@@ -42,7 +42,7 @@ function comment($cid)
                 <h5 class="card-title me-2 mb-0 position-relative">' . $comment->getColumn('fname') . '</h5>
               </div>
 
-              <p class="card-text pt-3 pe-3">
+              <p class="card-text pt-3 px-3" dir="auto">
                 ' . nl2br($comment->getColumn('text')) . '
               </p>
               ' .
