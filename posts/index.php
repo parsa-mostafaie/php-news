@@ -107,7 +107,7 @@ $editdate = $post_edit > $post_vdate && $post_vdate ? ' <b class="text-info">و�
         <hr class="mt-4" />
 
         <!-- Comment Section -->
-        <div class="col">
+        <div class="col" id="commain">
           <!-- Comment Form -->
           <div class="card" id="comments">
             <div class="card-body">
@@ -118,6 +118,7 @@ $editdate = $post_edit > $post_vdate && $post_vdate ? ' <b class="text-info">و�
                 <input type="hidden" name="sec_form_sess_n" value="<?= $sessn ?>">
                 <input type="hidden" name="sec_form_sess_v" value="<?= $sessv ?>">
                 <input type="hidden" name="post" value="<?= $post_id ?>">
+                <input type="hidden" name="parent" id="rep" value="NULL"/>
                 <div class="mb-3">
                   <label class="form-label">نام</label>
                   <input type="text" class="form-control" disabled

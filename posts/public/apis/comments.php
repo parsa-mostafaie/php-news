@@ -6,6 +6,8 @@ API_header();
 const ajax = new ajaxAPI();
 
 $ctext = get_val('ctext');
+$parent = get_val('parent');
+$parent = is_numeric($parent) ? intval($parent) : NULL;
 
 $_inps_arr = [$ctext];
 
@@ -20,7 +22,7 @@ $_COND = count($errors) == 0;
 
 // PROCESSOR
 $__PROCESS__CALLBACK__ = function () {
-  global $ctext, $post_id;
+  global $ctext, $post_id, $parent;
   if (!secure_form(secure_form_enum::get)) {
     throw new Exception('ارسال ناایمن');
   }
@@ -29,8 +31,8 @@ $__PROCESS__CALLBACK__ = function () {
     throw new Exception('ابتدا وارد شوید');
   }
 
-  db()->TABLE('comments')->INSERT(['user_id' => '?', 'text' => '?', 'post' => '?'])
-    ->Run([getCurrentUserInfo_prop('ID'), $ctext, $post_id]);
+  db()->TABLE('comments')->INSERT(['user_id' => '?', 'text' => '?', 'post' => '?', 'parent' => '?'])
+    ->Run([getCurrentUserInfo_prop('ID'), $ctext, $post_id, $parent]);
 };
 
 $__PROCESS__SUCCESS__ = function () {

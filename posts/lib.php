@@ -42,9 +42,14 @@ function comment($cid)
                 <h5 class="card-title me-2 mb-0 position-relative">' . $comment->getColumn('fname') . '</h5>
               </div>
 
-              <p class="card-text pt-3 pr-3">
+              <p class="card-text pt-3 pe-3">
                 ' . nl2br($comment->getColumn('text')) . '
               </p>
+              ' .
+    (Auth::isRole(UserRole::Normal) ?
+      '<a data-comment="' . $cid . '" class="card-link text-decoration-none d-block pb-1" href onclick="return false;">پاسخ دادن</a>' :
+      '')
+    . '
             ' . comments($cid) . '
             </div>
           </div>';
