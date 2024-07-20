@@ -1,5 +1,7 @@
 <?php require_once '../../../includes/c-init.php';
 
+use App\Auth;
+
 pls_validate_http_method('put');
 
 API_header();

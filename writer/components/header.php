@@ -1,4 +1,5 @@
-<?php require_once __DIR__ . '/../init.php'; ?>
+<?php require_once __DIR__ . '/../init.php';
+use App\Auth; ?>
 <?php Auth::authAdmin(1) ?>
 <?php $writer = web_url(c_url('/writer/')); ?>
 <!DOCTYPE html>

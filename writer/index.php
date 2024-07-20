@@ -1,5 +1,7 @@
 <?php
 include_once ('init.php');
+use App\Auth;
+
 Auth::authAdmin();
 
 if (Auth::isRole(2)) {

@@ -1,14 +1,15 @@
 <?php
-
-use pluslib\Config;
-
 defined('ABSPATH') || exit;
 
 if (!defined('news')) {
   define('news', true);
   HOME_URL('/news');
   db('plus_news');
+  pls_autoload('App', etc_url(c_url('')));
 }
+
+use pluslib\Config;
+use App\Auth;
 
 Config::$passwordHash_SHA256 = false;
 Config::$devMode = true;

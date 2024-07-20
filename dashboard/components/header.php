@@ -1,4 +1,5 @@
-<?php require_once __DIR__ . '/../../includes/c-init.php'; ?>
+<?php require_once __DIR__ . '/../../includes/c-init.php';
+use App\Auth; ?>
 <?php Auth::canlogin() || redirect(c_url('/auth/login.html', false), true) ?>
 <?php $dashboardPages = c_url('/dashboard/pages/'); ?>
 <?php $dashboard = c_url('/dashboard/'); ?>

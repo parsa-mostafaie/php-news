@@ -1,4 +1,6 @@
 <?php
+use App\Auth;
+
 function pcl_usid_cond()
 {
   return Auth::canlogin() ? 'user_id = ' . getCurrentUserInfo_prop('ID') : '0 = 0';

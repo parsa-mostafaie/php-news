@@ -1,7 +1,11 @@
 <?php
+namespace App;
+
 defined('ABSPATH') || exit;
 
-class Auth extends pluslib\Auth
+use \User, \UserRole;
+
+class Auth extends \pluslib\Auth
 {
   protected static string $UserTable = User::class;
 

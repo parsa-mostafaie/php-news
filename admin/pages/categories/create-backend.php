@@ -1,6 +1,7 @@
 <?php require_once '../../../includes/c-init.php';
 
 use pluslib\ajaxAPI;
+use App\Auth;
 
 pls_validate_http_method('put');
 

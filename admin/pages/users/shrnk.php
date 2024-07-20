@@ -1,5 +1,7 @@
 <?php require_once '../../../includes/c-init.php';
 
+use App\Auth;
+
 pls_validate_http_method(['post', 'put', 'options', 'patch']);
 
 API_header();

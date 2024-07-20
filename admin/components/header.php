@@ -1,4 +1,5 @@
-<?php require_once __DIR__ . '/../../includes/c-init.php'; ?>
+<?php require_once __DIR__ . '/../../includes/c-init.php';
+use App\Auth; ?>
 <?php Auth::authAdmin(2) ?>
 <?php $adminPages = web_url(c_url('/admin/pages/')); ?>
 <?php $admin = web_url(c_url('/admin/')); ?>

@@ -1,5 +1,7 @@
 <?php
 include_once 'init.php';
+use App\Auth;
+
 // /***************************************************
 //  * Only these origins are allowed to upload images *
 //  ***************************************************/

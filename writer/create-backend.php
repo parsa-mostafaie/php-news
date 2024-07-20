@@ -1,6 +1,7 @@
 <?php require_once 'init.php';
 
 use pluslib\ajaxAPI;
+use App\Auth;
 
 pls_validate_http_method('post'); // Should be post, for file uploads
 

@@ -2,6 +2,7 @@
 defined('ABSPATH') || exit;
 
 use pluslib\Eloquent\BaseModel;
+use App\Auth;
 
 class Post extends BaseModel
 {
@@ -16,9 +17,9 @@ class Post extends BaseModel
   public static function canEdited($post_id)
   {
     $post = new static($post_id);
-    if(!$post->loaded()){
+    if (!$post->loaded()) {
       return false;
     }
-    return $post->Author == getCurrentUserInfo_prop('ID') || \Auth::isRole(2);
+    return $post->Author == getCurrentUserInfo_prop('ID') || Auth::isRole(2);
   }
 }

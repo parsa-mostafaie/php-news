@@ -1,4 +1,6 @@
 <?php
+use App\Auth;
+
 $sidebarTemplate = [
   [
     'hide' => false,

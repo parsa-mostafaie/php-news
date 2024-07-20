@@ -1,6 +1,8 @@
 <?php
 require_once '../includes/c-init.php';
 
+use App\Auth;
+
 include_once ('lib.php');
 
 $post_id = postID();

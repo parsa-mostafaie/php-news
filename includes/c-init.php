@@ -1,7 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/libs/pluslib/init.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/libs/jdf/jdf.php';
-require_once __DIR__ . '/../configs/config.php';
+require_once "boot.php";
 
 function colnames(PDOStatement $st)
 {
