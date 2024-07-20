@@ -1,6 +1,7 @@
 <?php require_once '../../../includes/c-init.php';
 
 use App\Auth;
+use App\Models\User;
 
 pls_validate_http_method(['post', 'put', 'options', 'patch']);
 
