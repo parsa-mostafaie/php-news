@@ -1,4 +1,6 @@
-<?php include_once 'c-init.php';
+<?php
+
+defined('ABSPATH') || exit;
 
 function selectOpt(PDOStatement $st, $col, $valRow = 'ID', $inpname = '', $def = null, $all = null, $class = '', $echo = true)
 {

@@ -1,4 +1,6 @@
-<?php include_once 'c-init.php';
+<?php
+
+defined('ABSPATH') || exit;
 
 function tablify(
   PDOStatement $st,
@@ -64,5 +66,3 @@ function tablify(
     </tbody>
   </table><?php
 }
-
-include ('tables.php');

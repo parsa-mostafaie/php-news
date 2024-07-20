@@ -1,4 +1,6 @@
-<?php include_once "c-init.php";
+<?php
+
+defined('ABSPATH') || exit;
 
 function useBootstrap()
 {
