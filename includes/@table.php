@@ -65,4 +65,4 @@ function tablify(
   </table><?php
 }
 
-include ('.tables.php');
+include ('tables.php');
