@@ -29,7 +29,7 @@ include_once '../../posts/lib.php';
       reply.addEventListener('click', () => {
         rep.value = $data;
 
-        reply.append(card);
+        reply.insertAdjacentElement("afterend", card);
       })
     });
   }
