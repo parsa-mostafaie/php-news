@@ -3,7 +3,7 @@ namespace App;
 
 defined('ABSPATH') || exit;
 
-use \User, \UserRole;
+use App\Models\User, App\Models\UserRole;
 
 class Auth extends \pluslib\Auth
 {
@@ -13,7 +13,7 @@ class Auth extends \pluslib\Auth
   {
     if (!Auth::canLogin())
       return false;
-    return User::current()->auth($role);
+    return call_user_func([static::$UserTable, 'current'])->auth($role);
   }
 
   static function authAdmin(UserRole|int $role = 1)

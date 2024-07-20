@@ -1,4 +1,6 @@
 <?php
+namespace App\Models;
+
 defined('ABSPATH') || exit;
 
 use pluslib\Eloquent\BaseModel;
@@ -11,7 +13,7 @@ class Post extends BaseModel
   protected $relationships = array(
     'comments' => array(self::HAS_MANY, 'Comment', 'post'),
     'category' => array(self::BELONGS_TO, 'Category', 'Category'),
-    'author' => array(self::BELONGS_TO, 'User', 'Author'),
+    'author' => array(self::BELONGS_TO, User::class, 'Author'),
   );
 
   public static function canEdited($post_id)

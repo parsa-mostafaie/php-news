@@ -1,6 +1,7 @@
 <?php include_once '../includes/c-init.php';
 
 use App\Auth;
+use App\Models\Post;
 
 function EditAllowed($post_id)
 {

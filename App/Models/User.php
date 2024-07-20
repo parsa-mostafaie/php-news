@@ -1,4 +1,6 @@
 <?php
+namespace App\Models;
+
 defined('ABSPATH') || exit;
 
 use pluslib\App\Models\User as UserBase;
@@ -6,7 +8,7 @@ use pluslib\App\Models\User as UserBase;
 class User extends UserBase
 {
   protected $relationships = array(
-    'posts' => array(self::HAS_MANY, 'Post', 'author'),
+    'posts' => array(self::HAS_MANY, Post::class, 'author'),
     'comments' => array(self::HAS_MANY, 'Comment', 'user_id'),
   );
 
@@ -29,11 +31,4 @@ class User extends UserBase
 
     return $this->admin >= $asInt;
   }
-}
-
-enum UserRole: int
-{
-  case Admin = 2;
-  case Normal = 0;
-  case Writer = 1;
 }

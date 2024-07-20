@@ -1,4 +1,6 @@
 <?php
+namespace App\Models;
+
 defined('ABSPATH') || exit;
 
 use pluslib\Eloquent\BaseModel;

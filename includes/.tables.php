@@ -1,5 +1,6 @@
 <?php include_once 'c-init.php';
 use App\Auth;
+use App\Models\Post;
 
 function categories_table()
 {

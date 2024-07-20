@@ -1,5 +1,6 @@
 <?php
 use App\Auth;
+use App\Models\UserRole;
 
 function pcl_usid_cond()
 {
