@@ -1,5 +1,7 @@
 <?php require_once '../includes/c-init.php';
 
+use pluslib\ajaxAPI;
+
 API_header();
 
 const ajax = new ajaxAPI();

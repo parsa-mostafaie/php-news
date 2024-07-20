@@ -1,7 +1,7 @@
 <?php
 
-use pluslib\defaults\UserProfile as DefaultsUserProfile;
-use pluslib\SQL\UploadBaseColumn;
+use pluslib\App\Models\UserProfile as PluslibUserProfile;
+use pluslib\Database\UploadBaseColumn;
 
 defined('ABSPATH') || exit;
 
@@ -19,7 +19,7 @@ class PostImage extends UploadBaseColumn
   }
 }
 
-class UserProfile extends DefaultsUserProfile
+class UserProfile extends PluslibUserProfile
 {
   function __construct()
   {

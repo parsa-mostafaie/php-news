@@ -1,5 +1,7 @@
 <?php require_once 'init.php';
 
+use pluslib\ajaxAPI;
+
 pls_validate_http_method('post'); // Should be post, for file uploads
 
 API_header();

@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') || exit;
 
-use pluslib\MVC\BaseModel;
+use pluslib\Eloquent\BaseModel;
 
 class Comment extends BaseModel
 {

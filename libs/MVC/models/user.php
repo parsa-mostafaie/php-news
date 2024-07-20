@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') || exit;
 
-use pluslib\MVC\Defaults\User as UserBase;
+use pluslib\App\Models\User as UserBase;
 
 class User extends UserBase
 {
