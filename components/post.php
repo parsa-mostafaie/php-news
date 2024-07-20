@@ -1,4 +1,6 @@
 <?php
+use App\Models\PostImage;
+
 // $__component__post_id
 
 if (!is_numeric($__component__post_id)) {

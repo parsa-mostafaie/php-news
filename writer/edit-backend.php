@@ -2,6 +2,7 @@
 
 use pluslib\ajaxAPI;
 use App\Auth;
+use App\Models\PostImage;
 
 pls_validate_http_method('post'); // Should be post, for file uploads
 

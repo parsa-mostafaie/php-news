@@ -1,5 +1,6 @@
 <?php $current_page = '/posts' ?>
 <?php require_once 'init.php';
+use App\Models\PostImage;
 
 $post_qs = get_val('post');
 

@@ -3,6 +3,7 @@ require_once '../includes/c-init.php';
 
 use App\Auth;
 use App\Models\Post;
+use App\Models\PostImage;
 
 include_once ('lib.php');
 
