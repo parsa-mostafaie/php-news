@@ -15,4 +15,4 @@ if (!$post) {
 }
 
 db()->TABLE('posts')->UPDATE('id = ?')
-  ->SET(['verify' => 1, 'verify_date' => 'current_timestamp()'])->Run([$post]);
+  ->SET(['verify' => 1, 'verify_date' => expr('current_timestamp()')])->Run([$post]);

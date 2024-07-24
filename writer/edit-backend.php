@@ -51,7 +51,7 @@ $__PROCESS__CALLBACK__ = function () {
         'content' => '?',
         'category' => '?',
         'description' => '?',
-        'updated_at' => 'current_timestamp()'
+        'updated_at' => expr('current_timestamp()')
       ]
     )
     ->Run([$title, $content, $cat, $desc, $post_id]);
