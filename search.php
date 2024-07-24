@@ -1,5 +1,7 @@
 <?php include ('components/header.php'); ?>
 <?php
+use Pluslib\Database\Condition as sqlConditionGenerator;
+
 $inp = get_val('search') ?? '';
 $page = get_val('page');
 $cat_id = intval(get_val('cat')) ?? 0;
@@ -24,6 +26,11 @@ $countres = $pres['count'];
 
 $__component__post_pdos = $pres['res'];
 
+function page($to)
+{
+  return url($_SERVER['REQUEST_URI'], ['page' => $to]);
+}
+
 function ui_pagination()
 {
   global $page, $pres;
@@ -33,7 +40,7 @@ function ui_pagination()
       <ul class="pagination">
         <?php if ($page > 1): ?>
           <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous" page="<?= $page - 1 ?>">
+            <a class="page-link" href="<?= page($page - 1) ?>" aria-label="Previous" page="<?= $page - 1 ?>">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
@@ -42,15 +49,15 @@ function ui_pagination()
           <?php $class = $i == $page ? 'fw-bold text-dark' : ''; ?>
           <li class="page-item">
             <?php if ($page != $i): ?>
-              <a class="page-link <?= $class ?>" href="#" page="<?= $i ?>"><?= $i ?></a>
+              <a class="page-link <?= $class ?>" href="<?= page($i) ?>" page="<?= $i ?>"><?= $i ?></a>
             <?php else: ?>
-              <span class="page-link <?= $class ?>" href="#" page="<?= $i ?>"><?= $i ?></span>
+              <span class="page-link <?= $class ?>" href="<?= page($i) ?>" page="<?= $i ?>"><?= $i ?></span>
             <?php endif; ?>
           </li>
         <?php endfor; ?>
         <?php if ($page < $pres['page_count']): ?>
           <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next" page="<?= $page + 1 ?>">
+            <a class="page-link" href="<?= page($page + 1) ?>" aria-label="Next" page="<?= $page + 1 ?>">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
@@ -99,16 +106,5 @@ function ui_pagination()
     <?php include ('components/sidebar.php') ?>
   </div>
 </section>
-
-<script src='/libs/pluslib/frontend/sparams.js'></script>
-<script>
-  window.addEventListener('load', () => {
-    anchors('a[page]', {
-      attribute: {
-        page: (pv, url) => setUrlParams(url, 'page', pv)
-      }
-    })
-  })
-</script>
 
 <?php include ('components/footer.php'); ?>
