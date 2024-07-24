@@ -9,6 +9,8 @@ class Comment extends BaseModel
 {
   protected $table = "comments";
   protected $id_field = "ID";
+  protected $_updated_at = null;
+  protected $_created_at = 'date';
   protected $relationships = array(
     '_post' => array(self::HAS_ONE, 'Post', 'post'),
     '_parent' => array(self::BELONGS_TO, 'Comment', 'parent'),
