@@ -7,8 +7,8 @@ use pluslib\App\Models\User as UserBase;
 
 class User extends UserBase
 {
+  const updated_at = null;
 
-  protected $_updated_at = null;
   protected $relationships = array(
     'posts' => array(self::HAS_MANY, Post::class, 'author'),
     'comments' => array(self::HAS_MANY, 'Comment', 'user_id'),
