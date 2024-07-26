@@ -28,19 +28,20 @@ if (!$post->getColumn('verify') && !Auth::isRole()) {
 
 $_GET['cat'] = $post->getColumn('catid');// bold category in categories_list
 
-$seoFriendly_URL = normalRoute();
-
 ['n' => $sessn, 'v' => $sessv] = secure_form();
 
 // Edition >= Creation
 // Verify > Creation
 // Edition <=> Verify
-$post_edit = $post->edit; // edition
-$post_date = $post->date; // Creation
-$post_vdate = $post->vdate; // Verify (Publish)
-$date = empty($post_vdate) ? '<b class="text-success">تایید نشده</b>' : jdate('j F Y', strtotime(max($post_vdate, $post_edit)));
-$editdate = $post_edit > $post_vdate && $post_vdate ? ' <b class="text-info">ویرایش شده</b>' : ''
-  ?>
+$post_edit = strtotime($post->edit); // edition
+$post_date = strtotime($post->date); // Creation
+$post_vdate = strtotime($post->vdate); // Verify (Publish)
+
+$date = empty($post_vdate) ? '<b class="text-success">تایید نشده</b>' : jdate('j F Y', $post_vdate);
+$editdate = $post_edit > ($post_vdate ?? $post_date) ? ' <small><b class="text-info">ویرایش شده</b></small>' : '';
+
+$seoFriendly_URL = normalRoute();
+?>
 <?php if ($_SERVER['REQUEST_URI'] != $seoFriendly_URL): ?>
   <script>
     window.history.replaceState({}, '', "<?= $seoFriendly_URL ?>" + window.location.hash)
@@ -83,8 +84,7 @@ $editdate = $post_edit > $post_vdate && $post_vdate ? ' <b class="text-info">و�
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <h5 class="card-title fw-bold">
-                  <?php if (Post::CanEdited($post_id)): ?><a
-                      href="<?= c_url('/writer/edit.php?post=' . $post_id) ?>">
+                  <?php if (Post::CanEdited($post_id)): ?><a href="<?= c_url('/writer/edit.php?post=' . $post_id) ?>">
                       <i class='bi bi-pencil-square text-secondary'></i></a><?php endif ?>
                   <?php if (Auth::isRole(2)): ?><a href="<?= c_url('/admin/pages/posts/#' . $post_id) ?>">
                       <i class='bi bi-newspaper text-secondary'></i></a><?php endif ?>
@@ -122,7 +122,7 @@ $editdate = $post_edit > $post_vdate && $post_vdate ? ' <b class="text-info">و�
                 <input type="hidden" name="sec_form_sess_n" value="<?= $sessn ?>">
                 <input type="hidden" name="sec_form_sess_v" value="<?= $sessv ?>">
                 <input type="hidden" name="post" value="<?= $post_id ?>">
-                <input type="hidden" name="parent" id="rep" value="NULL"/>
+                <input type="hidden" name="parent" id="rep" value="NULL" />
                 <div class="mb-3">
                   <label class="form-label">نام</label>
                   <input type="text" class="form-control" disabled

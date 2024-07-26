@@ -89,11 +89,12 @@ function postID()
 
 function normalRoute()
 {
-  global $post, $post_id;
+  global $post, $post_id, $post_date;
   $slug_ttl = $post->getColumn('title');
   $slug_ttl = slugify($slug_ttl);
   $slug_ttl = truncate($slug_ttl, 50, '');
   $sfu_e = urlencode($slug_ttl);
-  $seoFriendly_URL = c_url('/posts/' . $post_id . '/' . $sfu_e . '/', false);
+  $date = jdate("Ymj", $post_date, tr_num:"en");
+  $seoFriendly_URL = c_url("/posts/$post_id/$date/$sfu_e", false);
   return $seoFriendly_URL;
 }
