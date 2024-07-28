@@ -1,11 +1,12 @@
 <?php
 use App\Auth;
+use App\Models\User;
 use App\Models\UserRole;
 use App\Models\UserProfile;
 
 function pcl_usid_cond()
 {
-  return Auth::canlogin() ? 'user_id = ' . getCurrentUserInfo_prop('ID') : '0 = 0';
+  return Auth::canlogin() ? cond('user_id', User::current()->id) : '0';
 }
 function comment($cid)
 {
@@ -14,8 +15,8 @@ function comment($cid)
     ->WHERE('c.ID=' . $cid)
     ->ON('u.ID = c.user_id', 'users as u');
 
-  if (!isAdmin()) {
-    $comment = $comment->WHERE('(verify = 1 OR ' . pcl_usid_cond() . ')');
+  if (!Auth::isRole(2)) {
+    $comment = $comment->WHERE('verify = 1 OR ' . pcl_usid_cond() . '');
   }
 
   $comment = $comment->getFirstRow();
@@ -29,7 +30,7 @@ function comment($cid)
       'width="45" height="45" alt="user-profile" class="rounded-circle"'
     );
 
-  $vhref = isAdmin() ? c_url('/admin/pages/comments/index.php#' . $cid) : '#c' . $cid;
+  $vhref = Auth::isRole(2) ? c_url('/admin/pages/comments/index.php#' . $cid) : '#c' . $cid;
   $v = <<<HTML
                 <div class='position-absolute' style='top: 5px;left:5px'><a
                     href="$vhref"><span
@@ -66,7 +67,7 @@ function comments_fetch($parent = 'NULL', $nop = false)
   $coms = db()->TABLE('comments as c', true)->SELECT('id')
     ->WHERE('c.post=' . $post_id)->WHERE($nop ? '1=1' : "c.parent $verb $parent")
     ->ORDER_BY('c.date desc');
-  if (!isAdmin()) {
+  if (!Auth::isRole(2)) {
     $coms = $coms->WHERE('1=1 AND (verify = 1 OR ' . pcl_usid_cond() . ')');
   }
   return $coms->Run()->fetchAll(PDO::FETCH_ASSOC);
@@ -94,7 +95,7 @@ function normalRoute()
   $slug_ttl = slugify($slug_ttl);
   $slug_ttl = truncate($slug_ttl, 50, '');
   $sfu_e = urlencode($slug_ttl);
-  $date = jdate("Ymj", $post_date, tr_num:"en");
+  $date = jdate("Ymj", $post_date, tr_num: "en");
   $seoFriendly_URL = c_url("/posts/$post_id/$date/$sfu_e", false);
   return $seoFriendly_URL;
 }
