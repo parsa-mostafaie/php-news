@@ -10,7 +10,7 @@
   <div class="mt-4">
     <h4 class="text-secondary fw-bold">مقالات اخیر</h4>
     <div class="table-responsive small">
-      <?php view('posts_tbl.php?last', 'l_posts_tbl') ?>
+      <?php view('posts_tbl', 'l_posts_tbl', ['last']) ?>
     </div>
   </div>
 
@@ -18,7 +18,7 @@
   <div class="mt-4">
     <h4 class="text-secondary fw-bold">کامنت های اخیر</h4>
     <div class="table-responsive small">
-      <?php view('comments_tbl.php?last', 'l_comments_tbl') ?>
+      <?php view('comments_tbl', 'l_comments_tbl', ['last']) ?>
     </div>
   </div>
 
@@ -26,7 +26,7 @@
   <div class="mt-4">
     <h4 class="text-secondary fw-bold">دسته بندی</h4>
     <div class="table-responsive small">
-      <?php view('a_cats_tbl.php'); ?>
+      <?php view('a_cats_tbl'); ?>
     </div>
   </div>
 
@@ -34,7 +34,7 @@
   <div class="mt-4">
     <h4 class="text-secondary fw-bold">کاربران</h4>
     <div class="table-responsive small">
-      <?php view('l_users_tbl.php') ?>
+      <?php view('l_users_tbl') ?>
     </div>
   </div>
 </main>

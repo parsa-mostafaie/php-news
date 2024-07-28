@@ -17,7 +17,7 @@
 
   <!-- Categories -->
   <div class="mt-4">
-    <?php view('a_cats_tbl.php') ?>
+    <?php view('a_cats_tbl') ?>
   </div>
 </main>
 <?php include '../../components/footer.php' ?>

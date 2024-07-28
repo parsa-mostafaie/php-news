@@ -15,7 +15,7 @@
   <!-- Comments -->
   <div class="mt-4">
     <div class="table-responsive small">
-      <?php view('comments_tbl.php', 'a_comments_tbl') ?>
+      <?php view('comments_tbl', 'a_comments_tbl') ?>
     </div>
   </div>
 </main>

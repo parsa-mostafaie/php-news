@@ -18,7 +18,7 @@
   <!-- Posts -->
   <div class="mt-4">
     <div class="table-responsive small">
-      <?php view('posts_tbl.php', 'a_posts_tbl') ?>
+      <?php view('posts_tbl', 'a_posts_tbl') ?>
     </div>
   </div>
 </main>

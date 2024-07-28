@@ -14,7 +14,7 @@
   <!-- Users -->
   <div class="mt-4">
     <div class="table-responsive small">
-      <?php view('a_users_tbl.php') ?>
+      <?php view('a_users_tbl') ?>
     </div>
   </div>
 </main>

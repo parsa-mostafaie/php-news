@@ -22,7 +22,7 @@ use App\Auth;
   <!-- Posts -->
   <div class="mt-4">
     <div class="table-responsive small">
-      <?php view('posts_tbl.php?by', 'as_posts_tbl') ?>
+      <?php view('posts_tbl', 'as_posts_tbl', ['by']) ?>
     </div>
   </div>
 </main>

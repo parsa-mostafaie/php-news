@@ -1,8 +1,9 @@
 <?php
 defined('ABSPATH') || exit;
 
-function view($url, $id = null)
+function view($url, $id = null, $props = [])
 {
+  $url = url($url . ".php", $props);
   $url = c_url('/Views/' . $url);
   $etc = etc_url($url);
   $www = www_url($url);

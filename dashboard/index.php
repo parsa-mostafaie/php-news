@@ -10,7 +10,7 @@
   <div class="mt-4">
     <h4 class="text-secondary fw-bold">مقالات اخیر شما</h4>
     <div class="table-responsive small">
-      <?php view('posts_tbl.php?by&last', 'ls_posts_tbl') ?>
+      <?php view('posts_tbl', 'ls_posts_tbl', ['by','last']) ?>
     </div>
   </div>
 
@@ -18,7 +18,7 @@
   <div class="mt-4">
     <h4 class="text-secondary fw-bold">کامنت های اخیر شما</h4>
     <div class="table-responsive small">
-      <?php view('comments_tbl.php?by&last', 'ls_comments_tbl') ?>
+      <?php view('comments_tbl', 'ls_comments_tbl', ['by','last']) ?>
     </div>
   </div>
 </main>

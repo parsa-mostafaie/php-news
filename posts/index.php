@@ -150,7 +150,7 @@ $seoFriendly_URL = normalRoute();
 
           <hr class="mt-4" />
           <!-- Comment Content -->
-          <?= view("post/comment.php?post=$post_id") ?>
+          <?= view("post/comment", props:["post" => $post_id]) ?>
         </div>
       </div>
     </div>

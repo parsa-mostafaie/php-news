@@ -15,7 +15,7 @@
   <!-- Comments -->
   <div class="mt-4">
     <div class="table-responsive small">
-      <?php view('comments_tbl.php?by', 'as_comments_tbl') ?>
+      <?php view('comments_tbl', 'as_comments_tbl', ['by']) ?>
     </div>
   </div>
 </main>
