@@ -9,6 +9,10 @@ class User extends UserBase
 {
   const updated_at = null;
 
+  protected $defaultData = [
+    'admin' => 0
+  ];
+
   protected $relationships = array(
     'posts' => array(self::HAS_MANY, Post::class, 'author'),
     'comments' => array(self::HAS_MANY, 'Comment', 'user_id'),

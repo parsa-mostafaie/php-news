@@ -9,6 +9,10 @@ class Comment extends BaseModel
 {
   protected $table = "comments";
   protected $id_field = "ID";
+  protected $defaultData = [
+    'Verify' => 0,
+    'Parent' => NULL
+  ];
 
   const updated_at = null;
   const created_at = 'date';

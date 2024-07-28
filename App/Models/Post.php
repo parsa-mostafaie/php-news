@@ -10,6 +10,11 @@ class Post extends BaseModel
 {
   protected $table = "posts";
   protected $id_field = "ID";
+  protected $defaultData = [
+    'Verify' => 0,
+    'verify_date' => NULL
+  ];
+
   protected $relationships = array(
     'comments' => array(self::HAS_MANY, 'Comment', 'post'),
     'category' => array(self::BELONGS_TO, 'Category', 'Category'),
