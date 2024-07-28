@@ -13,11 +13,14 @@ window.resetReply = resetReply;
 window.addEventListener("load", () => {
   let e = document.querySelector("#error");
   let l = document.querySelector("#logs");
+  let n = document.getElementsByName("sec_form_sess_n")[0];
+  let v = document.getElementsByName("sec_form_sess_v")[0];
   window.FormLibInitializer.setting(
     "[ajax-submit]",
     (res) => {
       e.textContent = "";
       l.innerHTML = res.json.ob;
+      [n.value, v.value] = Object.values(res.json.secform);
       setTimeout(() => {
         l.innerHTML = "";
       }, 5000);
