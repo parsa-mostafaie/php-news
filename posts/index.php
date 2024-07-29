@@ -15,7 +15,7 @@ if (!is_numeric($post_id)) {
 $post_id = intval($post_id);
 $post =
   db()->TABLE('posts', true, 'p')
-    ->SELECT('c.id as catid, p.created_at as `date`, p.updated_at as `edit`, p.ID, p.title, p.content, p.description as `desc`, p.verify_date as `vdate`, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
+    ->SELECT('p.view, c.id as catid, p.created_at as `date`, p.updated_at as `edit`, p.ID, p.title, p.content, p.description as `desc`, p.verify_date as `vdate`, p.image, p.verify, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category')
     ->ON('p.author = u.id', 'users as u')->ON('c.id = p.category', 'categories as c')
     ->WHERE('p.id=?')->getFirstRow([$post_id]);
 
@@ -105,6 +105,12 @@ $seoFriendly_URL = normalRoute();
                 <p class="fs-6 mt-sm-5 mb-0 mt-1"><?= $date ?> <?= $editdate ?> </p>
               </div>
             </div>
+            <div class="card-footer">
+              <div class="d-flex justify-content-end">
+                <span><i class="bi bi-bar-chart-line-fill"></i>
+                  <?= number_format($post->view + 1); // +1 for current ?></span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -150,7 +156,7 @@ $seoFriendly_URL = normalRoute();
 
           <hr class="mt-4" />
           <!-- Comment Content -->
-          <?= view("post/comment", props:["post" => $post_id]) ?>
+          <?= view("post/comment", props: ["post" => $post_id]) ?>
         </div>
       </div>
     </div>
@@ -159,4 +165,22 @@ $seoFriendly_URL = normalRoute();
   </div>
 </section>
 <?php useResubmit(); ?>
+<script>
+  <?php $s = secure_form(); ?>
+  let fd = new FormData();
+
+  fetch(
+    "<?= url(c_url('/posts/public/apis/pview.php', false), ['post' => $post_id]) ?>",
+    {
+      method: 'PUT',
+      body: JSON.stringify({
+        "sec_form_sess_n": "<?= $s['n'] ?>",
+        "sec_form_sess_v": "<?= $s['v'] ?>"
+      }),
+      headers: new Headers({
+        "content-type": "application/json"
+      })
+    }
+  );
+</script>
 <?php include ('../components/footer.php') ?>
