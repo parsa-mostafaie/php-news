@@ -100,9 +100,9 @@ $seoFriendly_URL = normalRoute();
               <?php endif ?>
               <p class="card-text text-secondary text-justify pt-3"><?= hts_xss(($post->getColumn('content'))) ?>
               </p>
-              <div class="d-flex justify-content-between">
+              <div class="d-flex justify-content-between align-items-center flex-column flex-sm-row">
                 <p class="fs-6 mt-5 mb-0">نویسنده: <?= $post->getColumn('author') ?> </p>
-                <p class="fs-6 mt-5 mb-0"><?= $date ?> <?= $editdate ?> </p>
+                <p class="fs-6 mt-sm-5 mb-0 mt-1"><?= $date ?> <?= $editdate ?> </p>
               </div>
             </div>
           </div>
