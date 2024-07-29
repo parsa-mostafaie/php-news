@@ -84,7 +84,11 @@ $cats = db()->TABLE('categories')->SELECT('name, id')->Run()->fetchAll(PDO::FETC
         <input type="hidden" name="back" value="<?= $_SERVER['REQUEST_URI'] ?>">
         <div class="mb-3">
           <label class="form-label">نام</label>
-          <input type="text" class="form-control" name="name" id='username' autocomplete='username' />
+          <input type="text" class="form-control" name="fname" id='fname' autocomplete='username' />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">نام خانوادگی</label>
+          <input type="text" class="form-control" name="lname" id='lname' autocomplete='username' />
         </div>
         <div class="mb-3">
           <label class="form-label">ایمیل</label>
