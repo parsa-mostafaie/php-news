@@ -18,6 +18,7 @@ window.addEventListener("load", () => {
   window.FormLibInitializer.setting(
     "[ajax-submit]",
     (res) => {
+      resetReply();
       e.textContent = "";
       l.innerHTML = res.json.ob;
       [n.value, v.value] = Object.values(res.json.secform);
@@ -26,7 +27,6 @@ window.addEventListener("load", () => {
       }, 5000);
       ajaxContentLoad("#comment");
       document.querySelector("textarea[name=ctext]").value = "";
-      resetReply();
     },
     HandleError(e)
   ).init();
