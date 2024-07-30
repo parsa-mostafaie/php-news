@@ -1,5 +1,6 @@
 <?php require_once '../includes/c-init.php';
 
+use App\Auth;
 use pluslib\ajaxAPI;
 
 API_header();
@@ -30,7 +31,7 @@ $_COND = count($errors) == 0;
 // PROCESSOR
 $__PROCESS__CALLBACK__ = function () {
   global $uname, $pword;
-  if (!loginWith($uname, $pword)) {
+  if (!Auth::LoginWith($uname, $pword)) {
     throw new Exception('<b>لاگین شکست خورد!</b> نام کاربری یا پسورد اشتباه است!');
   }
 };
