@@ -1,6 +1,7 @@
 <?php require_once '../../../includes/c-init.php';
 
 use App\Auth;
+use App\Models\Comment;
 
 pls_validate_http_method('put');
 
@@ -14,4 +15,9 @@ if (!$com) {
   _404_();
 }
 
-db()->TABLE('comments')->UPDATE('id = ?')->SET(['verify' => 1])->Run([$com]);
+$comment = Comment::find($com);
+
+if (!$comment)
+  _404_();
+
+$comment->verify();
