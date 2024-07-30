@@ -20,14 +20,17 @@ if (!secure_form(secure_form_enum::get)) {
 //   'view' => expr(escape_col('view') . ' + 1')
 // ])
 //   ->Run([$post_id]);
-$post = Post::find($post_id);
+Post::withoutTimestamps(function () {
+  global $post_id;
+  $post = Post::find($post_id);
 
-if (!$post)
-  _404_();
+  if (!$post)
+    _404_();
 
-$post->view = expr(escape_col('view') . " + 1");
+  $post->view = expr(escape_col('view') . " + 1");
 
-$post->save();
+  $post->save();
+});
 
 secure_form(secure_form_enum::expire);
 ajax->send();
