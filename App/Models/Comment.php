@@ -23,4 +23,14 @@ class Comment extends BaseModel
     'author' => array(self::BELONGS_TO, 'User', 'user_id'),
     'replies' => array(self::HAS_MANY, 'Comment', 'parent')
   );
+
+  function verify($save = true)
+  {
+    $this->Verify = 1;
+
+    if ($save)
+      $this->save();
+
+    return $this;
+  }
 }

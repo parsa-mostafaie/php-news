@@ -27,6 +27,22 @@ class Post extends BaseModel
     if (!$post->loaded()) {
       return false;
     }
-    return $post->Author == getCurrentUserInfo_prop('ID') || Auth::isRole(2);
+    return $post->Author == User::current()->_id() || Auth::isRole(2);
+  }
+
+  public function canEdit()
+  {
+    return static::canEdited($this->_id());
+  }
+
+  function verify($save = true)
+  {
+    $this->Verify = 1;
+    $this->verify_date = expr('current_timestamp()');
+
+    if ($save)
+      $this->save();
+
+    return $this;
   }
 }
