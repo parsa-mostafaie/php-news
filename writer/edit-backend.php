@@ -2,6 +2,7 @@
 
 use pluslib\ajaxAPI;
 use App\Auth;
+use App\Models\Post;
 use App\Models\PostImage;
 
 pls_validate_http_method('post'); // Should be post, for file uploads
@@ -42,20 +43,30 @@ $__PROCESS__CALLBACK__ = function () {
     ajax->err('ارسال ناایمن');
   }
 
+  $post = Post::find($post_id);
+  if (!$post) {
+    _404_();
+  }
+
   PostImage::setFromInput($post_id, 'photo');
 
-  db()->TABLE('posts')
-    ->UPDATE('id=?')->SET(
-      [
-        'title' => '?',
-        'content' => '?',
-        'category' => '?',
-        'description' => '?',
-        'updated_at' => expr('current_timestamp()')
-      ]
-    )
-    ->Run([$title, $content, $cat, $desc, $post_id]);
+  // db()->TABLE('posts')
+  //   ->UPDATE('id=?')->SET(
+  //     [
+  //       'title' => '?',
+  //       'content' => '?',
+  //       'category' => '?',
+  //       'description' => '?'
+  //     ]
+  //   )
+  //   ->Run([$title, $content, $cat, $desc, $post_id]);
 
+  $post->title = $title;
+  $post->content = $content;
+  $post->category = $cat;
+  $post->description = $desc;
+
+  $post->save();
 };
 
 $__PROCESS__SUCCESS__ = function () {

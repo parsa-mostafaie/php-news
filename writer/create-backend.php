@@ -2,7 +2,9 @@
 
 use pluslib\ajaxAPI;
 use App\Auth;
+use App\Models\Post;
 use App\Models\PostImage;
+use App\Models\User;
 
 pls_validate_http_method('post'); // Should be post, for file uploads
 
@@ -13,7 +15,7 @@ Auth::authAdmin();
 const ajax = new ajaxAPI();
 
 $title = get_val('title');
-$author = getCurrentUserInfo_prop('ID');
+$author = User::current()->_id();
 $cat = intval(get_val('cat'));
 $content = get_val('tiny');
 $desc = get_val('desc');
@@ -37,26 +39,25 @@ $_COND = count($errors) == 0;
 $__PROCESS__CALLBACK__ = function () {
   global $title, $cat, $content, $author, $desc;
 
-  // $upload = uploadFile_secure('photo', prefix: 'post.photo.');
+  $post = new Post;
 
-  db()->TABLE('posts')
-    ->INSERT([
-      'title' => '?',
-      'content' => '?',
-      'category' => '?',
-      'author' => '?',
-      'description' => '?'
-    ])
-    ->Run([$title, $content, $cat, $author, $desc]);
+  $post->title = $title;
+  $post->content = $content;
+  $post->category = $cat;
+  $post->author = $author;
+  $post->description = $desc;
 
-  $id = db()->lastInsertId();
+  $post->save();
 
-  $upload = PostImage::setFromInput($id, 'photo');
+  $upload = PostImage::setFromInput($post->_id(), 'photo');
 
   if (!$upload) {
-    db()->TABLE('posts')->DELETE('id = ?')->Run([$id]); // Delete Record on upload fail!
-    throw new Exception('Failed! Cant Upload File');
+    // db()->TABLE('posts')->DELETE('id = ?')->Run([$id]); 
+    // Delete Record on upload fail! Can be replaced by transcation in future
+    $post->delete();
+    throw new Exception('فایل آپلود نشد!');
   }
+
   ajax->redirect('./');
 };
 
