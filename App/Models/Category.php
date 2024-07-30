@@ -13,7 +13,7 @@ class Category extends BaseModel
   const updated_at = null;
   const created_at = null;
 
-  protected $_timestamps = false;
+  public $_timestamps = false;
 
   protected $relationships = array(
     'posts' => array(self::HAS_MANY, Post::class, 'Category'),
