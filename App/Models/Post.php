@@ -24,6 +24,7 @@ use pluslib\Database\Expression;
  * @property string $description
  * 
  * @property int $Verify
+ * @property int $verify
  * 
  * @property Category $category
  * @property User $author
@@ -40,7 +41,8 @@ class Post extends BaseModel
 
   protected $translation = [
     'content' => "Content",
-    'title' => "Title"
+    'title' => "Title",
+    'verify' => "Verify"
   ];
 
   protected $relationships = array(
@@ -81,7 +83,7 @@ class Post extends BaseModel
 
   function verified()
   {
-    return !empty($this->verify_date) && $this->Verify;
+    return $this->verify_date && $this->verify;
   }
 
   function published()
