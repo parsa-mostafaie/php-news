@@ -3,8 +3,28 @@ namespace App\Models;
 
 defined('ABSPATH') || exit;
 
+use pluslib\Database\Expression;
 use pluslib\Eloquent\BaseModel;
 
+/**
+ * @property Expression|string $date
+ * 
+ * @property int $Verify
+ * 
+ * @property int $ID
+ * @property int $Parent
+ * @property int $post
+ * @property int $user_id
+ * 
+ * @property string $text
+ * 
+ * @property string $Text
+ * 
+ * @property Post $_post
+ * @property Comment $parent
+ * @property User $author
+ * @property Comment[] $replies
+ */
 class Comment extends BaseModel
 {
   protected $table = "comments";
@@ -17,11 +37,15 @@ class Comment extends BaseModel
   const updated_at = null;
   const created_at = 'date';
 
+  protected $translation = [
+    'text' => 'Text'
+  ];
+
   protected $relationships = array(
-    '_post' => array(self::HAS_ONE, 'Post', 'post'),
-    '_parent' => array(self::BELONGS_TO, 'Comment', 'parent'),
-    'author' => array(self::BELONGS_TO, 'User', 'user_id'),
-    'replies' => array(self::HAS_MANY, 'Comment', 'parent')
+    '_post' => array(self::HAS_ONE, Post::class, 'post'),
+    'parent' => array(self::BELONGS_TO, Comment::class, 'Parent'),
+    'author' => array(self::BELONGS_TO, User::class, 'user_id'),
+    'replies' => array(self::HAS_MANY, Comment::class, 'Parent')
   );
 
   function verify($save = true)
@@ -32,5 +56,15 @@ class Comment extends BaseModel
       $this->save();
 
     return $this;
+  }
+
+  function verified()
+  {
+    return !empty($this->verify_date) && $this->Verify;
+  }
+
+  function published()
+  {
+    return $this->verified();
   }
 }

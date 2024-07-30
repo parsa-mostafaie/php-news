@@ -5,7 +5,30 @@ defined('ABSPATH') || exit;
 
 use pluslib\Eloquent\BaseModel;
 use App\Auth;
+use pluslib\Database\Expression;
 
+/**
+ * @property Expression|string $verify_date
+ * @property Expression|string $created_at
+ * @property Expression|string $updated_at
+ * 
+ * @property int $ID
+ * @property int $Author
+ * @property int $Category
+ * 
+ * @property int $view
+ * @property string $Content
+ * @property string $content
+ * @property string $title
+ * @property string $Title
+ * @property string $description
+ * 
+ * @property int $Verify
+ * 
+ * @property Category $category
+ * @property User $author
+ * @property Comment[] $comments
+ */
 class Post extends BaseModel
 {
   protected $table = "posts";
@@ -15,9 +38,14 @@ class Post extends BaseModel
     'verify_date' => NULL
   ];
 
+  protected $translation = [
+    'content' => "Content",
+    'title' => "Title"
+  ];
+
   protected $relationships = array(
-    'comments' => array(self::HAS_MANY, 'Comment', 'post'),
-    'category' => array(self::BELONGS_TO, 'Category', 'Category'),
+    'comments' => array(self::HAS_MANY, Comment::class, 'post'),
+    'category' => array(self::BELONGS_TO, Category::class, 'Category'),
     'author' => array(self::BELONGS_TO, User::class, 'Author'),
   );
 
@@ -44,5 +72,52 @@ class Post extends BaseModel
       $this->save();
 
     return $this;
+  }
+
+  function edited()
+  {
+    return $this->updated_at > ($this->verify_date ?? $this->created_at);
+  }
+
+  function verified()
+  {
+    return !empty($this->verify_date) && $this->Verify;
+  }
+
+  function published()
+  {
+    return $this->verified();
+  }
+
+  function sp_image()
+  {
+    return PostImage::get_img($this->_id(), 'class="card-img-top" alt="post-image"');
+  }
+
+  function cat_badge()
+  {
+    ?>
+    <div class='position-absolute' style='top: 5px;left:5px'><?= badge($this->category->Name) ?></div>
+    <?php
+  }
+
+  function publish()
+  {
+    return $this->verify();
+  }
+
+  function publish_date()
+  {
+    return strtotime($this->verify_date);
+  }
+
+  function readtime()
+  {
+    return readtime($this);
+  }
+
+  function content()
+  {
+    return hts_xss($this->content);
   }
 }
