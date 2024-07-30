@@ -76,7 +76,7 @@ class Post extends BaseModel
 
   function edited()
   {
-    return $this->updated_at > ($this->verify_date ?? $this->created_at);
+    return strtotime($this->updated_at) > strtotime($this->verify_date ?? $this->created_at);
   }
 
   function verified()
