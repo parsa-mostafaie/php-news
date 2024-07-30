@@ -1,6 +1,7 @@
 <?php require_once '../../../includes/c-init.php';
 
 use App\Auth;
+use App\Models\Post;
 
 pls_validate_http_method('delete');
 
@@ -14,4 +15,9 @@ if(!$post){
   _404_();
 }
 
-db()->TABLE('posts')->DELETE('id = ?')->Run([$post]);
+$post = Post::find($post);
+
+if (!$post)
+  _404_();
+
+$post->delete();

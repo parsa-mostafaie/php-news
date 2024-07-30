@@ -1,6 +1,7 @@
 <?php require_once '../../../includes/c-init.php';
 
 use App\Auth;
+use App\Models\Post;
 
 pls_validate_http_method('put');
 
@@ -14,5 +15,9 @@ if (!$post) {
   _404_();
 }
 
-db()->TABLE('posts')->UPDATE('id = ?')
-  ->SET(['verify' => 1, 'verify_date' => expr('current_timestamp()')])->Run([$post]);
+$Post = Post::find($post);
+
+if (!$Post)
+  _404_();
+
+$Post->verify();
