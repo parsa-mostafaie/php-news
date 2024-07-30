@@ -27,7 +27,7 @@ if (!$cat->found) {
       <div id="error" class='text-danger'></div>
       <div class="col-12">
         <button type="submit" class="btn btn-dark" ajax-submit name='update'
-          value='<?= intval(get_val('cat')) ?>'>ایجاد</button>
+          value='<?= intval(get_val('cat')) ?>'>ویرایش</button>
       </div>
       <?php useFormlibAjax(); ?>
       <?php useAjaxInit1(); ?>

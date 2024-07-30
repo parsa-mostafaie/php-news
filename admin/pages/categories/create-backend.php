@@ -2,6 +2,7 @@
 
 use pluslib\ajaxAPI;
 use App\Auth;
+use App\Models\Category;
 
 pls_validate_http_method('put');
 
@@ -28,7 +29,8 @@ $_COND = count($errors) == 0;
 // PROCESSOR
 $__PROCESS__CALLBACK__ = function () {
   global $cat;
-  db()->TABLE('categories')->INSERT(['name' => '?'])->Run([$cat]);
+  // db()->TABLE('categories')->INSERT(['name' => '?'])->Run([$cat]);
+  (new Category)->setname($cat)->save();
 };
 
 $__PROCESS__SUCCESS__ = function () {

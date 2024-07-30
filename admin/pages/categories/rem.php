@@ -1,6 +1,7 @@
 <?php require_once '../../../includes/c-init.php';
 
 use App\Auth;
+use App\Models\Category;
 
 pls_validate_http_method('delete');
 
@@ -14,4 +15,8 @@ if (!$cat) {
   _404_();
 }
 
-db()->TABLE('categories')->DELETE('id = ?')->Run([$cat]);
+$cat = Category::find($cat);
+
+!$cat && _404_();
+
+$cat->delete();

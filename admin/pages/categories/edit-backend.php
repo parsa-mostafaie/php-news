@@ -2,6 +2,7 @@
 
 use App\Auth;
 use pluslib\ajaxAPI;
+use App\Models\Category;
 
 pls_validate_http_method('put');
 
@@ -29,7 +30,15 @@ $_COND = count($errors) == 0;
 // PROCESSOR
 $__PROCESS__CALLBACK__ = function () {
   global $cat, $catn;
-  db()->TABLE('categories')->UPDATE('ID = ' . $cat)->SET(['Name' => '?'])->Run([$catn]);
+  // db()->TABLE('categories')->UPDATE('ID = ' . $cat)->SET(['Name' => '?'])->Run([$catn]);
+  $category = Category::find($cat);
+
+  if (!$category)
+    throw new Exception("دسته بندی پیدا نشد!");
+
+  $category->name = $catn;
+
+  $category->save();
 };
 
 $__PROCESS__SUCCESS__ = function () {
