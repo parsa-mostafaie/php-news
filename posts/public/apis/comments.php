@@ -1,8 +1,10 @@
 <?php
 require_once '../../../includes/c-init.php';
 
+use App\Models\User;
 use App\Auth;
 
+use App\Models\Comment;
 use pluslib\ajaxAPI;
 
 API_header();
@@ -35,8 +37,17 @@ $__PROCESS__CALLBACK__ = function () {
     throw new Exception('ابتدا وارد شوید');
   }
 
-  db()->TABLE('comments')->INSERT(['user_id' => '?', 'text' => '?', 'post' => '?', 'parent' => '?'])
-    ->Run([getCurrentUserInfo_prop('ID'), $ctext, $post_id, $parent]);
+  // db()->TABLE('comments')->INSERT(['user_id' => '?', 'text' => '?', 'post' => '?', 'parent' => '?'])
+  //   ->Run([getCurrentUserInfo_prop('ID'), $ctext, $post_id, $parent]);
+
+  $comment = new Comment;
+
+  $comment->user_id = User::current()->_id();
+  $comment->text = $ctext;
+  $comment->post = $post_id;
+  $comment->parent = $parent;
+
+  $comment->save();
 };
 
 $__PROCESS__SUCCESS__ = function () {
