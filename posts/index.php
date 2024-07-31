@@ -32,7 +32,7 @@ $_GET['cat'] = $post->Category;// bold category in categories_list
 
 ['n' => $sessn, 'v' => $sessv] = secure_form();
 
-$date = $post->verified() ? '<b class="text-success">تایید نشده</b>' : jdate('j F Y', $post->publish_date());
+$date = !$post->verified() ? '<b class="text-success">تایید نشده</b>' : jdate('j F Y', $post->publish_date());
 $editdate = $post->edited() ? ' <small><b class="text-info">ویرایش شده</b></small>' : '';
 
 $seoFriendly_URL = normalRoute();

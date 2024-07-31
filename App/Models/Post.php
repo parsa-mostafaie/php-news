@@ -76,6 +76,17 @@ class Post extends BaseModel
     return $this;
   }
 
+  function unverify($save = true)
+  {
+    $this->Verify = 0;
+    $this->verify_date = null;
+
+    if ($save)
+      $this->save();
+
+    return $this;
+  }
+
   function edited()
   {
     return strtotime($this->updated_at) > strtotime($this->verify_date ?? $this->created_at);

@@ -114,7 +114,8 @@ function posts_table($last = true, $by = null, $id = "a_posts_tbl")
         href="<?= Auth::isRole(2) ? c_url('/admin/pages/posts/verify.php?post=' . $data['ID']) : '#' ?>"
         class="btn btn-sm btn-outline-info">در انتظار تایید</a>
     <?php else: ?>
-      <a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>
+      <a href="<?= Auth::isRole(2) ? c_url('/admin/pages/posts/unverify.php?post=' . $data['ID']) : '#' ?>"
+        class="btn btn-sm btn-success" http-method="PUT" ajax-reload="#<?= $id ?>" danger-btn>تایید شده</a>
     <?php endif; ?>
     <?php if (Post::canEdited($data['ID'])): ?>
       <a href="<?= c_url('/writer/edit.php?post=' . $data['ID']) ?>" class="btn btn-sm btn-outline-dark">ویرایش</a>
