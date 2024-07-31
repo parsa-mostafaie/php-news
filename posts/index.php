@@ -60,7 +60,7 @@ $seoFriendly_URL = normalRoute();
               <?= $post->cat_badge() ?>
               <?php if (!$post->published()): ?>
                 <div class='position-absolute' style='top: 5px;right:5px'>
-                  <a href="<?= c_url('/admin/pages/posts/index.php#' . $post_id) ?>">
+                  <a href="<?= Auth::isRole(2) ? c_url('/admin/pages/posts/index.php#' . $post_id) : "#" ?>">
                     <span class="badge text-bg-danger">تایید
                       نشده</span>
                   </a>
@@ -128,8 +128,7 @@ $seoFriendly_URL = normalRoute();
                 <input type="hidden" name="parent" id="rep" value="NULL" />
                 <div class="mb-3">
                   <label class="form-label">نام</label>
-                  <input type="text" class="form-control" disabled
-                    value="<?= User::current()->fullname() ?>" />
+                  <input type="text" class="form-control" disabled value="<?= User::current()->fullname() ?>" />
                 </div>
                 <div class="mb-3">
                   <label class="form-label">متن کامنت</label>

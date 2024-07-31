@@ -62,7 +62,8 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
         class="btn btn-sm btn-outline-info">در
         انتظار تایید</a>
     <?php else: ?>
-      <a href="#" class="btn btn-sm btn-outline-dark disabled">تایید شده</a>
+      <a href="<?= Auth::isRole(2) ? c_url('/admin/pages/comments/unverify.php?com=' . $data['ID']) : '#' ?>"
+        http-method="PUT" ajax-reload="#<?= $id ?>" danger-btn class="btn btn-sm btn-success">تایید شده</a>
     <?php endif; ?>
     <?php if (Auth::isRole(2)): ?>
       <a danger-btn http-method="DELETE" ajax-reload="#<?= $id ?>"

@@ -58,6 +58,16 @@ class Comment extends BaseModel
     return $this;
   }
 
+  function unverify($save = true)
+  {
+    $this->Verify = 0;
+
+    if ($save)
+      $this->save();
+
+    return $this;
+  }
+
   function verified()
   {
     return !empty($this->verify_date) && $this->Verify;
