@@ -133,4 +133,9 @@ class Post extends BaseModel
   {
     return hts_xss($this->content);
   }
+
+  function thumbnail_image()
+  {
+    return PostImage::get_img($this->_id(), 'class = "w-100 img-thumbnail"');
+  }
 }

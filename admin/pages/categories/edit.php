@@ -1,11 +1,13 @@
 <?php include_once '../../../includes/c-init.php';
+use App\Models\Category;
 
-if (!is_numeric(get_val('cat'))) {
+$cat_id = get_val('cat');
+
+if (!is_numeric($cat_id)) {
   _404_();
 } ?>
-<?php $cat = db()->TABLE('categories')->SELECT()->WHERE("ID=" . intval(get_val('cat')))->
-  getFirstRow();
-if (!$cat->found) {
+<?php $cat = Category::find($cat_id);
+if (!$cat) {
   _404_();
 } ?>
 <?php $current_page = '/cat' ?>
@@ -21,7 +23,7 @@ if (!$cat->found) {
     <form class="row g-4" submit-control form-method="PUT" form-wait="#wait" form-action="edit-backend.php">
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label">عنوان دسته بندی</label>
-        <input type="text" class="form-control" name='catn' value="<?= $cat->getColumn('Name') ?>" />
+        <input type="text" class="form-control" name='catn' value="<?= $cat->Name ?>" />
       </div>
       <div id="wait">لطفا صبر کنید!</div>
       <div id="error" class='text-danger'></div>

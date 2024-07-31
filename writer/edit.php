@@ -1,5 +1,7 @@
 <?php $current_page = '/posts' ?>
 <?php require_once 'init.php';
+
+use App\Models\Post;
 use App\Models\PostImage;
 
 $post_qs = get_val('post');
@@ -11,13 +13,9 @@ $post_id = intval($post_qs);
 
 EditAllowed($post_id);
 
-$post =
-  db()->TABLE('posts', true, 'p')
-    ->SELECT('p.created_at, p.ID, p.title, p.content, p.image, p.verify, p.description, CONCAT(u.firstname, " ",u.lastname) as author, c.name as category, c.id as cid')
-    ->ON('p.author = u.id', 'users as u')->ON('c.id = p.category', 'categories as c')
-    ->WHERE('p.id=?')->getFirstRow([$post_id]);
+$post = Post::find($post_id);
 
-if (!$post->found) {
+if (!$post) {
   _404_();
 }
 
@@ -40,17 +38,17 @@ $tiny_mce = true;
       <input type="hidden" name="post" value="<?= $post_id ?>" ?>
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label" for="title">عنوان مقاله</label>
-        <input type="text" class="form-control" id="title" name="title" value="<?= $post->getColumn('title') ?>" />
+        <input type="text" class="form-control" id="title" name="title" value="<?= $post->title ?>" />
       </div>
 
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label" for="author">نویسنده مقاله</label>
-        <input type="text" class="form-control" disabled id="author" value="<?= $post->getColumn('author') ?>" />
+        <input type="text" class="form-control" disabled id="author" value="<?= $post->author->fullname() ?>" />
       </div>
 
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label">دسته بندی مقاله</label>
-        <?php categories_sel(default: $post->getColumn('cid')) ?>
+        <?php categories_sel(default: $post->category->_id()) ?>
       </div>
 
       <div class="col-12 col-sm-6 col-md-4">
@@ -60,17 +58,17 @@ $tiny_mce = true;
 
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label" for="desc">توضیحات مقاله</label>
-        <input type="text" class="form-control" id="desc" name="desc" value="<?= $post->getColumn('description') ?>" />
+        <input type="text" class="form-control" id="desc" name="desc" value="<?= $post->description ?>" />
       </div>
 
       <div class="col-12">
         <label for="content" class="form-label">متن مقاله</label>
-        <textarea rows="6" name="tiny" id="tiny"><?= $post->getColumn('content') ?></textarea>
+        <textarea rows="6" name="tiny" id="tiny"><?= $post->content ?></textarea>
       </div>
 
 
       <div class="col-12 col-sm-6 col-md-4 d-flex flex-column">
-        <?= PostImage::get_img($post_id, 'class = "w-100 img-thumbnail"') ?>
+        <?= $post->thumbnail_image() ?>
         <b class="text-dark text-center mt-1">تصویر فعلی</b>
       </div>
 
