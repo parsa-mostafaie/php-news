@@ -148,4 +148,16 @@ class Post extends BaseModel
   {
     return PostImage::get_img($this->_id(), 'class = "w-100 img-thumbnail"');
   }
+
+  function related_posts()
+  {
+    return collect(
+      array_reverse(
+        array_filter(
+          $this->category->posts->all(),
+          fn($p) => $p->_id() != $this->_id()
+        )
+      )
+    );
+  }
 }
