@@ -1,5 +1,7 @@
 <?php include ('components/header.php'); ?>
 <?php
+
+use App\Models\Post;
 use Pluslib\Database\Condition as sqlConditionGenerator;
 
 $inp = get_val('search') ?? '';
@@ -12,19 +14,20 @@ $u_id = intval(get_val('author')) ?? 0;
 
 $stmt_params = [...$fill, $cat_id, $u_id];
 
-$pres = db()->TABLE('posts', alias: 'p')->SELECT('*')
-  ->WHERE($condits)
-  ->WHERE($cat_id ? 'category = ?' : '0 = ?')
-  ->WHERE($u_id ? 'p.author = ?' : '0 = ?')
-  ->ORDER_BY('p.created_at desc')
-  ->pagination(4, $page, $stmt_params);
+$pres =
+  Post::where('verify', 1)
+    ->where($condits)
+    ->WHERE($cat_id ? 'category = ?' : '0 = ?')
+    ->WHERE($u_id ? 'author = ?' : '0 = ?')
+    ->ORDER_BY('verify_date', 'desc')
+    ->pagination(4, $page, $stmt_params);
 
 
 $page = $pres['current'];
 
 $countres = $pres['count'];
 
-$__component__post_pdos = $pres['res'];
+$__component__posts = $pres['result'];
 
 function page($to)
 {
@@ -97,8 +100,8 @@ function ui_pagination()
 
       <div class="row g-3">
         <?php
-        include ($_SERVER['DOCUMENT_ROOT'] . c_url('/components/posts.php'))
-          ?>
+        include $_SERVER['DOCUMENT_ROOT'] . c_url('/components/posts.php');
+        ?>
         <?php ui_pagination() ?>
       </div>
     </div>

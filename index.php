@@ -1,11 +1,13 @@
-<?php include ('components/header.php'); useAjaxContent() ?>
 <?php
-$__component__post_pdos = db()->TABLE('posts', alias: 'p')->SELECT('*')
-  ->LIMIT(15)->ORDER_BY('created_at DESC')->Run();
 
-$__component__caro_pdos = db()->TABLE('posts', alias: 'p')->SELECT('*')
-  ->WHERE('p.verify = 1')
-  ->LIMIT(5)->ORDER_BY('created_at DESC')->Run()->fetchAll(PDO::FETCH_ASSOC);
+use App\Models\Post;
+
+include ('components/header.php');
+useAjaxContent() ?>
+<?php
+$__component__posts = Post::where('verify', 1)->LIMIT(15)->ORDER_BY('verify_date', 'desc')->get();
+
+$__component__caro = Post::where('verify', 1)->LIMIT(5)->ORDER_BY('verify_date', 'desc')->get();
 ?>
 <!-- Slider Section -->
 <section>

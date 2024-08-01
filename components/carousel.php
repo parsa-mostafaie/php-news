@@ -1,24 +1,25 @@
-<?php include_once __DIR__ . ('/../includes/c-init.php')
-  // __component__caro_pdos
+<?php
+include_once __DIR__ . ('/../includes/c-init.php');
+// __component__caro
 ;
 ?>
 <link rel="stylesheet" href="<?= c_url('/assets/public/rtl-carousel.css') ?>">
 <div id="carousel" class="carousel slide">
   <div class="carousel-indicators">
-    <?php foreach ($__component__caro_pdos as $i => $post): ?>
+    <?php foreach ($__component__caro as $i => $post): ?>
       <button type="button" data-bs-target="#carousel" data-bs-slide-to="<?= $i ?>"
         class="<?= $i == 0 ? 'active' : '' ?>"></button>
     <?php endforeach; ?>
   </div>
   <div class="carousel-inner rounded">
-    <?php foreach ($__component__caro_pdos as $i => $post): ?>
-      <a href="<?= c_url('/posts/' . $post['ID']) ?>">
+    <?php foreach ($__component__caro as $i => $post): ?>
+      <a href="<?= c_url('/posts/' . $post->_id()) ?>">
         <div class="carousel-item overlay carousel-height <?= $i == 0 ? 'active' : '' ?>">
-          <?= imageComponent($post['Image'], 'class="d-block w-100" alt="post-image"', web_url(c_url('/assets/images/1.jpg'))) ?>
+          <?= $post->caro_image() ?>
           <div class="carousel-caption d-none d-md-block">
-            <h5><?= $post['Title'] ?></h5>
+            <h5><?= $post->title ?></h5>
             <p>
-              <?= $post['description'] ?>
+              <?= $post->description ?>
             </p>
           </div>
         </div>
