@@ -3,8 +3,14 @@ namespace App\Models;
 
 defined('ABSPATH') || exit;
 
+use pluslib\Collections\Collection;
 use pluslib\Eloquent\BaseModel;
 
+/**
+ * @property int $ID
+ * @property string $Name
+ * @property Collection<Post> $posts
+ */
 class Category extends BaseModel
 {
   protected $table = "categories";
