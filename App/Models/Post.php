@@ -65,6 +65,16 @@ class Post extends BaseModel
     return static::canEdited($this->_id());
   }
 
+  public function is_visible($for = null)
+  {
+    $for ??= User::current();
+
+    if (!$for)
+      return $this->verify;
+
+    return $this->Author == $for->_id() || Auth::isRole(2) || $this->verify;
+  }
+
   function verify($save = true)
   {
     $this->Verify = 1;

@@ -24,7 +24,7 @@ $post = Post::find($post_id);
 if (!$post) {
   _404_();
 }
-if (!$post->Verify && !Auth::isRole(2)) {
+if (!$post->is_visible()) {
   _404_();
 }
 
