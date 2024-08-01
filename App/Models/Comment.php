@@ -10,6 +10,7 @@ use pluslib\Eloquent\BaseModel;
  * @property Expression|string $date
  * 
  * @property int $Verify
+ * @property int $verify
  * 
  * @property int $ID
  * @property int $Parent
@@ -70,7 +71,7 @@ class Comment extends BaseModel
 
   function verified()
   {
-    return !empty($this->verify_date) && $this->Verify;
+    return $this->verify;
   }
 
   function published()

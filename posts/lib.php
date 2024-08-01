@@ -7,7 +7,7 @@ use App\Models\UserProfile;
 
 function pcl_usid_cond()
 {
-  return Auth::canlogin() ? cond('user_id', User::current()->id) : '0';
+  return Auth::canlogin() ? cond('user_id', User::current()->_id()) : '0';
 }
 function comment(Comment $comment)
 {
