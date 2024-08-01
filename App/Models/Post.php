@@ -117,6 +117,11 @@ class Post extends BaseModel
     return PostImage::get_img($this->_id(), 'class="card-img-top" alt="post-image"');
   }
 
+  function caro_image()
+  {
+    return PostImage::get_img($this->_id(), 'class="d-block w-100" alt="post-image"');
+  }
+
   function cat_badge()
   {
     ?>
