@@ -36,6 +36,8 @@ $date = !$post->verified() ? '<b class="text-success">تایید نشده</b>' :
 $editdate = $post->edited() ? ' <small><b class="text-info">ویرایش شده</b></small>' : '';
 
 $seoFriendly_URL = normalRoute();
+
+$__related_posts = $post->related_posts();
 ?>
 <?php if ($_SERVER['REQUEST_URI'] != $seoFriendly_URL): ?>
   <script>

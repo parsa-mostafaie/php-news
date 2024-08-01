@@ -8,9 +8,21 @@ $cats = db()->TABLE('categories')->SELECT('name, id')->Run()->fetchAll(PDO::FETC
   }
 </style>
 <!-- Sidebar Section -->
-<div class="col-lg-4 mt-3">
-  <!-- Sesrch Section -->
-  <div class="card">
+<div class="col-lg-4 mt-1">
+  <?php if (($has_rpost = isset($__related_posts) && $__related_posts->count())): ?>
+    <div>
+      <b class="h4 fw-bold">خبرهای مرتبط</b>
+      <div class="row g-1 mt-1">
+        <?php
+        $__component__posts = $__related_posts;
+        $__component__post_class = "col-12";
+        include 'posts.php';
+        ?>
+      </div>
+    </div>
+  <?php endif; ?>
+  <!-- Search Section -->
+  <div class="card <?= $has_rpost ? 'mt-4' : '' ?>">
     <div class="card-body">
       <p class="fw-bold fs-6">جستجو در وبلاگ</p>
       <form action="<?= c_url('/search.php') ?>" method='get'>
