@@ -56,7 +56,7 @@ function users_table($last = true, $id = "a_users_tbl")
 function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
 {
   $actions = function ($data) use ($id) {
-    $danger = !$data['verify'] ? 'danger-btn' : '';
+    $danger = $data['verify'] ? 'danger-btn' : '';
     $url = c_url('/writer/comment.php' . '?com=' . $data['ID'] . ($data['verify'] ? '' : '&v=1'));
     $href = Post::canEdited($data['pid']) ?
       "href='$url' http-method='PUT' ajax-reload='#$id' $danger" : '';
@@ -65,7 +65,7 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
       <a <?= $href ?> class="btn btn-sm btn-outline-info <?= $disable ?>">در
         انتظار تایید</a>
     <?php else: ?>
-      <a <?= $href ?> class="btn btn-sm btn-success <?=$disable?>">تایید شده</a>
+      <a <?= $href ?> class="btn btn-sm btn-success <?= $disable ?>">تایید شده</a>
     <?php endif; ?>
     <?php if (Auth::isRole(2)): ?>
       <a danger-btn http-method="DELETE" ajax-reload="#<?= $id ?>"
@@ -112,13 +112,16 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
 function posts_table($last = true, $by = null, $id = "a_posts_tbl")
 {
   $actions = function ($data) use ($id) {
+    $danger = $data['verify'] ? 'danger-btn' : '';
+    $url = c_url('/admin/pages/posts/' . ($data['verify'] ? 'un' : '') . 'verify.php?post=' . $data['ID']);
+    $attrs = Auth::isRole(2) ? "href='$url' http-method='PUT' ajax-reload='#$id' $danger" : '';
+
+    $disable = Auth::isRole(2) ? '' : 'disabled';
+
     if (!$data['verify']): ?>
-      <a http-method="PUT" ajax-reload="#<?= $id ?>"
-        href="<?= Auth::isRole(2) ? c_url('/admin/pages/posts/verify.php?post=' . $data['ID']) : '#' ?>"
-        class="btn btn-sm btn-outline-info">در انتظار تایید</a>
+      <a <?= $attrs ?> class="btn btn-sm btn-outline-info <?= $disable ?>">در انتظار تایید</a>
     <?php else: ?>
-      <a href="<?= Auth::isRole(2) ? c_url('/admin/pages/posts/unverify.php?post=' . $data['ID']) : '#' ?>"
-        class="btn btn-sm btn-success" http-method="PUT" ajax-reload="#<?= $id ?>" danger-btn>تایید شده</a>
+      <a <?= $attrs ?> class="btn btn-sm btn-success <?= $disable ?>">تایید شده</a>
     <?php endif; ?>
     <?php if (Post::canEdited($data['ID'])): ?>
       <a href="<?= c_url('/writer/edit.php?post=' . $data['ID']) ?>" class="btn btn-sm btn-outline-dark">ویرایش</a>
