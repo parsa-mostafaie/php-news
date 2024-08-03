@@ -56,10 +56,10 @@ $res = array_combine(array_column($res, 'emoji'), $res);
 <?php foreach ($res as $emoji => $edata): ?>
   <?php
   $react_id = $edata['id'];
-  $class_react = $react_id == $c_react ? 'primary' : 'secondary';
+  $class_react = $react_id == $c_react ? 'primary' : 'outline-secondary';
   $attrs = 'http-method="PUT"
     href="' . c_url("/posts/public/apis/react.php?post=$post_id&react_id=$react_id") . '" ajax-reload="#reactions"' ?>
-  <a class="btn btn-outline-<?= $class_react ?>   <?= !Auth::canLogin() ? 'disabled' : '' ?>"
+  <a class="btn btn-<?= $class_react ?>   <?= !Auth::canLogin() ? 'disabled' : '' ?>"
     title="<?= $emoji . ' ' . $edata['name'] ?>" <?= Auth::canLogin() ? $attrs : ""; ?>>
     <!-- <img src="<?= c_url('/emojis/' . $edata['eng_name'] . '.png') ?>" /> -->
     <?= $emoji ?>
