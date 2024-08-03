@@ -199,4 +199,28 @@ class Post extends BaseModel
 
     return $this;
   }
+
+  function addrem_reaction($id)
+  {
+    if (!Auth::canLogin()) {
+      return;
+    }
+
+    if ($this->reaction_id() == $id) {
+      db()->execute_q("
+      DELETE FROM REACTIONS WHERE post_id = :p AND emoji_id = :e AND user_id = :u
+    ", [
+        ':p' => $this->_id(),
+        ':e' => $id,
+        ':u' => User::current()->_id()
+      ]);
+
+      return $this;
+    }
+
+
+    $this->add_reaction($id);
+
+    return $this;
+  }
 }

@@ -24,4 +24,4 @@ if (!$post) {
   _404_();
 }
 
-$post->add_reaction($react_id);
+$post->addrem_reaction($react_id);
