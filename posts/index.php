@@ -105,7 +105,8 @@ $__related_posts = $post->related_posts();
               </div>
             </div>
             <div class="card-footer">
-              <div class="d-flex justify-content-end">
+              <div class="d-flex justify-content-between align-items-center">
+                <?= view('post/reactions', 'reactions', ['post' => $post_id]) ?>
                 <span><i class="bi bi-bar-chart-line-fill"></i>
                   <?= number_format($post->view + 1); // +1 for current ?></span>
               </div>

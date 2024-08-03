@@ -157,12 +157,46 @@ class Post extends BaseModel
   function related_posts()
   {
     return collect(
-      array_reverse(
-        array_filter(
-          $this->category->posts->all(),
-          fn($p) => $p->_id() != $this->_id()
-        )
+      array_slice(
+        array_reverse(
+          array_filter(
+            $this->category->posts->all(),
+            fn($p) => $p->_id() != $this->_id()
+          )
+        ),
+        0,
+        4
       )
     );
+  }
+
+  function reaction_id()
+  {
+    if (!Auth::canLogin()) {
+      return null;
+    }
+
+    return db()->table('reactions', alias: 'r')->select('e.id')
+      ->where(expr('r.post_id'), $this->_id())
+      ->where(expr('r.user_id'), User::current()->_id())
+      ->on('e.id = r.emoji_id', 'emojis as e')->getArray(nosql_row: true)[0]['id'] ?? null;
+  }
+
+  function add_reaction($id)
+  {
+    if (!Auth::canLogin()) {
+      return;
+    }
+
+    db()->execute_q("
+      INSERT INTO reactions (post_id, emoji_id, user_id) VALUES (:p, :e, :u)
+      ON duplicate KEY UPDATE emoji_id = :e;
+    ", [
+      ':p' => $this->_id(),
+      ':e' => $id,
+      ':u' => User::current()->_id()
+    ]);
+
+    return $this;
   }
 }
