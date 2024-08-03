@@ -37,4 +37,6 @@ $count = count(comments_fetch(nop: true))
       })
     });
   }
+  httpLinksInit();
+  ajaxContentReLoads();
 </script>

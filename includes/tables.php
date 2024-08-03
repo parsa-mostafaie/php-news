@@ -56,14 +56,16 @@ function users_table($last = true, $id = "a_users_tbl")
 function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
 {
   $actions = function ($data) use ($id) {
+    $danger = !$data['verify'] ? 'danger-btn' : '';
+    $url = c_url('/writer/comment.php' . '?com=' . $data['ID'] . ($data['verify'] ? '' : '&v=1'));
+    $href = Post::canEdited($data['pid']) ?
+      "href='$url' http-method='PUT' ajax-reload='#$id' $danger" : '';
+    $disable = Post::canEdited($data['pid']) ? '' : 'disabled';
     if (!$data['verify']): ?>
-      <a http-method="PUT" ajax-reload="#<?= $id ?>"
-        href="<?= Auth::isRole(2) ? c_url('/admin/pages/comments/verify.php?com=' . $data['ID']) : '#' ?>"
-        class="btn btn-sm btn-outline-info">در
+      <a <?= $href ?> class="btn btn-sm btn-outline-info <?= $disable ?>">در
         انتظار تایید</a>
     <?php else: ?>
-      <a href="<?= Auth::isRole(2) ? c_url('/admin/pages/comments/unverify.php?com=' . $data['ID']) : '#' ?>"
-        http-method="PUT" ajax-reload="#<?= $id ?>" danger-btn class="btn btn-sm btn-success">تایید شده</a>
+      <a <?= $href ?> class="btn btn-sm btn-success <?=$disable?>">تایید شده</a>
     <?php endif; ?>
     <?php if (Auth::isRole(2)): ?>
       <a danger-btn http-method="DELETE" ajax-reload="#<?= $id ?>"
@@ -75,21 +77,21 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
   $st =
     db()->TABLE('comments as c', true)->
       SELECT(
-        'c.verify, c.ID, (CONCAT(u.firstname, " ",u.lastname)) as `نام`, Text as `متن کامنت`'
+        'p.id as pid, c.verify, c.ID, (CONCAT(u.firstname, " ",u.lastname)) as `نام`, Text as `متن کامنت`'
       )
-      ->ON('u.ID = c.user_id', 'users as u')->ORDER_BY('c.date desc');
+      ->ON('u.ID = c.user_id', 'users as u')
+      ->on('p.id = c.post', 'posts p')
+      ->ORDER_BY('c.date desc');
   if ($last) {
     $st->LIMIT(5);
   }
   if ($by) {
-    $st->WHERE('u.id = ?');
+    $st->WHERE('u.id = ? OR p.author = ?');
   }
-  $st = $st->Run($by ? [$by] : []);
+  $st = $st->Run($by ? [$by, $by] : []);
   $idl = function ($data) {
     ['v' => $v] = $data;
-    $post = db()->TABLE('comments', alias: 'c')
-      ->SELECT('p.id')->ON('p.id = c.post', 'posts as p')
-      ->WHERE('c.id = ' . $v)->Run()->fetchColumn();
+    $post = $data['pid'];
     return c_url('/posts/' . $post . '#c' . $v);
   };
   $ril = function ($data) {
@@ -99,7 +101,7 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
     $st,
     Auth::isRole(1) ? 'عملیات' : null,
     $actions,
-    hidden: ['verify'],
+    hidden: ['verify', 'pid'],
     head_link: $idl,
     rowid: $ril,
     empty_msg: '<div class="alert alert-dark">هیچ کامنتی پیدا نشد!</div>'

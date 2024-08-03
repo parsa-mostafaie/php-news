@@ -10,7 +10,6 @@ use pluslib\Eloquent\BaseModel;
  * @property Expression|string $date
  * 
  * @property int $Verify
- * @property int $verify
  * 
  * @property int $ID
  * @property int $Parent
@@ -43,7 +42,7 @@ class Comment extends BaseModel
   ];
 
   protected $relationships = array(
-    '_post' => array(self::HAS_ONE, Post::class, 'post'),
+    '_post' => array(self::BELONGS_TO, Post::class, 'post'),
     'parent' => array(self::BELONGS_TO, Comment::class, 'Parent'),
     'author' => array(self::BELONGS_TO, User::class, 'user_id'),
     'replies' => array(self::HAS_MANY, Comment::class, 'Parent')
@@ -71,11 +70,15 @@ class Comment extends BaseModel
 
   function verified()
   {
-    return $this->verify;
+    return $this->Verify;
   }
 
   function published()
   {
     return $this->verified();
+  }
+
+  function can_verified(){
+    return $this->_post->canEdit();
   }
 }

@@ -1,4 +1,4 @@
-<?php require_once '../../../includes/c-init.php';
+<?php require_once 'init.php';
 
 use App\Auth;
 use App\Models\Comment;
@@ -6,8 +6,6 @@ use App\Models\Comment;
 pls_validate_http_method('put');
 
 API_header();
-
-Auth::authAdmin(2);
 
 $com = get_val('com');
 
@@ -20,4 +18,9 @@ $comment = Comment::find($com);
 if (!$comment)
   _404_();
 
-$comment->unverify();
+Auth::authAdmin($comment->can_verified() ? 0 : 2);
+
+if (intval(get_val('v')))
+  $comment->verify();
+else
+  $comment->unverify();

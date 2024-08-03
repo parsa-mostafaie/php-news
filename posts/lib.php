@@ -1,24 +1,26 @@
 <?php
 use App\Auth;
 use App\Models\Comment;
+use App\Models\Post;
 use App\Models\User;
 use App\Models\UserRole;
 use App\Models\UserProfile;
+use pluslib\Database\Condition;
 
 function pcl_usid_cond()
 {
-  return Auth::canlogin() ? cond('user_id', User::current()->_id()) : '0';
+  return Auth::canlogin() ? cond('user_id', User::current()->_id() ?? -1) : '0';
 }
 function comment(Comment $comment)
 {
   if (!$comment->loaded())
     return;
 
-  $vhref = Auth::isRole(2) ? c_url('/admin/pages/comments/index.php#' . $comment->_id()) : '#c' . $comment->_id();
+  $vhref = $comment->can_verified() ? c_url('/writer/comment.php?v=1&com=' . $comment->_id()) : '#c' . $comment->_id();
   ?>
   <div class="card bg-light-subtle mb-3" id="c<?= $comment->_id() ?>">
     <?php if (!$comment->verified()): ?>
-      <div class='position-absolute' style='top: 5px;left:5px'><a href="<?= $vhref ?>"><span
+      <div class='position-absolute' style='top: 5px;left:5px'><a href="<?= $vhref ?>" http-method=""><span
             class="badge text-bg-danger">تایید
             نشده</span></a></div>
     <?php endif; ?>
@@ -50,7 +52,7 @@ function comments_fetch($parent = 'NULL', $nop = false)
     ->WHERE(expr('post'), $post_id)->WHERE($nop ? '1=1' : "parent $verb $parent")
     ->ORDER_BY('date', 'DESC');
 
-  if (!Auth::isRole(2)) {
+  if (!Auth::isRole(2) && !Post::canEdited($post_id)) {
     $coms = $coms->WHERE('verify = 1 OR ' . pcl_usid_cond() . '');
   }
 
