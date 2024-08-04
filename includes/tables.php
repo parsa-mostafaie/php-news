@@ -89,8 +89,8 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
     $st->WHERE('u.id = ? OR p.author = ?');
   }
   $st = $st->Run($by ? [$by, $by] : []);
-  $idl = function ($data) {
-    ['v' => $v] = $data;
+  $idl = function ($kv, $data) {
+    ['v' => $v] = $kv;
     $post = $data['pid'];
     return c_url('/posts/' . $post . '#c' . $v);
   };

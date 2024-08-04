@@ -50,7 +50,7 @@ function tablify(
               <td><?= $cold ?></td><?php
             } else {
               ?>
-              <th><a href='<?= valueof($head_link, [' k' => $k, 'v' => $cold]) ?>'><?= $cold ?></a></th><?php
+              <th><a href='<?= valueof($head_link, ['k' => $k, 'v' => $cold], $data) ?>'><?= $cold ?></a></th><?php
             }
           }
           if ($h_actions and $actions) {
