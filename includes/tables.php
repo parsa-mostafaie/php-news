@@ -2,6 +2,7 @@
 use App\Auth;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use pluslib\Collections\Collection;
 
 function categories_table()
@@ -45,33 +46,61 @@ function categories_table()
 
 function users_table($last = true, $id = "a_users_tbl")
 {
-  $actions = function ($data) use ($id) {
-    $c_admin = getCurrentUserInfo_prop('admin');
-    if ($data['ID'] == getCurrentUserInfo_prop('ID') || $c_admin < 2) {
-      return '';
-    } ?>
-    <?php if ($data['admin'] == 1): ?>
-      <a http-method="patch" ajax-reload="#<?= $id ?>"
-        href="<?= c_url('/admin/pages/users/grw.php?admin&usr=') . $data['ID'] ?>" class="btn btn-sm btn-outline-dark">ارتقا
-        به ادمین</a>
-    <?php endif;
-    if ($data['admin'] < 1): ?>
-      <a http-method="patch" ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/users/grw.php?usr=') . $data['ID'] ?>"
-        class="btn btn-sm btn-outline-dark">ارتقا به نویسنده</a>
-    <?php else: ?>
-      <a http-method="patch" ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/users/shrnk.php?usr=') . $data['ID'] ?>"
-        class="btn btn-sm btn-danger">تنزل</a>
-    <?php endif;
-  };
-  $idl = function ($data) {
-    return '#';
-  };
-  $st = db()->TABLE('users')->SELECT('ID, CONCAT(firstname, " ", lastname) as `نام`, admin')->ORDER_BY('created_at desc');
-  if ($last) {
-    $st->LIMIT(5);
+  $fields = [
+    '#',
+    'نام',
+    'عملیات'
+  ];
+
+  $values = User::select();
+
+  if($last){
+    $values->limit(5);
   }
-  $st = $st->Run();
-  tablify($st, 'عملیات', $actions, head_link: $idl, hidden: ['admin']);
+
+  $values = $values->get()->all();
+
+  $empty = function () {
+    ?>
+    <div class="alert alert-primary">هیچ دسته بندی فعلا وجود ندارد!</div>
+    <?php
+  };
+
+  return tablify_pro($fields, $values, function (User $user, callable $td_render) use ($id) {
+    $c_admin = User::current()->admin;
+    $has_actions = !($user->_id() == User::current()->_id() || $c_admin < 2);
+
+    $td_render([
+      function () use ($user) {
+        ?>
+      <a href="#"><?= $user->_id() ?></a>
+      <?php
+      },
+      $user->fullname()
+    ]);
+
+    if ($has_actions) {
+      $td_render(
+        function () use ($user, $id) {
+          ?>
+        <?php if ($user->admin == 1): ?>
+          <a http-method="patch" ajax-reload="#<?= $id ?>"
+            href="<?= c_url('/admin/pages/users/grw.php?admin&usr=') . $user->ID ?>" class="btn btn-sm btn-outline-dark">ارتقا
+            به ادمین</a>
+        <?php endif;
+          if ($user->admin < 1): ?>
+          <a http-method="patch" ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/users/grw.php?usr=') . $user->_id() ?>"
+            class="btn btn-sm btn-outline-dark">ارتقا به نویسنده</a>
+        <?php else: ?>
+          <a http-method="patch" ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/users/shrnk.php?usr=') . $user->_id() ?>"
+            class="btn btn-sm btn-danger">تنزل</a>
+        <?php endif;
+        }
+      );
+    } else {
+      $td_render('');
+    }
+  }, $empty);
 }
 
 function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
