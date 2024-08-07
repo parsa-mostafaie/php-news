@@ -1,25 +1,46 @@
 <?php include_once 'c-init.php';
 use App\Auth;
+use App\Models\Category;
 use App\Models\Post;
+use pluslib\Collections\Collection;
 
 function categories_table()
 {
-  $actions = function ($data) {
+  $fields = [
+    '#',
+    'عنوان',
+    'عملیات'
+  ];
+
+  $values = Category::all()->all();
+
+  $empty = function () {
     ?>
-    <a href="<?= c_url('/admin/pages/categories/edit.php?cat=') . $data['ID'] ?>"
-      class="btn btn-sm btn-outline-dark">ویرایش</a>
-    <a type="submit" http-method="DELETE" danger-btn ajax-reload='#a_cats_tbl'
-      href="<?= c_url('/admin/pages/categories/rem.php?cat=') . $data['ID'] ?>"
-      class="btn btn-sm btn-outline-danger">حذف</a>
+    <div class="alert alert-primary">هیچ دسته بندی فعلا وجود ندارد!</div>
     <?php
-    return '';
   };
-  $idl = function ($data) {
-    ['v' => $v] = $data;
-    return c_url('/search.php?cat=' . $v);
-  };
-  $st = db()->TABLE('categories')->SELECT('ID, Name as `عنوان`')->Run();
-  tablify($st, 'عملیات', $actions, head_link: $idl);
+
+  return tablify_pro($fields, $values, function (Category $cat, callable $td_render) {
+    $td_render(function () use ($cat) {
+      ?>
+      <a href="<?= c_url('/search.php?cat=' . $cat->_id()) ?>"><?= $cat->_id(); ?></a>
+      <?php
+    });
+
+    $td_render($cat->Name);
+
+    $td_render(function () use ($cat) {
+      ?>
+      <a href="<?= c_url('/admin/pages/categories/edit.php?cat=') . $cat->_id() ?>"
+        class="btn btn-sm btn-outline-dark">ویرایش</a>
+      <a type="submit" http-method="DELETE" danger-btn ajax-reload='#a_cats_tbl'
+        href="<?= c_url('/admin/pages/categories/rem.php?cat=') . $cat->_id() ?>"
+        class="btn btn-sm btn-outline-danger">حذف</a>
+      <?php
+      return '';
+    });
+
+  }, $empty);
 }
 
 function users_table($last = true, $id = "a_users_tbl")
