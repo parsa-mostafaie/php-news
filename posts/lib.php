@@ -83,3 +83,19 @@ function normalRoute()
   $seoFriendly_URL = c_url("/posts/$post_id/$date/$sfu_e", false);
   return $seoFriendly_URL;
 }
+
+function normalized_route()
+{
+  return normalRoute();
+}
+
+function normalize_route()
+{
+  ?>
+    <?php if ($_SERVER['REQUEST_URI'] != normalized_route()): ?>
+        <script>
+          window.history.replaceState({}, '', "<?= normalized_route() ?>" + window.location.hash)
+        </script>
+    <?php endif; ?>
+<?php
+}

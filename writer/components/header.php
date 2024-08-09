@@ -12,28 +12,32 @@ use App\Auth; ?>
   <link rel="shortcut icon" href="<?= c_url('/favicon.ico', false) ?>" type="image/x-icon">
 
   <?php useBootstrap() ?>
-  <link rel="stylesheet" href="<?= c_url('/admin/', false) ?>assets/css/style.css" />
 
   <?php if ($tiny_mce ?? false): ?>
     <!-- TinyMCE -->
     <?php useTinyMCE(); ?>
 
-    <script>
-      tinymce.init({
-        selector: 'textarea#tiny',
-        content_css: '<?= c_url('/admin/', false) ?>assets/css/style.css',
-        plugins: [
-          'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'markdown',
-          'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
-          'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
-        ],
-        toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
-          'bullist numlist checklist outdent indent | removeformat | code table help',
-        images_upload_url: '<?= $writer . 'tnymceul.php' ?>'
-      })
-    </script>
+    <?php add_head(function () {
+      global $writer; ?>
+      <script>
+        tinymce.init({
+          selector: 'textarea#tiny',
+          content_css: '<?= c_url('/admin/', false) ?>assets/css/style.css',
+          plugins: [
+            'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'markdown',
+            'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+            'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+          ],
+          toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
+            'bullist numlist checklist outdent indent | removeformat | code table help',
+          images_upload_url: '<?= $writer . 'tnymceul.php' ?>'
+        })
+      </script>
+    <?php }); ?>
     <!-- end TinyMCE -->
   <?php endif ?>
+  <?php do_head(); ?>
+  <link rel="stylesheet" href="<?= c_url('/admin/', false) ?>assets/css/style.css" />
 </head>
 
 <body>

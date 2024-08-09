@@ -1,7 +1,8 @@
 </div>
 </div>
 
-<?php useBootstrapScript();?>
+<?php useBootstrapScript(); ?>
+<?php do_footer(); ?>
 </body>
 
 </html>

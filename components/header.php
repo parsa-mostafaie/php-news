@@ -1,5 +1,6 @@
 <?php require_once __DIR__ . ('/../includes/c-init.php');
 use App\Auth;
+
 ?>
 <!DOCTYPE html>
 <html dir="rtl" lang="fa">
@@ -11,7 +12,8 @@ use App\Auth;
   <link rel="shortcut icon" href="<?= c_url('/favicon.ico', false) ?>" type="image/x-icon">
 
   <?php useBootstrap() ?>
-  <link rel="stylesheet" href="<?= c_url('/assets/css/style.css') ?>" />
+  <?php do_head() ?>
+  <link rel="stylesheet" href="<?= c_url('/assets/css/style.css', false) ?>" />
 </head>
 
 <body>

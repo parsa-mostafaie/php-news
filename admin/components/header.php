@@ -13,6 +13,7 @@ use App\Auth; ?>
   <link rel="shortcut icon" href="<?= c_url('/favicon.ico', false) ?>" type="image/x-icon">
 
   <?php useBootstrap() ?>
+  <?php do_head() ?>
   <link rel="stylesheet" href="<?= c_url('/admin') ?>/assets/css/style.css" />
 </head>
 

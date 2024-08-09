@@ -16,6 +16,7 @@
   </div>
 </footer>
 </div>
-<?php useBootstrapScript()?>
+<?php useBootstrapScript() ?>
+<?php do_footer() ?>
 
 </html>

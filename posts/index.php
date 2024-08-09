@@ -39,11 +39,7 @@ $seoFriendly_URL = normalRoute();
 
 $__related_posts = $post->related_posts();
 ?>
-<?php if ($_SERVER['REQUEST_URI'] != $seoFriendly_URL): ?>
-  <script>
-    window.history.replaceState({}, '', "<?= $seoFriendly_URL ?>" + window.location.hash)
-  </script>
-<?php endif; ?>
+<?php add_footer('normalize_route'); ?>
 <?php include ('../components/header.php') ?>
 
 <!-- Content -->
@@ -164,22 +160,25 @@ $__related_posts = $post->related_posts();
   </div>
 </section>
 <?php useResubmit(); ?>
-<script>
-  <?php $s = secure_form(); ?>
-  let fd = new FormData();
+<?php add_footer(function () {
+  global $post_id; ?>
+  <script>
+    <?php $s = secure_form(); ?>
+    let fd = new FormData();
 
-  fetch(
-    "<?= url(c_url('/posts/public/apis/pview.php', false), ['post' => $post_id]) ?>",
-    {
-      method: 'PUT',
-      body: JSON.stringify({
-        "sec_form_sess_n": "<?= $s['n'] ?>",
-        "sec_form_sess_v": "<?= $s['v'] ?>"
-      }),
-      headers: new Headers({
-        "content-type": "application/json"
-      })
-    }
-  );
-</script>
+    fetch(
+      "<?= url(c_url('/posts/public/apis/pview.php', false), ['post' => $post_id]) ?>",
+      {
+        method: 'PUT',
+        body: JSON.stringify({
+          "sec_form_sess_n": "<?= $s['n'] ?>",
+          "sec_form_sess_v": "<?= $s['v'] ?>"
+        }),
+        headers: new Headers({
+          "content-type": "application/json"
+        })
+      }
+    );
+  </script>
+<?php }); ?>
 <?php include ('../components/footer.php') ?>
