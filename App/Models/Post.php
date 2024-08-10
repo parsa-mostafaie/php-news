@@ -179,7 +179,7 @@ class Post extends BaseModel
     return db()->table('reactions', alias: 'r')->select('e.id')
       ->where(expr('r.post_id'), $this->_id())
       ->where(expr('r.user_id'), User::current()->_id())
-      ->on('e.id = r.emoji_id', 'emojis as e')->getArray(nosql_row: true)[0]['id'] ?? null;
+      ->on('e.id = r.emoji_id', 'emojis as e')->getArray()[0]['id'] ?? null;
   }
 
   function add_reaction($id)

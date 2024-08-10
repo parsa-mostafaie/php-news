@@ -1,5 +1,5 @@
 <?php
-$cats = db()->TABLE('categories')->SELECT('name, id')->Run()->fetchAll(PDO::FETCH_ASSOC);
+$cats = db()->TABLE('categories')->SELECT(['name','id'])->Run()->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <style>
   .accordion-button::after {

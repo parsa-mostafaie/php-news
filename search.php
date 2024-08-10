@@ -19,7 +19,7 @@ $pres =
     ->where($condits)
     ->WHERE($cat_id ? 'category = ?' : '0 = ?')
     ->WHERE($u_id ? 'author = ?' : '0 = ?')
-    ->ORDER_BY('verify_date', 'desc')
+    ->orderBy('verify_date', 'desc')
     ->pagination(4, $page, $stmt_params);
 
 

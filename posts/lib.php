@@ -50,7 +50,7 @@ function comments_fetch($parent = 'NULL', $nop = false)
   $verb = strtoupper($parent) == 'NULL' ? 'is' : '=';
   $coms = Comment::select()
     ->WHERE(expr('post'), $post_id)->WHERE($nop ? '1=1' : "parent $verb $parent")
-    ->ORDER_BY('date', 'DESC');
+    ->orderBy('date', 'DESC');
 
   if (!Auth::isRole(2) && !Post::canEdited($post_id)) {
     $coms = $coms->WHERE('verify = 1 OR ' . pcl_usid_cond() . '');
@@ -92,10 +92,10 @@ function normalized_route()
 function normalize_route()
 {
   ?>
-    <?php if ($_SERVER['REQUEST_URI'] != normalized_route()): ?>
-        <script>
-          window.history.replaceState({}, '', "<?= normalized_route() ?>" + window.location.hash)
-        </script>
-    <?php endif; ?>
+  <?php if ($_SERVER['REQUEST_URI'] != normalized_route()): ?>
+    <script>
+      window.history.replaceState({}, '', "<?= normalized_route() ?>" + window.location.hash)
+    </script>
+  <?php endif; ?>
 <?php
 }

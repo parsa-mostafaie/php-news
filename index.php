@@ -5,9 +5,9 @@ use App\Models\Post;
 include ('components/header.php');
 useAjaxContent() ?>
 <?php
-$__component__posts = Post::where('verify', 1)->LIMIT(15)->ORDER_BY('verify_date', 'desc')->get();
+$__component__posts = Post::where('verify', 1)->LIMIT(15)->orderBy('verify_date', 'desc')->get();
 
-$__component__caro = Post::where('verify', 1)->LIMIT(5)->ORDER_BY('verify_date', 'desc')->get();
+$__component__caro = Post::where('verify', 1)->LIMIT(5)->orderBy('verify_date', 'desc')->get();
 ?>
 <!-- Slider Section -->
 <section>

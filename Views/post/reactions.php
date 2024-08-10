@@ -23,12 +23,12 @@ $res = db()->TABLE('emojis', alias: 'e')->SELECT([
   'e.name',
   'e.eng_name',
   'e.emoji',
-  'COUNT(r.ID) as `count`'
+  expr('COUNT(r.ID) as `count`')
 ])->ON(
     cond(expr('e.id'), expr('r.emoji_id'))->and(expr('r.post_id'), expr('?')),
     'reactions r',
     'left'
-  )->GROUP_BY('e.id')->getArray([$post_id], true);
+  )->groupBy('e.id')->getArray([$post_id]);
 
 // $sql = `SELECT 
 // 		e.id, e.name, e.eng_name, e.emoji, 

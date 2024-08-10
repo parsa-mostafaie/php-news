@@ -21,7 +21,7 @@ function listify(PDOStatement $st, $col, $link = '#', $class = '', $echo = true)
 
 function categories_list()
 {
-  $st = db()->TABLE('categories')->SELECT('ID, Name')->Run();
+  $st = db()->TABLE('categories')->SELECT(['ID', 'Name'])->Run();
   $href = function ($row) {
     return c_url("/search.php?search&cat=" . $row['ID']);
   };

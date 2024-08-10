@@ -54,7 +54,7 @@ function users_table($last = true, $id = "a_users_tbl")
 
   $values = User::select();
 
-  if($last){
+  if ($last) {
     $values->limit(5);
   }
 
@@ -126,12 +126,12 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
 
   $st =
     db()->TABLE('comments as c')->
-      SELECT(
+      select([])->selectRaw(
         'p.id as pid, c.verify, c.ID, (CONCAT(u.firstname, " ",u.lastname)) as `نام`, Text as `متن کامنت`'
       )
       ->ON('u.ID = c.user_id', 'users as u')
       ->on('p.id = c.post', 'posts p')
-      ->ORDER_BY('c.date desc');
+      ->orderBy('c.date','desc');
   if ($last) {
     $st->LIMIT(5);
   }
@@ -184,9 +184,9 @@ function posts_table($last = true, $by = null, $id = "a_posts_tbl")
   };
   $_ = 'p.verify, p.ID, Title as `عنوان`, (CONCAT(u.firstname, " ",u.lastname)) as `نویسنده`';
   $st = db()->TABLE('posts as p')->
-    SELECT($_)->
+    SELECT([])->selectRaw($_)->
     ON('u.ID = p.author', 'users as u')
-    ->ORDER_BY('p.created_at desc');
+    ->orderBy('p.created_at','desc');
   if ($last) {
     $st->LIMIT(5);
   }
