@@ -14,7 +14,10 @@ function view($url, $id = null, $props = [])
       <div class="spinner-grow text-primary" role="status" aria-hidden="true"></div>
       <p class="my-0 me-2">لطفا صبر کنید!</p>
     </div>
-    <div ajax-content http-method="post" href="<?= redirect($www, back: true, gen: true) ?>" loading=".loading">
+    <div class="fallback text-danger d-none d-flex justify-content-center align-items-center mx-auto">
+      خطا هنگام بارگزاری...
+    </div>
+    <div ajax-content http-method="post" href="<?= redirect($www, back: true, gen: true) ?>" loading=".loading" fallback=".fallback">
     </div>
   </div>
   <?php
