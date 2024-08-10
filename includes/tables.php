@@ -125,7 +125,7 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
   };
 
   $st =
-    db()->TABLE('comments as c', true)->
+    db()->TABLE('comments as c')->
       SELECT(
         'p.id as pid, c.verify, c.ID, (CONCAT(u.firstname, " ",u.lastname)) as `نام`, Text as `متن کامنت`'
       )
@@ -183,7 +183,7 @@ function posts_table($last = true, $by = null, $id = "a_posts_tbl")
   <?php
   };
   $_ = 'p.verify, p.ID, Title as `عنوان`, (CONCAT(u.firstname, " ",u.lastname)) as `نویسنده`';
-  $st = db()->TABLE('posts as p', true)->
+  $st = db()->TABLE('posts as p')->
     SELECT($_)->
     ON('u.ID = p.author', 'users as u')
     ->ORDER_BY('p.created_at desc');
