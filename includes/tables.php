@@ -1,6 +1,7 @@
 <?php include_once 'c-init.php';
 use App\Auth;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use pluslib\Collections\Collection;
@@ -62,7 +63,7 @@ function users_table($last = true, $id = "a_users_tbl")
 
   $empty = function () {
     ?>
-    <div class="alert alert-primary">هیچ دسته بندی فعلا وجود ندارد!</div>
+    <div class="alert alert-primary">هیچ کاربری فعلا وجود ندارد!</div>
     <?php
   };
 
@@ -105,57 +106,83 @@ function users_table($last = true, $id = "a_users_tbl")
 
 function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
 {
-  $actions = function ($data) use ($id) {
-    $danger = $data['verify'] ? 'danger-btn' : '';
-    $url = c_url('/writer/comment.php' . '?com=' . $data['ID'] . ($data['verify'] ? '' : '&v=1'));
-    $href = Post::canEdited($data['pid']) ?
-      "href='$url' http-method='PUT' ajax-reload='#$id' $danger" : '';
-    $disable = Post::canEdited($data['pid']) ? '' : 'disabled';
-    if (!$data['verify']): ?>
-      <a <?= $href ?> class="btn btn-sm btn-outline-info <?= $disable ?>">در
-        انتظار تایید</a>
-    <?php else: ?>
-      <a <?= $href ?> class="btn btn-sm btn-success <?= $disable ?>">تایید شده</a>
-    <?php endif; ?>
-    <?php if (Auth::isRole(2)): ?>
-      <a danger-btn http-method="DELETE" ajax-reload="#<?= $id ?>"
-        href="<?= c_url('/admin/pages/comments/rem.php?com=' . $data['ID']) ?>" class="btn btn-sm btn-outline-danger">حذف</a>
-    <?php endif ?>
-  <?php
+  $fields = [
+    '#',
+    'نام',
+    'پست',
+    'در پاسخ به',
+    'متن کامنت',
+    'عملیات'
+  ];
+
+  $values = Comment::select();
+
+  if ($last) {
+    $values->limit(5);
+  }
+
+  if ($by) {
+    $values->on(cond('u.id', expr('comments.user_id')), 'users u');
+    $values->on(cond('p.id', expr('comments.post')), 'posts p');
+    $values->where('u.id = :id OR p.author = :id');
+  }
+
+  $values->orderBy('comments.date', 'desc');
+
+  $values = $values->get($by ? [':id' => $by] : [])->all();
+
+  $empty = function () {
+    ?>
+    <div class="alert alert-primary">هیچ کامنتی فعلا وجود ندارد!</div>
+    <?php
   };
 
-  $st =
-    db()->TABLE('comments as c')->
-      select([])->selectRaw(
-        'p.id as pid, c.verify, c.ID, (CONCAT(u.firstname, " ",u.lastname)) as `نام`, Text as `متن کامنت`'
-      )
-      ->ON('u.ID = c.user_id', 'users as u')
-      ->on('p.id = c.post', 'posts p')
-      ->orderBy('c.date','desc');
-  if ($last) {
-    $st->LIMIT(5);
-  }
-  if ($by) {
-    $st->WHERE('u.id = ? OR p.author = ?');
-  }
-  $st = $st->Run($by ? [$by, $by] : []);
-  $idl = function ($kv, $data) {
-    ['v' => $v] = $kv;
-    $post = $data['pid'];
-    return c_url('/posts/' . $post . '#c' . $v);
-  };
-  $ril = function ($data) {
-    return $data['ID'];
-  };
-  tablify(
-    $st,
-    Auth::isRole(1) ? 'عملیات' : null,
-    $actions,
-    hidden: ['verify', 'pid'],
-    head_link: $idl,
-    rowid: $ril,
-    empty_msg: '<div class="alert alert-dark">هیچ کامنتی پیدا نشد!</div>'
-  );
+  return tablify_pro($fields, $values, function (Comment $comment, callable $td_render) use ($id) {
+    $td_render([
+      function () use ($comment) {
+        ?>
+      <a href="<?= $comment->get_url() ?>"><?= $comment->_id() ?></a>
+      <?php
+      },
+      $comment->author->fullname(),
+      function () use ($comment) {
+        ?>
+      <a href="<?= $comment->_post->get_url() ?>"><?= truncate($comment->_post->title) ?></a>
+      <?php
+      }
+    ]);
+
+    $td_render(!$comment->Parent ? '' : function () use ($comment) {
+      ?>
+      <a href="<?= $comment->parent->get_url() ?>"><?= $comment->parent->author->fullname() ?></a>
+      <?php
+    });
+
+    $td_render(truncate($comment->text));
+
+    $td_render(function () use ($comment) {
+      $danger = $comment->verified() ? 'danger-btn' : '';
+
+      $url = url(c_url('/writer/comment.php' . '?com=' . $comment->_id() . ($comment->Verify ? '' : '&v=1')));
+
+      $href = $comment->can_verified() ?
+        "href='$url' http-method='PUT' ajax-reload='#{$comment->_id()}' $danger" : '';
+
+      $disable = $comment->can_verified() ? '' : 'disabled';
+      if (!$comment->verified()): ?>
+        <a <?= $href ?> class="btn btn-sm btn-outline-info <?= $disable ?>">در
+          انتظار تایید</a>
+      <?php else: ?>
+        <a <?= $href ?> class="btn btn-sm btn-success <?= $disable ?>">تایید شده</a>
+      <?php endif; ?>
+      <?php if (Auth::isRole(2)): ?>
+        <a danger-btn http-method="DELETE" ajax-reload="#<?= $comment->_id() ?>"
+          href="<?= url(c_url('/admin/pages/comments/rem.php?com=' . $comment->_id())) ?>"
+          class="btn btn-sm btn-outline-danger">حذف</a>
+      <?php endif ?>
+    <?php
+    });
+  }, $empty);
 }
 
 
@@ -186,7 +213,7 @@ function posts_table($last = true, $by = null, $id = "a_posts_tbl")
   $st = db()->TABLE('posts as p')->
     SELECT([])->selectRaw($_)->
     ON('u.ID = p.author', 'users as u')
-    ->orderBy('p.created_at','desc');
+    ->orderBy('p.created_at', 'desc');
   if ($last) {
     $st->LIMIT(5);
   }

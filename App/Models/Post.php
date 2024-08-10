@@ -223,4 +223,9 @@ class Post extends BaseModel
 
     return $this;
   }
+
+  function get_url()
+  {
+    return url(c_url("/posts/{$this->_id()}"));
+  }
 }

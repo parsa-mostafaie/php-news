@@ -78,7 +78,13 @@ class Comment extends BaseModel
     return $this->verified();
   }
 
-  function can_verified(){
+  function can_verified()
+  {
     return $this->_post->canEdit();
+  }
+
+  function get_url()
+  {
+    return $this->_post->get_url() . '#' . $this->_id();
   }
 }
