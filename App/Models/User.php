@@ -37,24 +37,16 @@ class User extends UserBase
     'comments' => array(self::HAS_MANY, Comment::class, 'user_id'),
   );
 
-  function role()
+  function changeRole(int $role, User|null $upgrader = null)
   {
-    return @UserRole::from($this->admin);
-  }
-
-  function changeRole(UserRole|int $role, User|null $upgrader = null)
-  {
-    $asInt = is_int($role) ? $role : $role->value;
-    if (is_null($upgrader) || ($asInt <= $upgrader->admin && $this->admin <= $upgrader->admin)) {
-      $this->admin = $asInt;
+    if (is_null($upgrader) || ($role <= $upgrader->admin && $this->admin <= $upgrader->admin)) {
+      $this->admin = $role;
     }
   }
 
-  function auth(UserRole|int $minRole)
+  function auth(int $minRole)
   {
-    $asInt = is_int($minRole) ? $minRole : $minRole->value;
-
-    return $this->admin >= $asInt;
+    return $this->admin >= $minRole;
   }
 
   function sm_profile()

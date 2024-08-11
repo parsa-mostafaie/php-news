@@ -3,20 +3,20 @@ namespace App;
 
 defined('ABSPATH') || exit;
 
-use App\Models\User, App\Models\UserRole;
+use App\Models\User;
 
 class Auth extends \pluslib\Auth
 {
   protected static string $UserTable = User::class;
 
-  static function isRole(UserRole|int $role = 1)
+  static function isRole(int $role = 1)
   {
     if (!Auth::canLogin())
       return false;
-    return call_user_func([static::$UserTable, 'current'])->auth($role);
+    return User::current()->auth($role);
   }
 
-  static function authAdmin(UserRole|int $role = 1)
+  static function authAdmin(int $role = 1)
   {
     if (!static::isRole($role)) {
       _403_();

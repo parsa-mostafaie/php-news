@@ -32,6 +32,8 @@ function readtime($post)
   return ceil($count_words / 250);
 }
 
+const ROLE_NORMAL = 0, ROLE_WRITER = 1, ROLE_ADMIN = 2;
+
 require_once __DIR__ . '/../libs/@table.php';
 require_once __DIR__ . '/../libs/@ul.php';
 require_once __DIR__ . '/../libs/@use_lib.php';

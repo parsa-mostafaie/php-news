@@ -3,7 +3,6 @@ use App\Auth;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
-use App\Models\UserRole;
 use App\Models\UserProfile;
 use pluslib\Database\Condition;
 
@@ -34,7 +33,7 @@ function comment(Comment $comment)
       <p class="card-text pt-3 px-3" dir="auto">
         <?= nl2br($comment->text) ?>
       </p>
-      <?php if (Auth::isRole(UserRole::Normal)): ?>
+      <?php if (Auth::isRole(ROLE_NORMAL)): ?>
         <a data-comment="<?= $comment->_id() ?>" class="card-link text-decoration-none d-block pb-1" href
           onclick="return false;">پاسخ دادن</a>
       <?php endif; ?>
