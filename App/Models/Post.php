@@ -39,6 +39,20 @@ class Post extends BaseModel
     'verify_date' => NULL
   ];
 
+  protected $fillable = [
+    'Title',
+    'Author',
+    'Verify',
+    'Content',
+    'created_at',
+    'updated_at',
+    'Image',
+    'Category',
+    'description',
+    'verify_date',
+    'view',
+  ];
+
   protected $translation = [
     'content' => "Content",
     'title' => "Title",

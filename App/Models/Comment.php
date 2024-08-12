@@ -34,6 +34,15 @@ class Comment extends BaseModel
     'Parent' => NULL
   ];
 
+  protected $fillable = [
+    'date',
+    'Verify',
+    'Text',
+    'Parent',
+    'post',
+    'user_id'
+  ];
+
   const updated_at = null;
   const created_at = 'date';
 

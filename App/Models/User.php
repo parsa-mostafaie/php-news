@@ -28,6 +28,18 @@ class User extends UserBase
 {
   const updated_at = null;
 
+  protected $fillable = [
+    'username',
+    'firstname',
+    'lastname',
+    'created_at',
+    'password',
+    'admin',
+    'mail',
+    'last_activity_time',
+    'profile'
+  ];
+
   protected $defaultData = [
     'admin' => 0
   ];

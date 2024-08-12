@@ -63,7 +63,7 @@ $__PROCESS__CALLBACK__ = function () {
 
   $post->title = $title;
   $post->content = $content;
-  $post->category = $cat;
+  $post->Category = $cat;
   $post->description = $desc;
 
   $post->save();

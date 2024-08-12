@@ -16,6 +16,12 @@ class Category extends BaseModel
   protected $table = "categories";
   protected $id_field = "ID";
 
+  protected $fillable = ['Name'];
+
+  protected $translation = [
+    'name' => 'Name'
+  ];
+
   const updated_at = null;
   const created_at = null;
 
