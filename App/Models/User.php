@@ -28,6 +28,10 @@ class User extends UserBase
 {
   const updated_at = null;
 
+  protected $appends = [
+    'fullname'
+  ];
+
   protected $fillable = [
     'username',
     'firstname',
