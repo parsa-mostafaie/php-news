@@ -242,4 +242,24 @@ class Post extends BaseModel
   {
     return url(c_url("/posts/{$this->_id()}"));
   }
+
+  function _un_publish_url()
+  {
+    $post = $this;
+
+    return url(c_url('/admin/pages/posts/' . ($post->published() ? 'un' : '') . 'verify.php?post=' . $post->_id()));
+  }
+
+  function edit_url()
+  {
+    $id = $this->_id();
+
+    return url(c_url('/writer/edit.php?post=' . $id));
+  }
+
+  function rem_url()
+  {
+    $id = $this->_id();
+    return url(c_url('/admin/pages/posts/rem.php?post=' . $id));
+  }
 }

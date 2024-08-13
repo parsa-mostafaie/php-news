@@ -152,7 +152,7 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
       }
     ]);
 
-    $td_render(!$comment->Parent ? '' : function () use ($comment) {
+    $td_render(!$comment->parent_id ? '' : function () use ($comment) {
       ?>
       <a href="<?= $comment->parent->get_url() ?>"><?= $comment->parent->author->fullname() ?></a>
       <?php
@@ -160,13 +160,13 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
 
     $td_render(truncate($comment->text));
 
-    $td_render(function () use ($comment) {
+    $td_render(function () use ($comment, $id) {
       $danger = $comment->verified() ? 'danger-btn' : '';
 
       $url = url(c_url('/writer/comment.php' . '?com=' . $comment->_id() . ($comment->Verify ? '' : '&v=1')));
 
       $href = $comment->can_verified() ?
-        "href='$url' http-method='PUT' ajax-reload='#{$comment->_id()}' $danger" : '';
+        "href='$url' http-method='PUT' ajax-reload='#$id' $danger" : '';
 
       $disable = $comment->can_verified() ? '' : 'disabled';
       if (!$comment->verified()): ?>
@@ -188,54 +188,64 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
 
 function posts_table($last = true, $by = null, $id = "a_posts_tbl")
 {
-  $actions = function ($data) use ($id) {
-    $danger = $data['verify'] ? 'danger-btn' : '';
-    $url = c_url('/admin/pages/posts/' . ($data['verify'] ? 'un' : '') . 'verify.php?post=' . $data['ID']);
-    $attrs = Auth::isRole(2) ? "href='$url' http-method='PUT' ajax-reload='#$id' $danger" : '';
 
-    $disable = Auth::isRole(2) ? '' : 'disabled';
+  $fields = [
+    '#',
+    'عنوان',
+    'نویسنده',
+    'عملیات'
+  ];
 
-    if (!$data['verify']): ?>
-      <a <?= $attrs ?> class="btn btn-sm btn-outline-info <?= $disable ?>">در انتظار تایید</a>
-    <?php else: ?>
-      <a <?= $attrs ?> class="btn btn-sm btn-success <?= $disable ?>">تایید شده</a>
-    <?php endif; ?>
-    <?php if (Post::canEdited($data['ID'])): ?>
-      <a href="<?= c_url('/writer/edit.php?post=' . $data['ID']) ?>" class="btn btn-sm btn-outline-dark">ویرایش</a>
-    <?php endif; ?>
-    <?php if (Auth::isRole(2)): ?>
-      <a ajax-reload="#<?= $id ?>" href="<?= c_url('/admin/pages/posts/rem.php?post=' . $data['ID']) ?>" danger-btn
-        class="btn btn-sm btn-outline-danger" http-method="DELETE">حذف</a>
-    <?php endif; ?>
-  <?php
-  };
-  $_ = 'p.verify, p.ID, Title as `عنوان`, (CONCAT(u.firstname, " ",u.lastname)) as `نویسنده`';
-  $st = db()->TABLE('posts as p')->
-    SELECT([])->selectRaw($_)->
-    ON('u.ID = p.user_id', 'users as u')
-    ->orderBy('p.created_at', 'desc');
+  $values = Post::select();
+
   if ($last) {
-    $st->LIMIT(5);
+    $values->limit(5);
   }
+
   if ($by) {
-    $st->WHERE('p.user_id = ?');
+    $values->where('posts.user_id', expr(':id'));
   }
-  $st = $st->Run($by ? [$by] : []);
-  $idl = function ($data) {
-    ['v' => $v] = $data;
-    return c_url('/posts/' . $v);
-  };
-  $ril = function ($data) {
-    return $data['ID'];
+
+  $values->orderBy('posts.created_at', 'desc');
+
+  $values = $values->get($by ? [':id' => $by] : [])->all();
+
+  $empty = function () {
+    ?>
+    <div class="alert alert-primary">هیچ پستی فعلا وجود ندارد!</div>
+    <?php
   };
 
-  tablify(
-    $st,
-    Auth::isRole(1) ? 'عملیات' : null,
-    $actions,
-    hidden: ['verify'],
-    head_link: $idl,
-    rowid: $ril,
-    empty_msg: '<div class="alert alert-dark">هیچ پستی پیدا نشد!</div>'
-  );
+  return tablify_pro($fields, $values, function (Post $post, callable $td_render) use ($id) {
+    $td_render(function () use ($post) {
+      ?>
+      <a href="<?= $post->get_url() ?>"><?= $post->_id() ?></a>
+      <?php
+    });
+
+    $td_render($post->title);
+    $td_render($post->author->fullname());
+
+    $td_render(Auth::isRole(2) ? function () use ($post, $id) {
+      $danger = $post->published() ? 'danger-btn' : '';
+      $url = $post->_un_publish_url();
+      $attrs = Auth::isRole(2) ? "href='$url' http-method='PUT' ajax-reload='#$id' $danger" : '';
+
+      $disable = Auth::isRole(2) ? '' : 'disabled';
+
+      if (!$post['verify']): ?>
+        <a <?= $attrs ?> class="btn btn-sm btn-outline-info <?= $disable ?>">در انتظار تایید</a>
+      <?php else: ?>
+        <a <?= $attrs ?> class="btn btn-sm btn-success <?= $disable ?>">تایید شده</a>
+      <?php endif; ?>
+      <?php if (Post::canEdited($id)): ?>
+        <a href="<?= $post->edit_url() ?>" class="btn btn-sm btn-outline-dark">ویرایش</a>
+      <?php endif; ?>
+      <?php if (Auth::isRole(2)): ?>
+        <a ajax-reload="#<?= $id ?>" href="<?= $post->rem_url() ?>" danger-btn class="btn btn-sm btn-outline-danger"
+          http-method="DELETE">حذف</a>
+      <?php endif; ?>
+    <?php
+    } : null);
+  }, $empty);
 }
