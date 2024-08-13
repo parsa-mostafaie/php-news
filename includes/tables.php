@@ -123,7 +123,7 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
 
   if ($by) {
     $values->on(cond('u.id', expr('comments.user_id')), 'users u');
-    $values->on(cond('p.id', expr('comments.post')), 'posts p');
+    $values->on(cond('p.id', expr('comments.post_id')), 'posts p');
     $values->where('u.id = :id OR p.user_id = :id');
   }
 
