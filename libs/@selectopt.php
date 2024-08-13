@@ -1,41 +1,55 @@
 <?php
 
+use App\Models\Category;
+use App\Models\User;
+use pluslib\Collections\Collection;
+
 defined('ABSPATH') || exit;
 
-function selectOpt(PDOStatement $st, $col, $valRow = 'ID', $inpname = '', $def = null, $all = null, $class = '', $echo = true)
+function selectOpt($models, $name, $render, $once = [], $current = 0)
 {
-  $html = '<select class="form-select" name="' . $inpname . '">';
-  $fetch = $st->fetchAll(PDO::FETCH_ASSOC);
-  if ($all) {
-    $sfetch = $fetch;
-    $fetch = [$all];
-    array_push($fetch, ...$sfetch);
-  }
-  foreach ($fetch as $row) {
-    $colv = $row[$col];
-    $attr = '';
-    if ($row[$valRow] == $def) {
-      $attr = 'selected';
+  ?>
+  <select class="form-select" name="<?= $name ?>'">
+    <?php
+    $option_render = function ($value, $text, $class = '') use ($current) {
+      $isSelected = valueof($value) == $current;
+      $attr = $isSelected ? 'selected' : '';
+      $class = valueof($class);
+      ?>
+      <option class="list-group-item <?= $class ?>" value="<?= valueof($value) ?>" <?= $attr ?>>
+        <?= valueof($text) ?>
+      </option>
+      <?php
+    }; ?>
+    <?php foreach ($once as $arr): ?>
+      <?php $option_render(...wrap($arr)); ?>
+    <?php endforeach; ?>
+    <?php
+    foreach ($models as $model) {
+      ?>
+      <?= $render($model, $option_render); ?>
+      <?php
     }
-    $class_ = valueof($class, $row);
-    $html .= "<option class='list-group-item $class_' value=" . $row[$valRow] . " $attr>$colv</option>";
-  }
-  $html .= '</select>';
-  if ($echo)
-    echo $html;
-  return $html;
+    ?>
+  </select>
+  <?php
 }
 
 
 function categories_sel($inpname = 'cat', $default = null)
 {
-  $st = db()->TABLE('categories')->SELECT(['ID','Name'])->Run();
-  selectOpt($st, 'Name', inpname: $inpname, def: $default);
+  $st = Category::all();
+  selectOpt($st, $inpname, function (Category $category, $opr) {
+    $opr($category->_id(), $category->Name);
+  }, current: $default);
 }
 
 function authors_sel($inpname = 'author', $default = null)
 {
-  $st = db()->TABLE('users')->SELECT([])->selectRaw('ID, CONCAT(firstname, " ", lastname) as Name')
-    ->WHERE('admin > 0')->Run();
-  selectOpt($st, 'Name', inpname: $inpname, def: $default, all: ['ID' => '0', 'Name' => 'همه']);
+  $st =
+    User::select()->where('admin', '>', 0)->get();
+
+  selectOpt($st, $inpname, function (User $user, $opr) {
+    $opr($user->_id(), $user->fullname());
+  }, once: [[0, 'همه']], current: $default);
 }

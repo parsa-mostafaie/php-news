@@ -28,7 +28,7 @@ if (!$post->is_visible()) {
   _404_();
 }
 
-$_GET['cat'] = $post->Category;// bold category in categories_list
+$_GET['cat'] = $post->category_id;// bold category in categories_list
 
 ['n' => $sessn, 'v' => $sessv] = secure_form();
 
