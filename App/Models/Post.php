@@ -225,19 +225,13 @@ class Post extends BaseModel
       return;
     }
 
-    $reaction = $this->get_current_reaction();
-
-    if (!$reaction) {
-      $reaction = new Reaction;
-
-      $reaction->fill([
+    Reaction::updateOrCreate(
+      [
         'user_id' => User::current()->_id(),
         'post_id' => $this->_id()
-      ]);
-    }
-  
-    $reaction->emoji_id = $id;
-    $reaction->save();
+      ],
+      ['emoji_id' => $id]
+    );
 
     return $this;
   }
