@@ -48,7 +48,7 @@ function comments_fetch($parent = 'NULL', $nop = false)
   global $post_id;
   $verb = strtoupper($parent) == 'NULL' ? 'is' : '=';
   $coms = Comment::select()
-    ->WHERE(expr('post'), $post_id)->WHERE($nop ? '1=1' : "parent $verb $parent")
+    ->WHERE('post_id', $post_id)->WHERE($nop ? '1=1' : "parent_id $verb $parent")
     ->orderBy('date', 'DESC');
 
   if (!Auth::isRole(2) && !Post::canEdited($post_id)) {

@@ -44,8 +44,8 @@ $__PROCESS__CALLBACK__ = function () {
 
   $comment->user_id = User::current()->_id();
   $comment->text = $ctext;
-  $comment->post = $post_id;
-  $comment->Parent = $parent;
+  $comment->post_id = $post_id;
+  $comment->parent_id = $parent;
 
   $comment->save();
 };

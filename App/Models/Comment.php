@@ -12,8 +12,8 @@ use pluslib\Eloquent\BaseModel;
  * @property int $Verify
  * 
  * @property int $ID
- * @property int $Parent
- * @property int $post
+ * @property int $parent_id
+ * @property int $post_id
  * @property int $user_id
  * 
  * @property string $text
@@ -38,8 +38,8 @@ class Comment extends BaseModel
     'date',
     'Verify',
     'Text',
-    'Parent',
-    'post',
+    'parent_id',
+    'post_id',
     'user_id'
   ];
 
@@ -51,10 +51,10 @@ class Comment extends BaseModel
   ];
 
   protected $relationships = array(
-    '_post' => array(self::BELONGS_TO, Post::class, 'post'),
-    'parent' => array(self::BELONGS_TO, Comment::class, 'Parent'),
+    '_post' => array(self::BELONGS_TO, Post::class, 'post_id'),
+    'parent' => array(self::BELONGS_TO, Comment::class, 'parent_id'),
     'author' => array(self::BELONGS_TO, User::class, 'user_id'),
-    'replies' => array(self::HAS_MANY, Comment::class, 'Parent')
+    'replies' => array(self::HAS_MANY, Comment::class, 'parent_id')
   );
 
   function verify($save = true)
