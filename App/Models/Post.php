@@ -5,6 +5,7 @@ defined('ABSPATH') || exit;
 
 use pluslib\Eloquent\BaseModel;
 use App\Auth;
+use pluslib\Collections\Collection;
 use pluslib\Database\Expression;
 
 /**
@@ -29,6 +30,7 @@ use pluslib\Database\Expression;
  * @property Category $category
  * @property User $author
  * @property Comment[] $comments
+ * @property Collection<Reaction> $reactions
  */
 class Post extends BaseModel
 {
@@ -63,6 +65,7 @@ class Post extends BaseModel
     'comments' => array(self::HAS_MANY, Comment::class, 'post_id'),
     'category' => array(self::BELONGS_TO, Category::class, 'category_id'),
     'author' => array(self::BELONGS_TO, User::class, 'user_id'),
+    'reactions' => array(self::HAS_MANY, Reaction::class, 'post_id')
   );
 
   public static function canEdited($post_id)
@@ -184,16 +187,36 @@ class Post extends BaseModel
     );
   }
 
-  function reaction_id()
+  function get_current_reaction(): ?Reaction
   {
     if (!Auth::canLogin()) {
       return null;
     }
 
-    return db()->table('reactions', alias: 'r')->select('e.id')
-      ->where(expr('r.post_id'), $this->_id())
-      ->where(expr('r.user_id'), User::current()->_id())
-      ->on('e.id = r.emoji_id', 'emojis as e')->getArray()[0]['id'] ?? null;
+    return Reaction::select('reactions.*')
+      ->where('post_id', $this->_id())
+      ->where('user_id', User::current()->_id())
+      ->first();
+  }
+
+  function get_current_emoji(): ?Emoji
+  {
+    $reaction = $this->get_current_reaction();
+
+    if (!$reaction) {
+      return null;
+    }
+
+    return $reaction->emoji;
+  }
+
+  function ereaction_id()
+  {
+    if (!Auth::canLogin()) {
+      return null;
+    }
+
+    return $this->get_current_emoji()->ID ?? null;
   }
 
   function add_reaction($id)
@@ -202,14 +225,19 @@ class Post extends BaseModel
       return;
     }
 
-    db()->execute_q("
-      INSERT INTO reactions (post_id, emoji_id, user_id) VALUES (:p, :e, :u)
-      ON duplicate KEY UPDATE emoji_id = :e;
-    ", [
-      ':p' => $this->_id(),
-      ':e' => $id,
-      ':u' => User::current()->_id()
-    ]);
+    $reaction = $this->get_current_reaction();
+
+    if (!$reaction) {
+      $reaction = new Reaction;
+
+      $reaction->fill([
+        'user_id' => User::current()->_id(),
+        'post_id' => $this->_id()
+      ]);
+    }
+  
+    $reaction->emoji_id = $id;
+    $reaction->save();
 
     return $this;
   }
@@ -220,14 +248,8 @@ class Post extends BaseModel
       return;
     }
 
-    if ($this->reaction_id() == $id) {
-      db()->execute_q("
-      DELETE FROM REACTIONS WHERE post_id = :p AND emoji_id = :e AND user_id = :u
-    ", [
-        ':p' => $this->_id(),
-        ':e' => $id,
-        ':u' => User::current()->_id()
-      ]);
+    if ($this->ereaction_id() == $id) {
+      $this->get_current_reaction()->delete();
 
       return $this;
     }

@@ -4,6 +4,7 @@ namespace App\Models;
 defined('ABSPATH') || exit;
 
 use pluslib\App\Models\User as UserBase;
+use pluslib\Collections\Collection;
 use pluslib\Database\Expression;
 
 /**
@@ -23,6 +24,7 @@ use pluslib\Database\Expression;
  * 
  * @property Post[] $posts
  * @property Comment[] $comments
+ * @property Collection<Reaction> $reactions
  */
 class User extends UserBase
 {
@@ -51,6 +53,7 @@ class User extends UserBase
   protected $relationships = array(
     'posts' => array(self::HAS_MANY, Post::class, 'user_id'),
     'comments' => array(self::HAS_MANY, Comment::class, 'user_id'),
+    'reactions' => array(self::HAS_MANY, Reaction::class, 'user_id')
   );
 
   function changeRole(int $role, User|null $upgrader = null)
