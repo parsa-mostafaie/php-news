@@ -27,9 +27,7 @@ Post::withoutTimestamps(function () {
   if (!$post)
     _404_();
 
-  $post->view = expr(escape_col('view') . " + 1");
-
-  $post->save();
+  $post->increment('view')->save();
 });
 
 secure_form(secure_form_enum::expire);
