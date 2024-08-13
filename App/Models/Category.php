@@ -28,6 +28,10 @@ class Category extends BaseModel
   public $_timestamps = false;
 
   protected $relationships = array(
-    'posts' => array(self::HAS_MANY, Post::class, 'Category'),
+    'posts' => array(self::HAS_MANY, Post::class, 'category_id'),
   );
+
+  public function get_url(){
+    return url(c_url('/search.php?cat=' . $this->_id()));
+  }
 }

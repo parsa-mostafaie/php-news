@@ -17,8 +17,8 @@ $stmt_params = [...$fill, $cat_id, $u_id];
 $pres =
   Post::where('verify', 1)
     ->where($condits)
-    ->WHERE($cat_id ? 'category = ?' : '0 = ?')
-    ->WHERE($u_id ? 'author = ?' : '0 = ?')
+    ->WHERE($cat_id ? 'category_id = ?' : '0 = ?')
+    ->WHERE($u_id ? 'user_id = ?' : '0 = ?')
     ->orderBy('verify_date', 'desc')
     ->pagination(4, $page, $stmt_params);
 

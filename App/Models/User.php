@@ -49,7 +49,7 @@ class User extends UserBase
   ];
 
   protected $relationships = array(
-    'posts' => array(self::HAS_MANY, Post::class, 'author'),
+    'posts' => array(self::HAS_MANY, Post::class, 'user_id'),
     'comments' => array(self::HAS_MANY, Comment::class, 'user_id'),
   );
 

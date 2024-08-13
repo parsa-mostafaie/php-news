@@ -43,8 +43,8 @@ $__PROCESS__CALLBACK__ = function () {
 
   $post->title = $title;
   $post->content = $content;
-  $post->Category = $cat;
-  $post->Author = $author;
+  $post->category_id = $cat;
+  $post->user_id = $author;
   $post->description = $desc;
 
   $post->save();

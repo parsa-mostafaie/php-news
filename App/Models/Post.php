@@ -13,8 +13,8 @@ use pluslib\Database\Expression;
  * @property Expression|string $updated_at
  * 
  * @property int $ID
- * @property int $Author
- * @property int $Category
+ * @property int $user_id
+ * @property int $category_id
  * 
  * @property int $view
  * @property string $Content
@@ -41,13 +41,13 @@ class Post extends BaseModel
 
   protected $fillable = [
     'Title',
-    'Author',
+    'user_id',
     'Verify',
     'Content',
     'created_at',
     'updated_at',
     'Image',
-    'Category',
+    'category_id',
     'description',
     'verify_date',
     'view',
@@ -60,9 +60,9 @@ class Post extends BaseModel
   ];
 
   protected $relationships = array(
-    'comments' => array(self::HAS_MANY, Comment::class, 'post'),
-    'category' => array(self::BELONGS_TO, Category::class, 'Category'),
-    'author' => array(self::BELONGS_TO, User::class, 'Author'),
+    'comments' => array(self::HAS_MANY, Comment::class, 'post_id'),
+    'category' => array(self::BELONGS_TO, Category::class, 'category_id'),
+    'author' => array(self::BELONGS_TO, User::class, 'user_id'),
   );
 
   public static function canEdited($post_id)
@@ -71,7 +71,7 @@ class Post extends BaseModel
     if (!$post->loaded()) {
       return false;
     }
-    return $post->Author == User::current()->_id() || Auth::isRole(2);
+    return $post->user_id == User::current()->_id() || Auth::isRole(2);
   }
 
   public function canEdit()
@@ -86,7 +86,7 @@ class Post extends BaseModel
     if (!$for)
       return $this->verify;
 
-    return $this->Author == $for->_id() || Auth::isRole(2) || $this->verify;
+    return $this->user_id == $for->_id() || Auth::isRole(2) || $this->verify;
   }
 
   function verify($save = true)

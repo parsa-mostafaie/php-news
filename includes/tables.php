@@ -25,7 +25,7 @@ function categories_table()
   return tablify_pro($fields, $values, function (Category $cat, callable $td_render) {
     $td_render(function () use ($cat) {
       ?>
-      <a href="<?= c_url('/search.php?cat=' . $cat->_id()) ?>"><?= $cat->_id(); ?></a>
+      <a href="<?= $cat->get_url() ?>"><?= $cat->_id(); ?></a>
       <?php
     });
 
@@ -124,7 +124,7 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
   if ($by) {
     $values->on(cond('u.id', expr('comments.user_id')), 'users u');
     $values->on(cond('p.id', expr('comments.post')), 'posts p');
-    $values->where('u.id = :id OR p.author = :id');
+    $values->where('u.id = :id OR p.user_id = :id');
   }
 
   $values->orderBy('comments.date', 'desc');
@@ -212,13 +212,13 @@ function posts_table($last = true, $by = null, $id = "a_posts_tbl")
   $_ = 'p.verify, p.ID, Title as `عنوان`, (CONCAT(u.firstname, " ",u.lastname)) as `نویسنده`';
   $st = db()->TABLE('posts as p')->
     SELECT([])->selectRaw($_)->
-    ON('u.ID = p.author', 'users as u')
+    ON('u.ID = p.user_id', 'users as u')
     ->orderBy('p.created_at', 'desc');
   if ($last) {
     $st->LIMIT(5);
   }
   if ($by) {
-    $st->WHERE('p.author = ?');
+    $st->WHERE('p.user_id = ?');
   }
   $st = $st->Run($by ? [$by] : []);
   $idl = function ($data) {
