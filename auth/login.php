@@ -15,13 +15,13 @@ function is_usermail(...$p)
   return is_username(...$p) || is_email(...$p);
 }
 
-$_inps_arr = ['password' => $pword, 'username' => $uname];
+$_inps_arr = ['رمزعبور'  => $pword, 'نام کاربری' => $uname];
 $_inps_f = [
-  'password' => 'string | required',
-  'username' => 'string | usermail | required',
+  'نام کاربری' => 'string | usermail | required',
+  'رمزعبور' => 'string | required',
 ];
 
-[$inputs, $errors] = filter($_inps_arr, $_inps_f);
+[$inputs, $errors] = filter_persian($_inps_arr, $_inps_f);
 
 $_SUBMITED = setted('login');
 

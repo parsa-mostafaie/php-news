@@ -7,6 +7,8 @@ export function HandleError(e) {
       if (ERRORs instanceof Object) {
         let temp = "<ul dir='auto'>";
         for (let ERROR in ERRORs) {
+          if (!ERRORs[ERROR])
+            continue;
           let ERROR_TEXT = ERRORs[ERROR];
           temp += `<li><b>${ERROR}</b>: ${ERROR_TEXT}</li>`;
         }

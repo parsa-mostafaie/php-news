@@ -14,12 +14,12 @@ const ajax = new ajaxAPI();
 
 $catn = (get_val('catn'));
 
-$_inps_arr = ['name' => $catn];
+$_inps_arr = ['نام' => $catn];
 $_inps_f = [
-  'name' => 'string | required',
+  'نام' => 'string | required',
 ];
 
-[$inputs, $errors] = filter($_inps_arr, $_inps_f);
+[$inputs, $errors] = filter_persian($_inps_arr, $_inps_f);
 
 $_SUBMITED = setted('update');
 $cat = intval(get_val('update'));

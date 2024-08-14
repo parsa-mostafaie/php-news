@@ -20,15 +20,15 @@ $cat = intval(get_val('cat'));
 $content = get_val('tiny');
 $desc = get_val('desc');
 
-$_inps_arr = ['title' => $title, 'category' => $cat, 'content' => $content, 'description' => $desc];
+$_inps_arr = ['عنوان' => $title, 'دسته بندی' => $cat, 'محتوا' => $content, 'توضیحات' => $desc];
 $_inps_f = [
-  'title' => 'string | required',
-  'category' => 'int | required',
-  'content' => 'string | required',
-  'description' => 'string'
+  'عنوان' => 'string | required',
+  'دسته بندی' => 'int | required',
+  'محتوا' => 'string | required',
+  'توضیحان' => 'string'
 ];
 
-[$inputs, $errors] = filter($_inps_arr, $_inps_f);
+[$inputs, $errors] = filter_persian($_inps_arr, $_inps_f);
 
 $_SUBMITED = setted('create');
 

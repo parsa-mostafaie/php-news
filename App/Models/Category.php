@@ -9,6 +9,7 @@ use pluslib\Eloquent\BaseModel;
 /**
  * @property int $ID
  * @property string $Name
+ * @property string $name
  * @property Collection<Post> $posts
  */
 class Category extends BaseModel

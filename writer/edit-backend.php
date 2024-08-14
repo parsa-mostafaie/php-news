@@ -21,15 +21,15 @@ $post_id = intval(get_val('post'));
 
 EditAllowed($post_id);
 
-$_inps_arr = ['title' => $title, 'category' => $cat, 'content' => $content, 'description' => $desc];
+$_inps_arr = ['عنوان' => $title, 'دسته بندی' => $cat, 'محتوا' => $content, 'توضیحات' => $desc];
 $_inps_f = [
-  'title' => 'string | required',
-  'category' => 'int | required',
-  'content' => 'string | required',
-  'description' => 'string'
+  'عنوان' => 'string | required',
+  'دسته بندی' => 'int | required',
+  'محتوا' => 'string | required',
+  'توضیحات' => 'string'
 ];
 
-[$inputs, $errors] = filter($_inps_arr, $_inps_f);
+[$inputs, $errors] = filter_persian($_inps_arr, $_inps_f);
 
 $_SUBMITED = setted('edit');
 

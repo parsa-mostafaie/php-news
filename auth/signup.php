@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use pluslib\ajaxAPI;
+use pluslib\Support\Facades\DB;
 
 API_header();
 
@@ -17,15 +18,20 @@ $fname = trim($fname);
 $lname = trim($lname);
 // $uname = trim($uname);
 
-$_inps_arr = [/*'username' => $uname,*/ 'password' => $pword, 'fname' => $fname, 'lname' => $lname, 'email' => $mail];
+$_inps_arr = [/*'username' => $uname,*/
+  'رمزعبور' => $pword,
+  'نام' => $fname,
+  'نام خانوادگی' => $lname,
+  'ایمیل' => $mail
+];
 $_inps_f = [
   // 'username' => 'string | username | required',
-  'password' => 'string | required',
-  'email' => 'string | email | required',
-  'fname' => 'string | required',
-  'lname' => 'string | required'
+  'رمزعبور' => 'string | required',
+  'ایمیل' => 'string | email | unique:users,mail | required',
+  'نام' => 'string | required',
+  'نام خانوادگی' => 'string | required'
 ];
-[$inputs, $errors] = filter($_inps_arr, $_inps_f);
+[$inputs, $errors] = filter_persian($_inps_arr, $_inps_f);
 
 $_SUBMITED = setted('signup');
 
@@ -44,8 +50,10 @@ $__PROCESS__CALLBACK__ = function () {
     $uname .= "__" . uniqid();
   }
 
-  add_user($fname, $lname, $uname, $pword);
-  update_users('username="' . $uname . '"', 'mail=?', [$mail]);
+  DB::transaction(function () use ($fname, $lname, $uname, $pword, $mail) {
+    add_user($fname, $lname, $uname, $pword);
+    update_users('username="' . $uname . '"', 'mail=?', [$mail]);
+  });
 };
 
 $__PROCESS__SUCCESS__ = function () {

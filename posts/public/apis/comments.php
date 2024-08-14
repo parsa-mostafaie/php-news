@@ -17,7 +17,7 @@ $parent = is_numeric($parent) ? intval($parent) : NULL;
 
 $_inps_arr = [$ctext];
 
-[$inputs, $errors] = filter(['comment text' => $ctext], ['comment text' => 'string | required']);
+[$inputs, $errors] = filter_persian(['متن' => $ctext], ['متن' => 'string | required']);
 
 $_SUBMITED = setted('comment');
 
