@@ -1,5 +1,5 @@
 <?php
-$cats = db()->TABLE('categories')->SELECT(['name','id'])->Run()->fetchAll(PDO::FETCH_ASSOC);
+$cats = db()->TABLE('categories')->SELECT(['name', 'id'])->Run()->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <style>
   .accordion-button::after {
@@ -46,6 +46,12 @@ $cats = db()->TABLE('categories')->SELECT(['name','id'])->Run()->fetchAll(PDO::F
             </h2>
             <div id="searchCollapse" class="accordion-collapse collapse" data-bs-parent="#accordionSearch">
               <div class="accordion-body">
+                <p class="fw-bold">مرتب سازی: </p>
+                <div class='mb-3 d-flex gap-1'>
+                  <div class='flex-grow-1'>
+                    <?= searchSort_sel(intval(get_val('orderBy'))) ?>
+                  </div>
+                </div>
                 <p class="fw-bold">نویسنده: </p>
                 <div class='mb-3 d-flex gap-1'>
                   <button class="btn btn-danger" type="button" onclick="form_unselect_all('author')">

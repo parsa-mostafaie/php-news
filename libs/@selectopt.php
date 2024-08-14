@@ -2,14 +2,16 @@
 
 use App\Models\Category;
 use App\Models\User;
+use pluslib\Collections\Arr;
 use pluslib\Collections\Collection;
+use pluslib\Eloquent\Select;
 
 defined('ABSPATH') || exit;
 
 function selectOpt($models, $name, $render, $once = [], $current = 0)
 {
   ?>
-  <select class="form-select" name="<?= $name ?>'">
+  <select class="form-select" name="<?= $name ?>">
     <?php
     $option_render = function ($value, $text, $class = '') use ($current) {
       $isSelected = valueof($value) == $current;
@@ -52,4 +54,41 @@ function authors_sel($inpname = 'author', $default = null)
   selectOpt($st, $inpname, function (User $user, $opr) {
     $opr($user->_id(), $user->fullname());
   }, once: [[0, 'همه']], current: $default);
+}
+
+define("searchSort", [
+  [0, 'جدید ترین ها', ['verify_date', 'desc']],
+  [1, 'قدیمی ترین ها', ['verify_date', 'asc']],
+  [
+    2,
+    'پربحث ترین ها',
+    function (Select $select) {
+      $select->selectRaw('COUNT(c.id) as comment_count')
+        ->on('c.post_id = posts.id AND c.verify = 1', 'comments c', 'left')
+        ->groupBy('posts.id');
+
+      return ['comment_count', 'desc'];
+    }
+  ],
+  [
+    3,
+    'محبوب ترین ها',
+    function (Select $select) {
+      $select->selectRaw('COUNT(r.id) as reaction_count')
+        ->on('r.post_id = posts.id', 'reactions r', 'left')
+        ->groupBy('posts.id');
+
+      return ['reaction_count', 'desc'];
+    }
+  ]
+]);
+
+function searchSort_sel($default = 0)
+{
+  $st =
+    Arr::select(searchSort, [0, 1]);
+
+  selectOpt($st, 'orderBy', function (array $kv, $opr) {
+    $opr(...$kv);
+  }, current: $default);
 }

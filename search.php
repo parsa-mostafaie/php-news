@@ -9,19 +9,28 @@ $page = get_val('page');
 $cat_id = intval(get_val('cat')) ?? 0;
 $u_id = intval(get_val('author')) ?? 0;
 
+
+$sort = intval(get_val('orderBy')) ?? 0;
+$_GET['orderBy'] = $sort = min(count(searchSort) - 1, $sort);
+
 [$condits, $fill] =
   sqlConditionGenerator::TextSearch($inp, 'p.title');
 
 $stmt_params = [...$fill, $cat_id, $u_id];
 
-$pres =
-  Post::where('verify', 1)
+$query =
+  Post::where('posts.verify', 1)
+    ->onlySelect('posts.*')
     ->where($condits)
     ->WHERE($cat_id ? 'category_id = ?' : '0 = ?')
-    ->WHERE($u_id ? 'user_id = ?' : '0 = ?')
-    ->orderBy('verify_date', 'desc')
-    ->pagination(4, $page, $stmt_params);
+    ->WHERE($u_id ? 'user_id = ?' : '0 = ?');
 
+$order = valueof(searchSort[$sort][2], $query);
+
+$pres = $query
+  ->orderBy(...$order)
+  ->orderBy('verify_date', 'desc')
+  ->pagination(4, $page, $stmt_params);
 
 $page = $pres['current'];
 
