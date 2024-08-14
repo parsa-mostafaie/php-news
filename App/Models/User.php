@@ -18,6 +18,7 @@ use pluslib\Database\Expression;
  * @property string $password
  * @property string $mail
  * @property string|null $profile
+ * @property string $fullname
  * 
  * @property Expression|string $created_at
  * @property Expression|string $last_activity_time
@@ -30,9 +31,8 @@ class User extends UserBase
 {
   const updated_at = null;
 
-  protected $appends = [
-    'fullname'
-  ];
+  protected $appends = [];
+  protected $accessors = ['fullname'];
 
   protected $fillable = [
     'username',
@@ -61,6 +61,14 @@ class User extends UserBase
     if (is_null($upgrader) || ($role <= $upgrader->admin && $this->admin <= $upgrader->admin)) {
       $this->admin = $role;
     }
+  }
+
+  function fullname(){
+    return $this->fullname;
+  }
+
+  function getFullnameAttribute(){
+    return parent::fullname();
   }
 
   function auth(int $minRole)
