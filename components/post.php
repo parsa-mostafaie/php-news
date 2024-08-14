@@ -15,8 +15,8 @@ if (!$__component__post->verify) {
 }
 
 $__component__post_class ??= "col-sm-6"
-?>
-<div class="<?=$__component__post_class?>">
+  ?>
+<div class="<?= $__component__post_class ?>">
   <div class="card h-100">
     <div class='position-relative'>
       <?= $__component__post->sp_image() ?>
@@ -34,22 +34,21 @@ $__component__post_class ??= "col-sm-6"
     </div>
     <div class="card-body" style='min-height: 190px'>
       <div class="d-flex justify-content-between">
-        <h5 class="card-title fw-bold"><?= $__component__post->title ?></h5>
+        <a href="<?= $__component__post->get_url() ?>" class="text-decoration-none">
+          <div class="text-black">
+            <p class="card-title fw-bold"><?= $__component__post->title ?></p>
+            <?php if ($__component__post->description): ?>
+              <?= nl2br($__component__post->description, true) ?>
+            <?php endif; ?>
+          </div>
+        </a>
       </div>
-      <?php if ($__component__post->description): ?>
-        <!-- <p class="card-text pt-1 m-0 bg-gray p-1 px-2 bg-light rounded" style="border-right: .25rem solid #0a0b0caa;"> -->
-        <?= nl2br($__component__post->description, 275) ?>
-        <!-- </p> -->
-      <?php endif; ?>
-      <!-- <p class="card-text text-secondary pt-1">
-        <?php // echo truncate($__component__post->content, 275) ?>
-      </p> -->
     </div>
     <div class="card-footer">
       <div class="d-flex justify-content-between gap-2 align-items-center flex-column">
         <p class="fs-7 mb-0">نویسنده: <?= $__component__post->author->fullname ?> </p>
 
-        <p class="fs-7 mb-0">نویسنده: <?= $__component__post->author->fullname() ?> </p>
+        <?= view('post/reactions', 'reactions' . $__component__post->_id(), props: ['post' => $__component__post->_id()]) ?>
       </div>
     </div>
   </div>
