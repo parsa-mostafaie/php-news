@@ -77,7 +77,7 @@ function users_table($last = true, $id = "a_users_tbl")
       <a href="#"><?= $user->_id() ?></a>
       <?php
       },
-      $user->fullname()
+      $user->fullname
     ]);
 
     if ($has_actions) {
@@ -144,7 +144,7 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
       <a href="<?= $comment->get_url() ?>"><?= $comment->_id() ?></a>
       <?php
       },
-      $comment->author->fullname(),
+      $comment->author->fullname,
       function () use ($comment) {
         ?>
       <a href="<?= $comment->_post->get_url() ?>"><?= truncate($comment->_post->title) ?></a>
@@ -224,7 +224,7 @@ function posts_table($last = true, $by = null, $id = "a_posts_tbl")
     });
 
     $td_render($post->title);
-    $td_render($post->author->fullname());
+    $td_render($post->author->fullname);
 
     $td_render(Auth::isRole(2) ? function () use ($post, $id) {
       $danger = $post->published() ? 'danger-btn' : '';

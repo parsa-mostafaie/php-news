@@ -52,7 +52,7 @@ function authors_sel($inpname = 'author', $default = null)
     User::select()->where('admin', '>', 0)->get();
 
   selectOpt($st, $inpname, function (User $user, $opr) {
-    $opr($user->_id(), $user->fullname());
+    $opr($user->_id(), $user->fullname);
   }, once: [[0, 'همه']], current: $default);
 }
 

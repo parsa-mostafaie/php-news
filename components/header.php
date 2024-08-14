@@ -1,5 +1,5 @@
 <?php require_once __DIR__ . ('/../includes/c-init.php');
-use App\Auth;
+use App\Auth, App\Models\User;
 
 ?>
 <!DOCTYPE html>
@@ -30,7 +30,7 @@ use App\Auth;
         <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">متفرقه</a> -->
         <?php if (App\Auth::canlogin()): ?>
           <a href="<?= !App\Auth::isRole(2) ? c_url('/dashboard/') : c_url('/admin/') ?>"
-            class="me-3 py-2 link-body-emphasis text-decoration-none <?= Auth::isRole(2) ? 'text-primary' : '' ?>"><?= getCurrentUserInfo_prop('firstname') . ' ' . getCurrentUserInfo_prop('lastname') ?></a>
+            class="me-3 py-2 link-body-emphasis text-decoration-none <?= Auth::isRole(2) ? 'text-primary' : '' ?>"><?= User::current()->fullname ?></a>
         <?php else: ?>
           <a href="<?= c_url('/auth/login.html') ?>"
             class="fw-bold me-3 py-2 link-body-emphasis text-decoration-none text-primary">ورود</a>

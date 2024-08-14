@@ -6,6 +6,7 @@ defined('ABSPATH') || exit;
 use pluslib\App\Models\User as UserBase;
 use pluslib\Collections\Collection;
 use pluslib\Database\Expression;
+use pluslib\Eloquent\Attribute;
 
 /**
  * @property int $ID
@@ -31,8 +32,7 @@ class User extends UserBase
 {
   const updated_at = null;
 
-  protected $appends = [];
-  protected $accessors = ['fullname'];
+  protected $appends = ['fullname'];
 
   protected $fillable = [
     'username',
@@ -61,14 +61,6 @@ class User extends UserBase
     if (is_null($upgrader) || ($role <= $upgrader->admin && $this->admin <= $upgrader->admin)) {
       $this->admin = $role;
     }
-  }
-
-  function fullname(){
-    return $this->fullname;
-  }
-
-  function getFullnameAttribute(){
-    return parent::fullname();
   }
 
   function auth(int $minRole)

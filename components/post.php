@@ -46,8 +46,8 @@ $__component__post_class ??= "col-sm-6"
       </p> -->
     </div>
     <div class="card-footer">
-      <div class="d-flex justify-content-between gap-2 align-items-center flex-sm-row flex-column">
-        <a href="<?= c_url('/posts/' . $__component__post->_id()) ?>" class="btn btn-sm btn-dark">مشاهده</a>
+      <div class="d-flex justify-content-between gap-2 align-items-center flex-column">
+        <p class="fs-7 mb-0">نویسنده: <?= $__component__post->author->fullname ?> </p>
 
         <p class="fs-7 mb-0">نویسنده: <?= $__component__post->author->fullname() ?> </p>
       </div>

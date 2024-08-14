@@ -96,13 +96,13 @@ $__related_posts = $post->related_posts();
               <p class="card-text text-secondary text-justify pt-3"><?= $post->content() ?>
               </p>
               <div class="d-flex justify-content-between align-items-center flex-column flex-sm-row">
-                <p class="fs-6 mt-5 mb-0">نویسنده: <?= $post->author->fullname() ?> </p>
+                <p class="fs-6 mt-5 mb-0">نویسنده: <?= $post->author->fullname ?> </p>
                 <p class="fs-6 mt-sm-5 mb-0 mt-1"><?= $date ?> <?= $editdate ?> </p>
               </div>
             </div>
             <div class="card-footer">
               <div class="d-flex justify-content-between align-items-center">
-                <?= view('post/reactions', 'reactions', ['post' => $post_id]) ?>
+                <?= view('post/reactions', 'reactions' . $post_id, ['post' => $post_id]) ?>
                 <span><i class="bi bi-bar-chart-line-fill"></i>
                   <?= number_format($post->view + 1); // +1 for current ?></span>
               </div>
@@ -127,7 +127,7 @@ $__related_posts = $post->related_posts();
                 <input type="hidden" name="parent" id="rep" value="NULL" />
                 <div class="mb-3">
                   <label class="form-label">نام</label>
-                  <input type="text" class="form-control" disabled value="<?= User::current()->fullname() ?>" />
+                  <input type="text" class="form-control" disabled value="<?= User::current()->fullname ?>" />
                 </div>
                 <div class="mb-3">
                   <label class="form-label">متن کامنت</label>

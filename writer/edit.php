@@ -43,7 +43,7 @@ $tiny_mce = true;
 
       <div class="col-12 col-sm-6 col-md-4">
         <label class="form-label" for="author">نویسنده مقاله</label>
-        <input type="text" class="form-control" disabled id="author" value="<?= $post->author->fullname() ?>" />
+        <input type="text" class="form-control" disabled id="author" value="<?= $post->author->fullname ?>" />
       </div>
 
       <div class="col-12 col-sm-6 col-md-4">
