@@ -154,7 +154,7 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
 
     $td_render(!$comment->parent_id ? '' : function () use ($comment) {
       ?>
-      <a href="<?= $comment->parent->get_url() ?>"><?= $comment->parent->author->fullname() ?></a>
+      <a href="<?= $comment->parent->get_url() ?>"><?= $comment->parent->author->fullname ?></a>
       <?php
     });
 

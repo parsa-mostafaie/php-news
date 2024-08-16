@@ -7,6 +7,7 @@ use pluslib\Eloquent\BaseModel;
 use App\Auth;
 use pluslib\Collections\Collection;
 use pluslib\Database\Expression;
+use pluslib\Eloquent\Attribute;
 
 /**
  * @property Expression|string $verify_date
@@ -31,6 +32,8 @@ use pluslib\Database\Expression;
  * @property User $author
  * @property Comment[] $comments
  * @property Collection<Reaction> $reactions
+ * 
+ * @property int $comment_count
  */
 class Post extends BaseModel
 {
@@ -277,5 +280,22 @@ class Post extends BaseModel
   {
     $id = $this->_id();
     return url(c_url('/admin/pages/posts/rem.php?post=' . $id));
+  }
+
+  function commentCount(): Attribute
+  {
+    return Attribute::make(
+      get:
+      function () {
+        return static::select('posts.*')
+          ->selectRaw('count(c.id) as comment_count')
+          ->where('posts.id', $this->_id())
+          ->on('posts.id = c.post_id AND c.verify = 1', 'comments c', 'left')
+          ->groupBy('posts.id')
+          ->take(1)
+          ->first()
+          ->comment_count;
+      }
+    );
   }
 }

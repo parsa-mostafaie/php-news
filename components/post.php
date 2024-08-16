@@ -46,7 +46,15 @@ $__component__post_class ??= "col-sm-6"
     </div>
     <div class="card-footer">
       <div class="d-flex justify-content-between gap-2 align-items-center flex-column">
-        <p class="fs-7 mb-0">نویسنده: <?= $__component__post->author->fullname ?> </p>
+        <div class="d-flex justify-content-between w-100">
+          <p class="fs-7 mb-0">نویسنده: <?= $__component__post->author->fullname ?> </p>
+          <div>
+            <span><i class="bi bi-eye-fill"></i>
+              <?= number_format($__component__post->view); ?></span>
+              <span><i class="bi bi-chat-fill"></i>
+              <?= number_format($__component__post->comment_count); ?></span>
+          </div>
+        </div>
 
         <?= view('post/reactions', 'reactions' . $__component__post->_id(), props: ['post' => $__component__post->_id()]) ?>
       </div>
