@@ -56,32 +56,40 @@ function authors_sel($inpname = 'author', $default = null)
   }, once: [[0, 'همه']], current: $default);
 }
 
-define("searchSort", [
-  [0, 'جدید ترین ها', ['verify_date', 'desc']],
-  [1, 'قدیمی ترین ها', ['verify_date', 'asc']],
+define(
+  "searchSort",
   [
-    2,
-    'پربحث ترین ها',
-    function (Select $select) {
-      $select->selectRaw('COUNT(c.id) as comment_count')
-        ->on('c.post_id = posts.id AND c.verify = 1', 'comments c', 'left')
-        ->groupBy('posts.id');
+    [0, 'جدید ترین ها', ['verify_date', 'desc']],
+    [1, 'قدیمی ترین ها', ['verify_date', 'asc']],
+    [
+      2,
+      'پربحث ترین ها',
+      function (Select $select) {
+        $select->selectRaw('COUNT(c.id) as comment_count')
+          ->on('c.post_id = posts.id AND c.verify = 1', 'comments c', 'left')
+          ->groupBy('posts.id');
 
-      return ['comment_count', 'desc'];
-    }
-  ],
-  [
-    3,
-    'محبوب ترین ها',
-    function (Select $select) {
-      $select->selectRaw('COUNT(r.id) as reaction_count')
-        ->on('r.post_id = posts.id', 'reactions r', 'left')
-        ->groupBy('posts.id');
+        return ['comment_count', 'desc'];
+      }
+    ],
+    [
+      3,
+      'محبوب ترین ها',
+      function (Select $select) {
+        $select->selectRaw('COUNT(r.id) as reaction_count')
+          ->on('r.post_id = posts.id', 'reactions r', 'left')
+          ->groupBy('posts.id');
 
-      return ['reaction_count', 'desc'];
-    }
+        return ['reaction_count', 'desc'];
+      }
+    ],
+    [
+      4,
+      'پربازدید ترین ها',
+      ['view','desc']
+    ]
   ]
-]);
+);
 
 function searchSort_sel($default = 0)
 {
