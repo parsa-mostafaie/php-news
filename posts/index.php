@@ -118,7 +118,10 @@ $__related_posts = $post->related_posts();
           <div class="card my-2" id="comments">
             <div class="card-body">
               <div id="logs"></div>
-              <p class="fw-bold fs-5">ارسال کامنت</p>
+              <p class="fw-bold fs-5">ارسال کامنت
+
+                <span id="resetReplyButton" role="button" class="badge bg-danger rounded-pill fw-normal d-none" onclick="resetReply()">لغو</span>
+              </p>
 
               <form form-action="<?= c_url('/posts/public/apis/comments.php'); ?>" submit-control form-wait="#wait">
                 <input type="hidden" name="sec_form_sess_n" value="<?= $sessn ?>">

@@ -33,6 +33,8 @@ $count = count(comments_fetch(nop: true))
       reply.addEventListener('click', () => {
         rep.value = $data;
 
+        window.resetReplyButton($data);
+
         reply.insertAdjacentElement("afterend", card);
       })
     });

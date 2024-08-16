@@ -4,10 +4,18 @@ function resetReply() {
   let rep = document.querySelector("#rep");
   let commain = document.querySelector("#commain");
   let card = document.querySelector("#comments");
+  resetReplyButton();
   commain.prepend(card);
   rep.value = "NULL";
 }
 
+function resetReplyButton(value = "NULL") {
+  value == "NULL"
+    ? document.querySelector("#resetReplyButton").classList.add("d-none")
+    : document.querySelector("#resetReplyButton").classList.remove("d-none");
+}
+
+window.resetReplyButton = resetReplyButton;
 window.resetReply = resetReply;
 
 window.addEventListener("load", () => {
