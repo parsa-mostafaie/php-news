@@ -1,1 +1,5 @@
 @import url("../../../assets/shared/admin_dashboard.css");
+
+* {
+  font-family: 'Vazir', sans-serif !important;
+}

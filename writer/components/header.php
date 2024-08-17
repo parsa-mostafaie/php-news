@@ -30,7 +30,9 @@ use App\Auth; ?>
           ],
           toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
             'bullist numlist checklist outdent indent | removeformat | code table help',
-          images_upload_url: '<?= $writer . 'tnymceul.php' ?>'
+          images_upload_url: '<?= $writer . 'tnymceul.php' ?>',
+          language_url:'/tinymce/langs/fa.js',
+          language:'fa'
         })
       </script>
     <?php }); ?>

@@ -238,7 +238,7 @@ function posts_table($last = true, $by = null, $id = "a_posts_tbl")
       <?php else: ?>
         <a <?= $attrs ?> class="btn btn-sm btn-success <?= $disable ?>">تایید شده</a>
       <?php endif; ?>
-      <?php if (Post::canEdited($id)): ?>
+      <?php if ($post->canEdit()): ?>
         <a href="<?= $post->edit_url() ?>" class="btn btn-sm btn-outline-dark">ویرایش</a>
       <?php endif; ?>
       <?php if (Auth::isRole(2)): ?>
