@@ -176,18 +176,7 @@ class Post extends BaseModel
 
   function related_posts()
   {
-    return collect(
-      array_slice(
-        array_reverse(
-          array_filter(
-            $this->category->posts->all(),
-            fn($p) => $p->_id() != $this->_id()
-          )
-        ),
-        0,
-        4
-      )
-    );
+    return $this->category->hasMany(static::class)->where('id', '!=', $this->ID)->take(2)->orderBy('created_at', 'desc')->get();
   }
 
   function get_current_reaction(): ?Reaction
