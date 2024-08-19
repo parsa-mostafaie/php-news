@@ -6,6 +6,7 @@ if (!defined('news')) {
   HOME_URL('/news');
   db('plus_news');
   pls_autoload('App', etc_url(c_url('')));
+  set_exception_handler('pls_exception_handler');
 }
 
 use pluslib\Config;
