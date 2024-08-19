@@ -3,8 +3,8 @@ defined('ABSPATH') || exit;
 
 function view($url, $id = null, $props = [])
 {
-  $url = url($url . ".php", $props);
-  $url = c_url('/Views/' . $url);
+  $url = url("$url.php", $props);
+  $url = c_url("/Views/$url");
   $etc = etc_url($url);
   $www = www_url($url);
 
@@ -26,6 +26,6 @@ function view($url, $id = null, $props = [])
   </div>
   <?php
   useDangerButtons();
-  useAjaxContent();
   useHTTPLink();
+  useAjaxContent();
 }
