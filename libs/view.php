@@ -8,7 +8,7 @@ function view($url, $id = null, $props = [])
   $etc = etc_url($url);
   $www = www_url($url);
 
-  $id = pathinfo($etc, PATHINFO_FILENAME)
+  $id ??= pathinfo($etc, PATHINFO_FILENAME)
 
     ?>
   <div ajax-container id="<?= $id ?>">

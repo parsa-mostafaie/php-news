@@ -25,7 +25,9 @@ $res = Emoji::select('emojis.*')
     cond(expr('emojis.id'), expr('r.emoji_id'))->and(expr('r.post_id'), expr('?')),
     'reactions r',
     'left'
-  )->groupBy('emojis.id')->getArray([$post_id]);
+  )->groupBy('emojis.id')
+  ->orderBy('count','desc')
+  ->getArray([$post_id]);
 
 ?>
 <?php $c_react = $post->ereaction_id() ?>
@@ -39,7 +41,7 @@ $res = Emoji::select('emojis.*')
   $react_id = $emoji->_id();
   $class_react = $react_id == $c_react ? 'primary' : 'outline-secondary';
   $attrs = 'http-method="PUT"
-    href="' . c_url("/posts/public/apis/react.php?post=$post_id&react_id=$react_id") . "\" ajax-reload='#reactions$post_id'" ?>
+    href="' . url(c_url("/posts/public/apis/react.php?post=$post_id&react_id=$react_id")) . "\" ajax-reload='#reactions$post_id'" ?>
   <a class="btn btn-<?= $class_react ?>   <?= !Auth::canLogin() ? 'disabled' : '' ?>"
     title="<?= $emoji->unicode . ' ' . $emoji->name ?>" <?= Auth::canLogin() ? $attrs : ""; ?>>
     <!-- <img src="<?= c_url('/emojis/' . $edata['eng_name'] . '.png') ?>" /> -->

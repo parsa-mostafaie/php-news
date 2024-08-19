@@ -66,7 +66,7 @@ function __AjaxContent()
     return;
   }
   ?>
-  <script src="/<?= RELPATH ?>frontend/ajax-content.js" type="module"></script>
+  <script src="/<?= RELPATH ?>frontend/ajax-content.js" type="module" defer></script>
   <script>window.httplinksConfig = { refreshOn: 2 }</script>
   <?php
   $imported = true;

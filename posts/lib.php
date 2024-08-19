@@ -19,7 +19,7 @@ function comment(Comment $comment)
   ?>
   <div class="card bg-light-subtle mb-3" id="c<?= $comment->_id() ?>">
     <?php if (!$comment->verified()): ?>
-      <div class='position-absolute' style='top: 5px;left:5px'><a href="<?= $vhref ?>" http-method=""><span
+      <div class='position-absolute' style='top: 5px;left:5px'><a href="<?= $vhref ?>" http-method="PUT" ajax-reload="#comment"><span
             class="badge text-bg-danger">تایید
             نشده</span></a></div>
     <?php endif; ?>
