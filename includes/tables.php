@@ -59,7 +59,7 @@ function users_table($last = true, $id = "a_users_tbl")
     $values->limit(5);
   }
 
-  $values = $values->get()->all();
+  $values = $values->orderBy('created_at', 'desc')->get()->all();
 
   $empty = function () {
     ?>
