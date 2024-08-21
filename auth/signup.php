@@ -18,6 +18,8 @@ $fname = trim($fname);
 $lname = trim($lname);
 // $uname = trim($uname);
 
+$uname = '';
+
 $_inps_arr = [/*'username' => $uname,*/
   'رمزعبور' => $pword,
   'نام' => $fname,
@@ -40,7 +42,7 @@ $_COND = count($errors) == 0;
 
 // PROCESSOR
 $__PROCESS__CALLBACK__ = function () {
-  global $fname, $lname, $pword, $mail;
+  global $fname, $lname, $pword, $mail, $uname;
 
   $uname = substr($mail, 0, strrpos($mail, '@'));
 
@@ -54,6 +56,7 @@ $__PROCESS__CALLBACK__ = function () {
     add_user($fname, $lname, $uname, $pword);
     update_users('username="' . $uname . '"', 'mail=?', [$mail]);
   });
+
 };
 
 $__PROCESS__SUCCESS__ = function () {
