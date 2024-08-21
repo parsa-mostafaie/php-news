@@ -29,6 +29,7 @@ class Comment extends BaseModel
 {
   protected $table = "comments";
   protected $id_field = "ID";
+  protected $appends = ['url'];
   protected $defaultData = [
     'Verify' => 0,
     'Parent' => NULL
@@ -92,6 +93,9 @@ class Comment extends BaseModel
     return $this->_post->canEdit();
   }
 
+  function getUrlAttribute(){
+    return $this->get_url();
+  }
   function get_url()
   {
     return $this->_post->get_url() . '#' . $this->_id();

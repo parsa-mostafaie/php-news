@@ -71,6 +71,8 @@ class Post extends BaseModel
     'reactions' => array(self::HAS_MANY, Reaction::class, 'post_id')
   );
 
+  protected $appends = ['url'];
+
   public static function canEdited($post_id)
   {
     $post = new static($post_id);
@@ -145,7 +147,8 @@ class Post extends BaseModel
   function cat_badge()
   {
     ?>
-    <div class='position-absolute' style='top: 5px;left:5px'><?= badge($this->category->Name) ?></div>
+    <a href="<?= $this->category->url ?>" class='position-absolute'
+      style='top: 5px;left:5px'><?= badge($this->category->Name) ?></a>
     <?php
   }
 
@@ -292,5 +295,10 @@ class Post extends BaseModel
           ->comment_count;
       }
     );
+  }
+
+  function getUrlAttribute()
+  {
+    return $this->get_url();
   }
 }

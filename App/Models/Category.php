@@ -23,6 +23,8 @@ class Category extends BaseModel
     'name' => 'Name'
   ];
 
+  protected $appends = ['url'];
+
   const updated_at = null;
   const created_at = null;
 
@@ -31,6 +33,10 @@ class Category extends BaseModel
   protected $relationships = array(
     'posts' => array(self::HAS_MANY, Post::class, 'category_id'),
   );
+
+  public function getUrlAttribute(){
+    return $this->get_url();
+  }
 
   public function get_url(){
     return url(c_url('/search.php?cat=' . $this->_id()));
