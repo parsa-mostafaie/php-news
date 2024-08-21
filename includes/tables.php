@@ -22,7 +22,7 @@ function categories_table()
     <?php
   };
 
-  return tablify_pro($fields, $values, function (Category $cat, callable $td_render) {
+  return tablify($fields, $values, function (Category $cat, callable $td_render) {
     $td_render(function () use ($cat) {
       ?>
       <a href="<?= $cat->get_url() ?>"><?= $cat->_id(); ?></a>
@@ -67,7 +67,7 @@ function users_table($last = true, $id = "a_users_tbl")
     <?php
   };
 
-  return tablify_pro($fields, $values, function (User $user, callable $td_render) use ($id) {
+  return tablify($fields, $values, function (User $user, callable $td_render) use ($id) {
     $c_admin = User::current()->admin;
     $has_actions = !($user->_id() == User::current()->_id() || $c_admin < 2);
 
@@ -137,7 +137,7 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
     <?php
   };
 
-  return tablify_pro($fields, $values, function (Comment $comment, callable $td_render) use ($id) {
+  return tablify($fields, $values, function (Comment $comment, callable $td_render) use ($id) {
     $td_render([
       function () use ($comment) {
         ?>
@@ -216,7 +216,7 @@ function posts_table($last = true, $by = null, $id = "a_posts_tbl")
     <?php
   };
 
-  return tablify_pro($fields, $values, function (Post $post, callable $td_render) use ($id) {
+  return tablify($fields, $values, function (Post $post, callable $td_render) use ($id) {
     $td_render(function () use ($post) {
       ?>
       <a href="<?= $post->get_url() ?>"><?= $post->_id() ?></a>
