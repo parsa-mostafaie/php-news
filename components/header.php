@@ -8,7 +8,7 @@ use App\Auth, App\Models\User;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>اخبار</title>
+  <title><?=meta('title', 'اخبار')?></title>
   <link rel="shortcut icon" href="<?= c_url('/favicon.ico', false) ?>" type="image/x-icon">
 
   <?php useBootstrap() ?>

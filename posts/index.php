@@ -38,6 +38,7 @@ $editdate = $post->edited() ? ' <small><b class="text-info">ویرایش شده<
 $seoFriendly_URL = normalRoute();
 
 $__related_posts = $post->related_posts();
+meta()->title($post->title)
 ?>
 <?php add_footer('normalize_route'); ?>
 <?php include ('../components/header.php') ?>
