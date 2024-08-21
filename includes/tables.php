@@ -176,7 +176,7 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
         <a <?= $href ?> class="btn btn-sm btn-success <?= $disable ?>">تایید شده</a>
       <?php endif; ?>
       <?php if (Auth::isRole(2)): ?>
-        <a danger-btn http-method="DELETE" ajax-reload="#<?= $comment->_id() ?>"
+        <a danger-btn http-method="DELETE" ajax-reload="#<?= $id ?>"
           href="<?= url(c_url('/admin/pages/comments/rem.php?com=' . $comment->_id())) ?>"
           class="btn btn-sm btn-outline-danger">حذف</a>
       <?php endif ?>
