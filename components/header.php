@@ -13,7 +13,7 @@ use App\Auth, App\Models\User;
 
   <?php useBootstrap() ?>
   <?php do_head() ?>
-  <link rel="stylesheet" href="<?= c_url('/assets/css/style.css', false) ?>" />
+  <link rel="stylesheet" href="<?= asset('css/style.css') ?>" />
 </head>
 
 <body>

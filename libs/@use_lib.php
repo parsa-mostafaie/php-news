@@ -30,7 +30,7 @@ function __HTTPLink()
 function __AjaxInit1()
 {
   ?>
-  <script src="<?= www_url(c_url('/assets/js/ajaxInit1.js', false)) ?>" type="module"></script>
+  <script src="<?= asset('js/ajaxInit1.js') ?>" type="module"></script>
   <?php
 }
 
@@ -54,7 +54,7 @@ function __DangerButtons()
     return;
   }
   ?>
-  <script src="<?= www_url(c_url('/assets/js/dangerbtn.js')) ?>"></script>
+  <script src="<?= asset('js/dangerbtn.js') ?>"></script>
   <?php
   $imported = true;
 }
@@ -154,7 +154,7 @@ function __CommentsInit()
 {
   __FormlibAjax();
   ?>
-  <script src="<?= www_url(c_url('/assets/js/CommentAJAX.js', false)) ?>" type="module"></script>
+  <script src="<?= asset('js/CommentAJAX.js') ?>" type="module"></script>
   <?php
 }
 
@@ -166,16 +166,17 @@ function __AjaxInit2()
 {
   __FormlibAjax();
   ?>
-  <script src="<?= www_url(c_url('/assets/js/ajaxInit2.js', false)) ?>" type="module"></script>
+  <script src="<?= asset('js/ajaxInit2.js') ?>" type="module"></script>
   <?php
 }
 
-function useFormall(){
+function useFormall()
+{
   add_footer('__Formall');
 }
 function __Formall()
 {
   ?>
-  <script src='<?= c_url('/assets/js/formall.js', false) ?>'></script>
+  <script src='<?= asset('js/formall.js') ?>'></script>
   <?php
 }

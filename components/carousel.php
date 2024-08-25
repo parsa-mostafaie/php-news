@@ -3,7 +3,7 @@ include_once __DIR__ . ('/../includes/c-init.php');
 // __component__caro
 ;
 ?>
-<link rel="stylesheet" href="<?= c_url('/assets/public/rtl-carousel.css') ?>">
+<link rel="stylesheet" href="<?= asset('public/rtl-carousel.css') ?>">
 <div id="carousel" class="carousel slide">
   <div class="carousel-indicators">
     <?php foreach ($__component__caro as $i => $post): ?>
