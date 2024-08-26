@@ -61,7 +61,7 @@ function comments_table($last = true, $by = null, $id = 'a_comments_tbl')
     'عملیات'
   ];
 
-  $values = Comment::select();
+  $values = Comment::select('comments.*');
 
   if ($last) {
     $values->limit(5);

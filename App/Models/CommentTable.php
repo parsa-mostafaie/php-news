@@ -24,7 +24,7 @@ trait CommentTable
 
   function tbl_parent()
   {
-    if (!$this['parent'])
+    if (!$this['parent_id'])
       return;
     ?>
     <a href="<?= $this->parent->get_url() ?>"><?= $this->parent->author->fullname ?></a>
