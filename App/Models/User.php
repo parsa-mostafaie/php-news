@@ -30,6 +30,7 @@ use pluslib\Eloquent\Attribute;
  */
 class User extends UserBase
 {
+  use UserTable;
   const updated_at = null;
 
   protected $appends = ['fullname'];

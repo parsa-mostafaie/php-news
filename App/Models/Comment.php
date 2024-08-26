@@ -27,6 +27,7 @@ use pluslib\Eloquent\BaseModel;
  */
 class Comment extends BaseModel
 {
+  use CommentTable;
   protected $table = "comments";
   protected $id_field = "ID";
   protected $appends = ['url'];

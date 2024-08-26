@@ -14,6 +14,7 @@ use pluslib\Eloquent\BaseModel;
  */
 class Category extends BaseModel
 {
+  use CategoryTable;
   protected $table = "categories";
   protected $id_field = "ID";
 
@@ -34,11 +35,13 @@ class Category extends BaseModel
     'posts' => array(self::HAS_MANY, Post::class, 'category_id'),
   );
 
-  public function getUrlAttribute(){
+  public function getUrlAttribute()
+  {
     return $this->get_url();
   }
 
-  public function get_url(){
+  public function get_url()
+  {
     return url(c_url('/search.php?cat=' . $this->_id()));
   }
 }

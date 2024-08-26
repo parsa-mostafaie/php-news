@@ -37,6 +37,7 @@ use pluslib\Eloquent\Attribute;
  */
 class Post extends BaseModel
 {
+  use PostTable;
   protected $table = "posts";
   protected $id_field = "ID";
   protected $defaultData = [

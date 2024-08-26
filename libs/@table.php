@@ -61,3 +61,50 @@ function tablify(
   </div>
   <?php
 }
+
+
+/**
+ * Convert array of models into HTML Table [OPTIMIZED]
+ * 
+ * @param array $fields
+ * @param array $values
+ * @param string $table_class
+ * @param string $container_class
+ * @return bool|void
+ */
+function tablify_optimized(
+  $fields = [],
+  $values = [],
+  $empty_msg = null,
+  $table_class = TABLE_BASE_CSS_CLASS,
+  $container_class = TABLE_CONTAINER_BASE_CSS_CLASS,
+  $params = []
+) {
+  if (count($values) == 0) {
+    echo value($empty_msg);
+    return false;
+  }
+
+  ?>
+  <div class="<?= $container_class ?>">
+    <table class="<?= $table_class ?>">
+      <thead>
+        <tr>
+          <?php foreach ($fields as $field): ?>
+            <th><?= $field ?></th>
+          <?php endforeach; ?>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($values as $value): ?>
+          <tr>
+            <?php foreach ($value->toTableRow() as $col): ?>
+              <td><?= $value[$col] ?: $value->$col(...$params) ?></td>
+            <?php endforeach; ?>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+  <?php
+}
