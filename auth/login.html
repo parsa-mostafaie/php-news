@@ -67,7 +67,7 @@
     <script>
       window.addEventListener("load", () => {
         ffqs();
-        let $urlparams = new URLSearchParams(location.href);
+        let $urlparams = new URLSearchParams(location.search);
         let $why = document.querySelector(".why");
         if ($urlparams.get("why") == "expired") {
           $why.innerHTML =
