@@ -25,11 +25,11 @@ trait UserTable
       return;
 
     $u_admin = $this->admin;
-    
+    $downgrade_url = null;
+
     if ($u_admin != 2)
       $upgrade_url = url(c_url('/admin/pages/users/grw.php?' . ($u_admin ? 'admin' : '')), ['usr' => $this_id]);
-    else
-      $downgrade_url = url(c_url('/admin/pages/users/shrnk.php'), ['usr' => $this_id]);
+    $downgrade_url = url(c_url('/admin/pages/users/shrnk.php'), ['usr' => $this_id]);
 
     if ($u_admin == 1): ?>
       <a http-method="patch" ajax-reload="#<?= $id ?>" href="<?= $upgrade_url ?>" class="btn btn-sm btn-outline-dark">ارتقا
