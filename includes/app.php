@@ -11,7 +11,4 @@ return
     devmode: true,
     use_sha: false
   )
-    ->db(
-      'plus_news'
-    )
     ->init();
