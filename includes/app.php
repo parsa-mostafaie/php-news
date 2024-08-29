@@ -11,4 +11,5 @@ return
     devmode: true,
     use_sha: false
   )
+    ->withProviders(require realpath(__DIR__ . '/providers.php'))
     ->init();
