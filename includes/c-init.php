@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/libs/pluslib/init.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/libs/jdf/jdf.php';
 require_once "boot.php";
 

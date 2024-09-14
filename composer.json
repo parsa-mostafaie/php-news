@@ -1,0 +1,5 @@
+{
+    "require": {
+        "parsa/pluslib": "<=0.0.04"
+    }
+}
